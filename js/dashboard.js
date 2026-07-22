@@ -5,18 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("attendanceDate").value = today;
 
 });
-let students = JSON.parse(localStorage.getItem("students")) || [
-    {roll:101,name:"Rahul Kumar",photo:"https://i.pravatar.cc/50?img=1",attendance:{}},
-    {roll:102,name:"Aman Singh",photo:"https://i.pravatar.cc/50?img=2",attendance:{}},
-    {roll:103,name:"Priya Verma",photo:"https://i.pravatar.cc/50?img=3",attendance:{}}
-];
+let students = [];
+const studentRef = window.collection(window.db, "students");
 
+window.onSnapshot(studentRef, (snapshot) => {
+
+    students = [];
+
+    snapshot.forEach((docSnap) => {
+
+        students.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
+
+    });
+
+    renderTable();
+
+});
 const tbody = document.getElementById("studentTableBody");
 const search = document.getElementById("searchStudent");
-
-function saveData(){
-    localStorage.setItem("students", JSON.stringify(students));
-}
 
 function updateCounter(){
 
@@ -112,7 +121,7 @@ return "<b>"+st+"</b>";
     });
 
     updateCounter();
-    saveData();
+   
 
 }
 
@@ -150,50 +159,57 @@ function addStudent(){
 
 }
 
-function deleteStudent(index){
+async function deleteStudent(index){
 
     if(confirm("Delete Student?")){
 
-        students.splice(index,1);
-
-        renderTable();
+        await window.deleteDoc(
+            window.doc(window.db, "students", students[index].id)
+        );
 
     }
 
 }
 
-function editStudent(index){
+async function editStudent(index){
 
-    let name=prompt("Edit Name",students[index].name);
+    let name = prompt("Edit Name", students[index].name);
 
     if(name){
 
-        students[index].name=name;
+        await window.updateDoc(
+
+            window.doc(window.db, "students", students[index].id),
+
+            {
+                name: name
+            }
+
+        );
 
     }
 
-    renderTable();
-
 }
 
-function setStatus(index,status){
+async function setStatus(index, status) {
 
-    let date=document.getElementById("attendanceDate").value;
+    let date = document.getElementById("attendanceDate").value;
 
-    if(date==""){
+    if (date == "") {
         alert("Please Select Date");
         return;
     }
 
-    if(!students[index].attendance){
-        students[index].attendance={};
-    }
+    let attendance = students[index].attendance || {};
 
-    students[index].attendance[date]=status;
+    attendance[date] = status;
 
-    saveData();
-
-    renderTable();
+    await window.updateDoc(
+        window.doc(window.db, "students", students[index].id),
+        {
+            attendance: attendance
+        }
+    );
 
 }
 
@@ -210,90 +226,72 @@ document.getElementById("studentModal").style.display="none";
 
 }
 
-function saveStudent(){
+async function saveStudent() {
 
-let roll=document.getElementById("roll").value;
+    let roll = document.getElementById("roll").value;
+    let name = document.getElementById("name").value;
+    let course = document.getElementById("course").value;
+    let mobile = document.getElementById("mobile").value;
 
-let name=document.getElementById("name").value;
+    let file = document.getElementById("photo").files[0];
 
-let course=document.getElementById("course").value;
+    let photo = "https://i.pravatar.cc/50?u=" + roll;
 
-let mobile=document.getElementById("mobile").value;
+    if (file) {
 
-let file=document.getElementById("photo").files[0];
+        let reader = new FileReader();
 
-let photo="";
+        reader.onload = async function (e) {
 
-if(file){
+            await window.addDoc(
+                window.collection(window.db, "students"),
+                {
+                    roll,
+                    name,
+                    course,
+                    mobile,
+                    photo: e.target.result,
+                    attendance: {}
+                }
+            );
 
-    let reader=new FileReader();
+            closeModal();
 
-    reader.onload=function(e){
+            document.getElementById("roll").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("course").value = "";
+            document.getElementById("mobile").value = "";
+            document.getElementById("photo").value = "";
 
-        students.push({
+        };
 
-            roll,
-
-            name,
-
-            course,
-
-            mobile,
-
-            photo:e.target.result,
-
-            attendance:{}
-
-        });
-
-        saveData();
-
-        renderTable();
-
-        closeModal();
-        // Form Clear
-document.getElementById("roll").value="";
-document.getElementById("name").value="";
-document.getElementById("course").value="";
-document.getElementById("mobile").value="";
-document.getElementById("photo").value="";
-
+        reader.readAsDataURL(file);
+        return;
     }
 
-    reader.readAsDataURL(file);
+    await window.addDoc(
+        window.collection(window.db, "students"),
+        {
+            roll,
+            name,
+            course,
+            mobile,
+            photo,
+            attendance: {}
+        }
+    );
 
-    return;
+    closeModal();
+
+    document.getElementById("roll").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("course").value = "";
+    document.getElementById("mobile").value = "";
+    document.getElementById("photo").value = "";
 
 }
-students.push({
 
-    roll,
-
-    name,
-
-    course,
-
-    mobile,
-
-    photo:"https://i.pravatar.cc/50?u="+roll,
-
-    attendance:{}
-
-});
-
-saveData();
-
-renderTable();
-
-closeModal();
-// Form Clear
-document.getElementById("roll").value="";
-document.getElementById("name").value="";
-document.getElementById("course").value="";
-document.getElementById("mobile").value="";
-document.getElementById("photo").value="";
-
-}   // <-- यही सबसे जरूरी लाइन है
+   // <-- यही सबसे जरूरी लाइन है
 
 function saveAttendance(){
 
