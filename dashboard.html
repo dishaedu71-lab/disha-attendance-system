@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Disha Dashboard</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>Disha Computer</h2>
+
+<a href="#"><i class="fa fa-home"></i> Dashboard</a>
+
+<a href="#"><i class="fa fa-user-graduate"></i> Students</a>
+
+<a href="#"><i class="fa fa-calendar-check"></i> Attendance</a>
+
+<a href="#"><i class="fa fa-chart-line"></i> Reports</a>
+
+<a href="#"><i class="fa fa-cog"></i> Settings</a>
+
+<a href="login.html"><i class="fa fa-right-from-bracket"></i> Logout</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<h1>Welcome Teacher 👨‍🏫</h1>
+
+<div class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-users"></i>
+
+<h2 id="total">0</h2>
+
+<p>Total Students</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-user-check"></i>
+
+<h2 id="present">0</h2>
+
+<p>Present</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-user-xmark"></i>
+
+<h2 id="absent">0</h2>
+
+<p>Absent</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h2  id="percentage">0%</h2>
+
+<p>Attendance</p>
+
+</div>
+
+</div>
+
+</div>
+<!-- Attendance Section -->
+
+<h2 style="margin-top:40px;">Today's Attendance</h2>
+
+<div class="attendance-box">
+
+<div class="attendance-header">
+
+<label><b>Attendance Date :</b></label>
+
+<input type="date" id="attendanceDate">
+
+<button onclick="saveAttendance()">Save Attendance</button>
+
+</div>
+<div class="top-bar">
+
+<input type="text" id="searchStudent" placeholder="🔍 Search Student">
+
+<button onclick="openModal()">+ Add Student</button>
+
+</div>
+<div class="summary">
+
+<div class="box">
+<h3>Total Students</h3>
+<h2 id="total">0</h2>
+</div>
+
+<div class="box">
+<h3>Present</h3>
+<h2 id="present">0</h2>
+</div>
+
+<div class="box">
+<h3>Absent</h3>
+<h2 id="absent">0</h2>
+</div>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+
+<th>Roll No.</th>
+
+<th>Name</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="studentTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+<script src="js/dashboard.js"></script>
+
+<!-- Add Student Modal -->
+
+<div id="studentModal" class="modal">
+
+<div class="modal-content">
+
+<h2>Add New Student</h2>
+
+<input type="text" id="roll" placeholder="Roll Number">
+
+<input type="text" id="name" placeholder="Student Name">
+
+<input type="text" id="course" placeholder="Course">
+
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<label>Student Photo</label>
+
+<input type="file" id="photo" accept="image/*">
+
+<div class="modal-btn">
+
+<button onclick="saveStudent()">Save Student</button>
+
+<button onclick="closeModal()" class="cancel">Cancel</button>
+
+</div>
+
+</div>
+
+</div>
+<!-- Student History Modal -->
+
+<div id="historyModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Student Attendance History</h2>
+
+        <div id="historyContent"></div>
+
+        <br>
+
+        <button class="cancel" onclick="closeHistory()">
+            Close
+        </button>
+
+    </div>
+
+</div>
+</body>
+
+</html>
