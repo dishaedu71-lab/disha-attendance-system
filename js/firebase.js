@@ -40,3 +40,5 @@ window.doc = doc;
 window.onSnapshot = onSnapshot;
 
 console.log("Firebase Connected Successfully");
+
+window.dispatchEvent(new Event("firebase-ready"));
