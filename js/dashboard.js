@@ -6,22 +6,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 let students = [];
-const studentRef = window.collection(window.db, "students");
+window.addEventListener("firebase-ready", () => {
 
-window.onSnapshot(studentRef, (snapshot) => {
+    const studentRef = window.collection(window.db, "students");
 
-    students = [];
+    window.onSnapshot(studentRef, (snapshot) => {
 
-    snapshot.forEach((docSnap) => {
+        students = [];
 
-        students.push({
-            id: docSnap.id,
-            ...docSnap.data()
+        snapshot.forEach((docSnap) => {
+            students.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
         });
 
-    });
+        renderTable();
 
-    renderTable();
+    });
 
 });
 const tbody = document.getElementById("studentTableBody");
