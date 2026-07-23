@@ -803,50 +803,56 @@ transform:scale(1.15);
 
 .why-container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    grid-template-columns:repeat(4,1fr);
     gap:25px;
 }
 
 .why-card{
     background:rgba(255,255,255,.15);
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(20px);
     border-radius:20px;
-    padding:35px 25px;
+    padding:30px;
     color:#fff;
+    text-align:center;
     box-shadow:0 10px 25px rgba(0,0,0,.25);
     transition:.4s;
-    border:1px solid rgba(255,255,255,.2);
 }
 
 .why-card:hover{
-    transform:translateY(-12px) scale(1.05);
-    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    transform:translateY(-10px);
 }
 
 .why-card i{
-    font-size:55px;
+    font-size:50px;
     color:#FFD700;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .why-card h3{
-    font-size:26px;
+    font-size:24px;
     margin-bottom:10px;
 }
 
 .why-card p{
-    font-size:17px;
-    opacity:.95;
+    font-size:16px;
 }
 
-@media(max-width:768px){
+@media(max-width:900px){
 
-.why-us h2{
-    font-size:30px;
+.why-container{
+
+grid-template-columns:repeat(2,1fr);
+
 }
 
-.why-card{
-    padding:25px;
+}
+
+@media(max-width:600px){
+
+.why-container{
+
+grid-template-columns:1fr;
+
 }
 
 }
