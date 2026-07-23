@@ -109,14 +109,39 @@ return "<b>"+st+"</b>";
 
         <td>
 
-            <button class="edit" onclick="editStudent(${index})">Edit</button>
+<button class="edit" onclick="editStudent(${index})">
+✏ Edit
+</button>
 
-            <button class="delete" onclick="deleteStudent(${index})">Delete</button>
-            <button onclick="showHistory(${index})">
+<button class="delete" onclick="deleteStudent(${index})">
+🗑 Delete
+</button>
+
+<button onclick="showHistory(${index})">
 📜 History
 </button>
 
-        </td>
+${
+(()=>{
+let date=document.getElementById("attendanceDate").value;
+
+if(s.attendance && s.attendance[date]=="Absent"){
+
+return `
+<button class="wa-btn"
+onclick="sendWhatsApp('${s.mobile}','${s.name}','${s.roll}')">
+<i class="fa-brands fa-whatsapp"></i>
+</button>
+`;
+
+}
+
+return "";
+
+})()
+}
+
+</td>
 
         </tr>
         `;
@@ -366,3 +391,33 @@ function closeHistory(){
     document.getElementById("historyModal").style.display="none";
 
 }
+function sendWhatsApp(phone,name,roll){
+
+phone=phone.replace(/\s+/g,"").replace("+","");
+
+if(!phone.startsWith("91")){
+phone="91"+phone;
+}
+
+let message=`🏫 Disha Computer Education
+
+Dear Parent,
+
+Your Child ${name}
+
+Roll No : ${roll}
+
+was ABSENT today.
+
+Please send your child regularly.
+
+Thank You`;
+
+window.open(
+`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+"_blank"
+);
+
+}
+
+window.sendWhatsApp=sendWhatsApp;
