@@ -68,15 +68,15 @@ const aiButton=document.getElementById("aiButton");
 const chatBox=document.getElementById("chatBox");
 const closeChat=document.getElementById("closeChat");
 
-aiButton.onclick=()=>{
+if (aiButton && chatBox && closeChat) {
 
-chatBox.style.display="block";
+    aiButton.addEventListener("click", () => {
+        chatBox.style.display = "block";
+    });
 
-}
-
-closeChat.onclick=()=>{
-
-chatBox.style.display="none";
+    closeChat.addEventListener("click", () => {
+        chatBox.style.display = "none";
+    });
 
 }
 const sendBtn = document.getElementById("sendBtn");
