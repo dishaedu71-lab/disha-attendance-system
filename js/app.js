@@ -61,3 +61,20 @@ document.getElementById("loader").style.visibility="hidden";
 }
 
 },30);
+//================ AI CHAT =================
+
+const aiButton=document.getElementById("aiButton");
+const chatBox=document.getElementById("chatBox");
+const closeChat=document.getElementById("closeChat");
+
+aiButton.onclick=()=>{
+
+chatBox.style.display="block";
+
+}
+
+closeChat.onclick=()=>{
+
+chatBox.style.display="none";
+
+}
