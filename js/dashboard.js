@@ -421,3 +421,32 @@ window.open(
 }
 
 window.sendWhatsApp=sendWhatsApp;
+//================ WELCOME POPUP ================
+
+const popup=document.getElementById("welcomePopup");
+
+const start=document.getElementById("startBtn");
+
+start.onclick=()=>{
+
+popup.style.opacity="0";
+
+setTimeout(()=>{
+
+popup.style.display="none";
+
+},500);
+
+};
+
+setTimeout(()=>{
+
+popup.style.opacity="0";
+
+setTimeout(()=>{
+
+popup.style.display="none";
+
+},500);
+
+},4000);
