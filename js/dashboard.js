@@ -340,27 +340,6 @@ async function saveStudent() {
 
 }
 
-    await window.addDoc(
-        window.collection(window.db, "students"),
-        {
-            roll,
-            name,
-            course,
-            mobile,
-            photo,
-            attendance: {}
-        }
-    );
-
-    closeModal();
-
-    document.getElementById("roll").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("course").value = "";
-    document.getElementById("mobile").value = "";
-    document.getElementById("photo").value = "";
-
-}
 
    // <-- यही सबसे जरूरी लाइन है
 
