@@ -55,6 +55,7 @@ window.addEventListener("firebase-ready", () => {
     }
 
 });
+});
 const tbody = document.getElementById("studentTableBody");
 const search = document.getElementById("searchStudent");
 
