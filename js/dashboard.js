@@ -250,23 +250,48 @@ async function editStudent(index){
 
 async function setStatus(index, status) {
 
+    const btns = document.querySelectorAll(".presentBtn,.absentBtn");
+
+    btns.forEach(b => b.disabled = true);
+
     let date = document.getElementById("attendanceDate").value;
 
-    if (date == "") {
+    if (!date) {
         alert("Please Select Date");
+        btns.forEach(b => b.disabled = false);
         return;
     }
 
-    let attendance = students[index].attendance || {};
+    // Local Update (Instant UI)
+    if (!students[index].attendance) {
+        students[index].attendance = {};
+    }
 
-    attendance[date] = status;
+    students[index].attendance[date] = status;
 
-    await window.updateDoc(
-        window.doc(window.db, "students", students[index].id),
-        {
-            attendance: attendance
-        }
-    );
+    renderTable();
+
+    try {
+
+        await window.updateDoc(
+
+            window.doc(window.db, "students", students[index].id),
+
+            {
+                attendance: students[index].attendance
+            }
+
+        );
+
+    } catch (e) {
+
+        alert("Update Failed");
+
+        console.log(e);
+
+    }
+
+    btns.forEach(b => b.disabled = false);
 
 }
 
