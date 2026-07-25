@@ -6,24 +6,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 let students = [];
+// ===============================
+// PERFORMANCE CACHE
+// ===============================
+
+let studentMap = new Map();
+let isRendering = false;
+
 window.addEventListener("firebase-ready", () => {
 
     const studentRef = window.collection(window.db, "students");
 
     window.onSnapshot(studentRef, (snapshot) => {
 
-        students = [];
+    snapshot.docChanges().forEach((change) => {
 
-        snapshot.forEach((docSnap) => {
-            students.push({
-                id: docSnap.id,
-                ...docSnap.data()
-            });
-        });
+        const student = {
+            id: change.doc.id,
+            ...change.doc.data()
+        };
+
+        if (change.type === "added") {
+
+            studentMap.set(student.id, student);
+
+        }
+
+        if (change.type === "modified") {
+
+            studentMap.set(student.id, student);
+
+        }
+
+        if (change.type === "removed") {
+
+            studentMap.delete(student.id);
+
+        }
+
+    });
+
+    students = [...studentMap.values()];
+
+    if (!isRendering) {
 
         renderTable();
 
-    });
+    }
 
 });
 const tbody = document.getElementById("studentTableBody");
