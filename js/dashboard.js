@@ -340,10 +340,6 @@ async function saveStudent() {
 
 }
 
-        reader.readAsDataURL(file);
-        return;
-    }
-
     await window.addDoc(
         window.collection(window.db, "students"),
         {
