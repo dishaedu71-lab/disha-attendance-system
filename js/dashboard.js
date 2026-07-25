@@ -272,8 +272,10 @@ async function setStatus(index, status) {
     renderTable();
 
     try {
+        console.time("Attendance Update");
 
         await window.updateDoc(
+            console.timeEnd("Attendance Update");
 
             window.doc(window.db, "students", students[index].id),
 
