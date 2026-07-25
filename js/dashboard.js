@@ -272,27 +272,27 @@ async function setStatus(index, status) {
     renderTable();
 
     try {
-        console.time("Attendance Update");
 
-        await window.updateDoc(
-            console.timeEnd("Attendance Update");
+    console.time("Attendance Update");
 
-            window.doc(window.db, "students", students[index].id),
+    await window.updateDoc(
 
-            {
-                attendance: students[index].attendance
-            }
+        window.doc(window.db, "students", students[index].id),
 
-        );
+        {
+            attendance: students[index].attendance
+        }
 
-    } catch (e) {
+    );
 
-        alert("Update Failed");
+    console.timeEnd("Attendance Update");
 
-        console.log(e);
+} catch (e) {
 
-    }
+    alert("Update Failed");
+    console.log(e);
 
+}
     btns.forEach(b => b.disabled = false);
 
 }
