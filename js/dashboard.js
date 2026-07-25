@@ -107,8 +107,6 @@ function renderTable(list = students){
         tbody.innerHTML += `
         <tr>
 
-        <td><img src="${s.photo}" width="50"></td>
-
         <td>${s.roll}</td>
 
         <td>${s.name}</td>
@@ -312,42 +310,35 @@ document.getElementById("studentModal").style.display="none";
 
 async function saveStudent() {
 
-    let roll = document.getElementById("roll").value;
-    let name = document.getElementById("name").value;
-    let course = document.getElementById("course").value;
-    let mobile = document.getElementById("mobile").value;
+    let roll = document.getElementById("roll").value.trim();
+    let name = document.getElementById("name").value.trim();
+    let course = document.getElementById("course").value.trim();
+    let mobile = document.getElementById("mobile").value.trim();
 
-    let file = document.getElementById("photo").files[0];
+    if (!roll || !name) {
+        alert("Roll Number aur Name zaruri hai");
+        return;
+    }
 
-    let photo = "https://i.pravatar.cc/50?u=" + roll;
+    await window.addDoc(
+        window.collection(window.db, "students"),
+        {
+            roll,
+            name,
+            course,
+            mobile,
+            attendance: {}
+        }
+    );
 
-    if (file) {
+    closeModal();
 
-        let reader = new FileReader();
+    document.getElementById("roll").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("course").value = "";
+    document.getElementById("mobile").value = "";
 
-        reader.onload = async function (e) {
-
-            await window.addDoc(
-                window.collection(window.db, "students"),
-                {
-                    roll,
-                    name,
-                    course,
-                    mobile,
-                    photo: e.target.result,
-                    attendance: {}
-                }
-            );
-
-            closeModal();
-
-            document.getElementById("roll").value = "";
-            document.getElementById("name").value = "";
-            document.getElementById("course").value = "";
-            document.getElementById("mobile").value = "";
-            document.getElementById("photo").value = "";
-
-        };
+}
 
         reader.readAsDataURL(file);
         return;
