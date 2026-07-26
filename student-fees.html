@@ -25,7 +25,7 @@ DISHA COMPUTER EDUCATION
 <li><a href="study.html">Study Portal</a></li>
 </ul>
 
-<a href="student-login.html" class="login-btn">
+<a href="#" id="logoutBtn" class="login-btn">
 Logout
 </a>
 
@@ -47,24 +47,23 @@ Logout
 
 <div class="card">
 <h3>Total Fees</h3>
-<h2>₹18,000</h2>
+<h2 id="totalFees">Loading...</h2>
 </div>
 
 <div class="card">
 <h3>Paid Fees</h3>
-<h2>₹15,000</h2>
+<h2 id="paidFees">Loading...</h2>
 </div>
 
 <div class="card">
-<h3>Pending Fees</h3>
-<h2>₹3,000</h2>
+<h3>Due Fees</h3>
+<h2 id="dueFees">Loading...</h2>
 </div>
 
 <div class="card">
 <h3>Status</h3>
-<h2>Partially Paid</h2>
+<h2 id="feeStatus">Loading...</h2>
 </div>
-
 </section>
 
 <section class="dashboard">
@@ -136,6 +135,8 @@ Logout
 </div>
 
 </section>
+
+    <script type="module" src="js/student-fees.js"></script>
 
 </body>
 </html>
