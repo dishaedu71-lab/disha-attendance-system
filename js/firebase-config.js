@@ -14,19 +14,12 @@ getFirestore
 // Firebase Config
 
 const firebaseConfig = {
-
-apiKey: "",
-
-authDomain: "",
-
-projectId: "",
-
-storageBucket: "",
-
-messagingSenderId: "",
-
-appId: ""
-
+  apiKey: "AIzaSyCi0gz9XPJvAUUaMaGYXEC2jTQuOmkRRGM",
+  authDomain: "disha-attendance-system.firebaseapp.com",
+  projectId: "disha-attendance-system",
+  storageBucket: "disha-attendance-system.firebasestorage.app",
+  messagingSenderId: "492796083174",
+  appId: "1:492796083174:web:3bdfa2b30071c3fae07427"
 };
 
 
