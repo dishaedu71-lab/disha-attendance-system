@@ -41,19 +41,19 @@ Teacher Login
 
 <p>Create Your Student Account</p>
 
-<form>
+<form id="registerForm">
 
-<input type="text" placeholder="Full Name" required><br><br>
+<input type="text" id="name" placeholder="Full Name" required><br><br>
 
-<input type="text" placeholder="Father Name" required><br><br>
+<input type="text" id="father" placeholder="Father Name" required><br><br>
 
-<input type="text" placeholder="Mobile Number" required><br><br>
+<input type="text" id="mobile" placeholder="Mobile Number" required><br><br>
 
-<input type="email" placeholder="Email Address" required><br><br>
+<input type="email" id="email" placeholder="Email Address" required><br><br>
 
-<select required>
+<select id="course" required>
 
-<option>Select Course</option>
+<option value="">Select Course</option>
 
 <option>O Level</option>
 
@@ -69,19 +69,19 @@ Teacher Login
 
 <br><br>
 
-<input type="text" placeholder="Batch">
+<input type="text" id="batch" placeholder="Batch">
 
 <br><br>
 
-<input type="password" placeholder="Create Password" required>
+<input type="password" id="password" placeholder="Create Password" required>
 
 <br><br>
 
-<input type="password" placeholder="Confirm Password" required>
+<input type="password" id="confirmPassword" placeholder="Confirm Password" required>
 
 <br><br>
 
-<button class="start-btn">
+<button type="submit" class="start-btn">
 
 Register
 
