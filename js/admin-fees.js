@@ -151,11 +151,11 @@ const paid = oldPaid + newPayment;
         alert(error.message);
 
     }
-    // Load Payment History
+   // Reload Payment History
 
 const paymentQuery = query(
     collection(db, "feesHistory"),
-    where("studentId", "==", data.studentId)
+    where("studentId", "==", studentId.value.trim())
 );
 
 const paymentSnap = await getDocs(paymentQuery);
@@ -167,13 +167,13 @@ paymentSnap.forEach((paymentDoc) => {
     const payment = paymentDoc.data();
 
     adminPaymentHistory.innerHTML += `
-    <tr>
-        <td>${payment.receiptNo}</td>
-        <td>${payment.date}</td>
-        <td>₹ ${payment.amount}</td>
-        <td>${payment.mode}</td>
-        <td>${payment.status}</td>
-    </tr>
+        <tr>
+            <td>${payment.receiptNo}</td>
+            <td>${payment.date}</td>
+            <td>₹ ${payment.amount}</td>
+            <td>${payment.mode}</td>
+            <td>${payment.status}</td>
+        </tr>
     `;
 
 });
