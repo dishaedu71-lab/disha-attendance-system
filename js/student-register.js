@@ -2,7 +2,38 @@ import { auth, db } from "./firebase-config.js";
 
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+  doc,
+  setDoc,
+  runTransaction
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+async function generateStudentId() {
+
+    const counterRef = doc(db, "counters", "studentCounter");
+
+    const studentId = await runTransaction(db, async (transaction) => {
+
+        const counterDoc = await transaction.get(counterRef);
+
+        let lastNumber = 0;
+
+        if (counterDoc.exists()) {
+            lastNumber = counterDoc.data().lastNumber;
+        }
+
+        lastNumber++;
+
+        transaction.set(counterRef, {
+            lastNumber: lastNumber
+        });
+
+        return "DCE25" + String(lastNumber).padStart(4, "0");
+
+    });
+
+    return studentId;
+}
 
 const form = document.getElementById("registerForm");
 
@@ -30,19 +61,21 @@ form.addEventListener("submit", async (e) => {
             email,
             password
         );
+        const studentId = await generateStudentId();
 
-        await setDoc(doc(db, "studentAccounts", userCredential.user.uid), {
-            uid: userCredential.user.uid,
-            name,
-            father,
-            mobile,
-            email,
-            course,
-            batch,
-            createdAt: new Date().toISOString()
-        });
+       await setDoc(doc(db, "studentAccounts", userCredential.user.uid), {
+    uid: userCredential.user.uid,
+    studentId: studentId,
+    name,
+    father,
+    mobile,
+    email,
+    course,
+    batch,
+    createdAt: new Date().toISOString()
+});
 
-        alert("Registration Successful");
+        alert("Registration Successful\n\nStudent ID : " + studentId);
 
         window.location.href = "student-login.html";
 
