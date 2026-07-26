@@ -4,7 +4,9 @@ import {
     collection,
     query,
     where,
-    getDocs
+    getDocs,
+    doc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const studentId = document.getElementById("studentId");
@@ -12,6 +14,7 @@ const searchBtn = document.getElementById("searchBtn");
 
 const totalFees = document.getElementById("totalFees");
 const paidFees = document.getElementById("paidFees");
+const saveBtn = document.getElementById("saveBtn");
 
 let currentDocId = "";
 
@@ -72,6 +75,47 @@ searchBtn.addEventListener("click", async () => {
     }
 
     catch(error){
+
+        console.log(error);
+
+        alert(error.message);
+
+    }
+
+});
+saveBtn.addEventListener("click", async () => {
+
+    if (currentDocId == "") {
+
+        alert("Search Student First");
+
+        return;
+
+    }
+
+    const total = Number(totalFees.value);
+    const paid = Number(paidFees.value);
+
+    const due = total - paid;
+
+    const status = due <= 0 ? "Paid" : "Pending";
+
+    try {
+
+        await updateDoc(doc(db, "studentAccounts", currentDocId), {
+
+            totalFees: total,
+            paidFees: paid,
+            dueFees: due,
+            feeStatus: status
+
+        });
+
+        alert("Fees Updated Successfully");
+
+    }
+
+    catch (error) {
 
         console.log(error);
 
