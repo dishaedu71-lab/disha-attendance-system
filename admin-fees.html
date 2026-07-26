@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Fees Management</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+DISHA COMPUTER EDUCATION
+
+</div>
+
+<ul>
+
+<li><a href="dashboard.html">Dashboard</a></li>
+
+</ul>
+
+<a href="login.html" class="login-btn">
+
+Admin
+
+</a>
+
+</nav>
+
+<section class="hero">
+
+<div class="glass">
+
+<h1>Fees Management</h1>
+
+<p>Search Student and Update Fees</p>
+
+</div>
+
+</section>
+
+<section class="dashboard">
+
+<div class="glass">
+
+<input
+type="text"
+id="studentId"
+placeholder="Student ID">
+
+<br><br>
+
+<button
+id="searchBtn"
+class="start-btn">
+
+Search Student
+
+</button>
+
+<hr><br>
+
+<input
+type="number"
+id="totalFees"
+placeholder="Total Fees">
+
+<br><br>
+
+<input
+type="number"
+id="paidFees"
+placeholder="Paid Fees">
+
+<br><br>
+
+<button
+id="saveBtn"
+class="start-btn">
+
+Update Fees
+
+</button>
+
+</div>
+
+</section>
+
+<script type="module" src="js/admin-fees.js"></script>
+
+</body>
+
+</html>
