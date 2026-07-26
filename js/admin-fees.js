@@ -54,55 +54,28 @@ searchBtn.addEventListener("click", async () => {
             return;
 
         }
+        const student = snap.docs[0];
 
-        snap.forEach(doc => {
+        currentDocId = student.id;
 
-            currentDocId = doc.id;
+const data = student.data();
 
-            const data = doc.data();
+totalFees.value = data.totalFees || 0;
 
-            totalFees.value = data.totalFees || 0;
+paidFees.value = data.paidFees || 0;
 
-            paidFees.value = data.paidFees || 0;
+dueFees.value = data.dueFees || (data.totalFees - data.paidFees);
 
-            alert(
+feeStatus.value = data.feeStatus || "Pending";
 
-                "Student Found\n\n" +
-
-                "Name : " + data.name +
-
-                "\nCourse : " + data.course +
-
-                "\nBatch : " + data.batch
-
-            );
-            // Load Payment History
-
-const paymentQuery = query(
-    collection(db, "feesHistory"),
-    where("studentId", "==", data.studentId)
+alert(
+"Student Found\n\n" +
+"Name : " + data.name +
+"\nCourse : " + data.course +
+"\nBatch : " + data.batch
 );
-
-const paymentSnap = await getDocs(paymentQuery);
-
-adminPaymentHistory.innerHTML = "";
-
-paymentSnap.forEach((paymentDoc) => {
-
-    const payment = paymentDoc.data();
-
-    adminPaymentHistory.innerHTML += `
-        <tr>
-            <td>${payment.receiptNo}</td>
-            <td>${payment.date}</td>
-            <td>₹ ${payment.amount}</td>
-            <td>${payment.mode}</td>
-            <td>${payment.status}</td>
-        </tr>
-    `;
-
-});
-
+        await loadPaymentHistory(data.studentId);
+            
         });
 
     }
@@ -116,6 +89,40 @@ paymentSnap.forEach((paymentDoc) => {
     }
 
 });
+async function loadPaymentHistory(studentID) {
+
+    adminPaymentHistory.innerHTML = "";
+
+    const paymentQuery = query(
+        collection(db, "feesHistory"),
+        where("studentId", "==", studentID)
+    );
+
+    const paymentSnap = await getDocs(paymentQuery);
+
+    if (paymentSnap.empty) {
+        adminPaymentHistory.innerHTML =
+        "<tr><td colspan='5'>No Payment History</td></tr>";
+        return;
+    }
+
+    paymentSnap.forEach((paymentDoc) => {
+
+        const payment = paymentDoc.data();
+
+        adminPaymentHistory.innerHTML += `
+        <tr>
+            <td>${payment.receiptNo}</td>
+            <td>${payment.date}</td>
+            <td>₹ ${payment.amount}</td>
+            <td>${payment.mode}</td>
+            <td>${payment.status}</td>
+        </tr>
+        `;
+
+    });
+
+}
 saveBtn.addEventListener("click", async () => {
 
     if (currentDocId == "") {
@@ -165,6 +172,17 @@ const paid = oldPaid + newPayment;
     remarks: remarks.value
 
 });
+        paidFees.value = paid;
+
+dueFees.value = due;
+
+feeStatus.value = status;
+
+await loadPaymentHistory(studentId.value.trim());
+
+paymentAmount.value = "";
+
+remarks.value = "";
 
         alert("Payment Saved Successfully");
 
