@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Student Registration | Disha Computer Education</title>
 
 <link rel="stylesheet" href="css/style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
@@ -25,7 +27,9 @@ DISHA COMPUTER EDUCATION
 <li><a href="study.html">Study Portal</a></li>
 </ul>
 
-<a href="login.html" class="login-btn">Teacher Login</a>
+<a href="login.html" class="login-btn">
+Teacher Login
+</a>
 
 </nav>
 
@@ -35,7 +39,7 @@ DISHA COMPUTER EDUCATION
 
 <h1>Student Registration</h1>
 
-<p>Create your Student Account</p>
+<p>Create Your Student Account</p>
 
 <form>
 
@@ -45,34 +49,60 @@ DISHA COMPUTER EDUCATION
 
 <input type="text" placeholder="Mobile Number" required><br><br>
 
-<input type="email" placeholder="Email Address"><br><br>
+<input type="email" placeholder="Email Address" required><br><br>
 
-<input type="text" placeholder="Course"><br><br>
+<select required>
 
-<input type="text" placeholder="Batch"><br><br>
+<option>Select Course</option>
 
-<input type="password" placeholder="Create Password" required><br><br>
+<option>O Level</option>
+
+<option>CCC</option>
+
+<option>ADCA</option>
+
+<option>DCA</option>
+
+<option>Web Development</option>
+
+</select>
+
+<br><br>
+
+<input type="text" placeholder="Batch">
+
+<br><br>
+
+<input type="password" placeholder="Create Password" required>
+
+<br><br>
+
+<input type="password" placeholder="Confirm Password" required>
+
+<br><br>
 
 <button class="start-btn">
+
 Register
+
 </button>
 
 </form>
 
 <br>
 
-<p>
 Already Registered?
 
 <a href="student-login.html">
-Student Login
-</a>
 
-</p>
+Student Login
+
+</a>
 
 </div>
 
 </section>
 
 </body>
+
 </html>
