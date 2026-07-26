@@ -16,6 +16,8 @@ const searchBtn = document.getElementById("searchBtn");
 
 const totalFees = document.getElementById("totalFees");
 const paidFees = document.getElementById("paidFees");
+const dueFees = document.getElementById("dueFees");
+const feeStatus = document.getElementById("feeStatus");
 const saveBtn = document.getElementById("saveBtn");
 const paymentAmount = document.getElementById("paymentAmount");
 const paymentMode = document.getElementById("paymentMode");
@@ -74,7 +76,8 @@ alert(
 "\nCourse : " + data.course +
 "\nBatch : " + data.batch
 );
-        await loadPaymentHistory(data.studentId);
+
+await loadPaymentHistory(data.studentId);
             
         });
 
