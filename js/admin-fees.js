@@ -76,6 +76,32 @@ searchBtn.addEventListener("click", async () => {
                 "\nBatch : " + data.batch
 
             );
+            // Load Payment History
+
+const paymentQuery = query(
+    collection(db, "feesHistory"),
+    where("studentId", "==", data.studentId)
+);
+
+const paymentSnap = await getDocs(paymentQuery);
+
+adminPaymentHistory.innerHTML = "";
+
+paymentSnap.forEach((paymentDoc) => {
+
+    const payment = paymentDoc.data();
+
+    adminPaymentHistory.innerHTML += `
+        <tr>
+            <td>${payment.receiptNo}</td>
+            <td>${payment.date}</td>
+            <td>₹ ${payment.amount}</td>
+            <td>${payment.mode}</td>
+            <td>${payment.status}</td>
+        </tr>
+    `;
+
+});
 
         });
 
@@ -151,31 +177,6 @@ const paid = oldPaid + newPayment;
         alert(error.message);
 
     }
-   // Reload Payment History
-
-const paymentQuery = query(
-    collection(db, "feesHistory"),
-    where("studentId", "==", studentId.value.trim())
-);
-
-const paymentSnap = await getDocs(paymentQuery);
-
-adminPaymentHistory.innerHTML = "";
-
-paymentSnap.forEach((paymentDoc) => {
-
-    const payment = paymentDoc.data();
-
-    adminPaymentHistory.innerHTML += `
-        <tr>
-            <td>${payment.receiptNo}</td>
-            <td>${payment.date}</td>
-            <td>₹ ${payment.amount}</td>
-            <td>${payment.mode}</td>
-            <td>${payment.status}</td>
-        </tr>
-    `;
-
-});
+ 
 
 });
