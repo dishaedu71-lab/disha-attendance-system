@@ -43,6 +43,41 @@ id="studentId"
 placeholder="Enter Student ID">
 
 <br><br>
+  <hr><br>
+
+<h3>New Payment</h3>
+
+<input
+type="number"
+id="paymentAmount"
+placeholder="Enter Payment Amount">
+
+<br><br>
+
+<select id="paymentMode">
+
+<option value="Cash">Cash</option>
+
+<option value="UPI">UPI</option>
+
+<option value="Online">Online</option>
+
+</select>
+
+<br><br>
+
+<input
+type="date"
+id="paymentDate">
+
+<br><br>
+
+<input
+type="text"
+id="remarks"
+placeholder="Remarks">
+
+<br><br>
 
 <button
 id="searchBtn"
@@ -84,15 +119,42 @@ readonly>
 
 <br><br>
 
-<button
-id="saveBtn"
-class="start-btn">
+<button id="saveBtn" class="start-btn">
 
-Update Fees
+Save Payment
 
 </button>
 
 </div>
+  <hr><br>
+
+<h2>Payment History</h2>
+
+<table border="1" width="100%" cellpadding="10">
+
+<thead>
+
+<tr>
+
+<th>Receipt</th>
+
+<th>Date</th>
+
+<th>Amount</th>
+
+<th>Mode</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="adminPaymentHistory">
+
+</tbody>
+
+</table>
 
 </section>
 
