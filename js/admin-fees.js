@@ -78,18 +78,15 @@ alert(
 );
 
 await loadPaymentHistory(data.studentId);
-            
-        });
 
-    }
+}
+catch(error){
 
-    catch(error){
+    console.log(error);
 
-        console.log(error);
+    alert(error.message);
 
-        alert(error.message);
-
-    }
+}
 
 });
 async function loadPaymentHistory(studentID) {
