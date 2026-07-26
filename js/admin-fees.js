@@ -6,8 +6,10 @@ import {
     where,
     getDocs,
     doc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    updateDoc,
+    addDoc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const studentId = document.getElementById("studentId");
 const searchBtn = document.getElementById("searchBtn");
@@ -15,6 +17,11 @@ const searchBtn = document.getElementById("searchBtn");
 const totalFees = document.getElementById("totalFees");
 const paidFees = document.getElementById("paidFees");
 const saveBtn = document.getElementById("saveBtn");
+const paymentAmount = document.getElementById("paymentAmount");
+const paymentMode = document.getElementById("paymentMode");
+const paymentDate = document.getElementById("paymentDate");
+const remarks = document.getElementById("remarks");
+const adminPaymentHistory = document.getElementById("adminPaymentHistory");
 
 let currentDocId = "";
 
@@ -94,7 +101,12 @@ saveBtn.addEventListener("click", async () => {
     }
 
     const total = Number(totalFees.value);
-    const paid = Number(paidFees.value);
+
+const oldPaid = Number(paidFees.value);
+
+const newPayment = Number(paymentAmount.value);
+
+const paid = oldPaid + newPayment;
 
     const due = total - paid;
 
@@ -110,8 +122,25 @@ saveBtn.addEventListener("click", async () => {
             feeStatus: status
 
         });
+        await addDoc(collection(db, "feesHistory"), {
 
-        alert("Fees Updated Successfully");
+    studentId: studentId.value.trim(),
+
+    receiptNo: "RC" + Date.now(),
+
+    date: paymentDate.value,
+
+    amount: newPayment,
+
+    mode: paymentMode.value,
+
+    status: "Paid",
+
+    remarks: remarks.value
+
+});
+
+        alert("Payment Saved Successfully");
 
     }
 
@@ -122,5 +151,31 @@ saveBtn.addEventListener("click", async () => {
         alert(error.message);
 
     }
+    // Load Payment History
+
+const paymentQuery = query(
+    collection(db, "feesHistory"),
+    where("studentId", "==", data.studentId)
+);
+
+const paymentSnap = await getDocs(paymentQuery);
+
+adminPaymentHistory.innerHTML = "";
+
+paymentSnap.forEach((paymentDoc) => {
+
+    const payment = paymentDoc.data();
+
+    adminPaymentHistory.innerHTML += `
+    <tr>
+        <td>${payment.receiptNo}</td>
+        <td>${payment.date}</td>
+        <td>₹ ${payment.amount}</td>
+        <td>${payment.mode}</td>
+        <td>${payment.status}</td>
+    </tr>
+    `;
+
+});
 
 });
