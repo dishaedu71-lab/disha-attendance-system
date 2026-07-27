@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Migration</title>
+</head>
 
+<body>
+
+<h2>Student Migration Tool</h2>
+
+<button id="migrateBtn">
+Migrate All Students
+</button>
+
+<script type="module">
+
+import { db } from "./firebase-student.js";
+
+import {
+collection,
+getDocs,
+doc,
+getDoc,
+setDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+document.getElementById("migrateBtn").onclick = async ()=>{
+
+const snapshot = await getDocs(collection(db,"studentAccounts"));
+
+let count=0;
+
+for(const item of snapshot.docs){
+
+const s=item.data();
+
+const studentRef=doc(db,"studentsERP",s.studentId);
+
+const already=await getDoc(studentRef);
+
+if(already.exists()) continue;
+
+await setDoc(studentRef,{
+
+uid:s.uid,
+
+studentId:s.studentId,
+
+name:s.name,
+
+fatherName:s.father,
+
+motherName:"",
+
+mobile:s.mobile,
+
+email:s.email,
+
+dob:"",
+
+gender:"",
+
+course:s.course,
+
+batch:s.batch,
+
+admissionDate:"",
+
+totalFees:0,
+
+paidFees:0,
+
+dueFees:0,
+
+status:"Active",
+
+address:"",
+
+createdAt:s.createdAt,
+
+createdBy:"Migration"
+
+});
+
+count++;
+
+}
+
+alert(count+" Students Migrated Successfully");
+
+}
+
+</script>
+
+</body>
+</html>
