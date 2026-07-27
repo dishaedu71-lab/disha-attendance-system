@@ -74,6 +74,47 @@ form.addEventListener("submit", async (e) => {
     batch,
     createdAt: new Date().toISOString()
 });
+      await setDoc(doc(db, "studentsERP", studentId), {
+
+    uid: userCredential.user.uid,
+
+    studentId: studentId,
+
+    name: name,
+
+    fatherName: father,
+
+    motherName: "",
+
+    mobile: mobile,
+
+    email: email,
+
+    dob: "",
+
+    gender: "",
+
+    course: course,
+
+    batch: batch,
+
+    admissionDate: "",
+
+    totalFees: 0,
+
+    paidFees: 0,
+
+    dueFees: 0,
+
+    status: "Active",
+
+    address: "",
+
+    createdAt: new Date().toISOString(),
+
+    createdBy: "Student Registration"
+
+});
 
         alert("Registration Successful\n\nStudent ID : " + studentId);
 
