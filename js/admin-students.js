@@ -264,7 +264,10 @@ Edit
 
 <button class="actionBtn feeBtn">Fees</button>
 
-<button class="actionBtn deleteBtn">Delete</button>
+<button class="actionBtn deleteBtn"
+onclick="deleteStudent('${docSnap.id}')">
+Delete
+</button>
 
 </td>
 
@@ -357,4 +360,31 @@ window.editStudent = async function(studentId){
     "💾 Update Student";
 
     studentModal.style.display = "flex";
+}
+// =============================
+// Delete Student
+// =============================
+
+window.deleteStudent = async function(studentId){
+
+    const ok = confirm("क्या आप इस Student को Delete करना चाहते हैं?");
+
+    if(!ok) return;
+
+    try{
+
+        await deleteDoc(doc(db,"studentsERP",studentId));
+
+        alert("✅ Student Deleted Successfully");
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
 }
