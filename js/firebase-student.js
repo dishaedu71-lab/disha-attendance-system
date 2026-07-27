@@ -59,3 +59,19 @@ window.runTransaction = runTransaction;
 window.serverTimestamp = serverTimestamp;
 
 console.log("✅ Student Firebase Ready");
+
+export {
+    db,
+    auth,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    setDoc,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    runTransaction,
+    serverTimestamp
+};
