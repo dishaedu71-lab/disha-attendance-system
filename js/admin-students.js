@@ -89,7 +89,7 @@ saveStudentBtn.addEventListener("click", async () => {
 
         const studentId = await generateStudentId();
 
-        await setDoc(doc(db, "students", studentId), {
+        await setDoc(doc(db, "studentsERP", studentId), {
 
             studentId: studentId,
 
@@ -146,3 +146,72 @@ saveStudentBtn.addEventListener("click", async () => {
     }
 
 });
+// =============================
+// Load Students
+// =============================
+
+const studentTable = document.getElementById("studentTable");
+
+function loadStudents() {
+
+  onSnapshot(collection(db, "studentsERP"), (snapshot) => {
+
+        studentTable.innerHTML = "";
+
+        let total = 0;
+        let active = 0;
+        let completed = 0;
+        let left = 0;
+
+        snapshot.forEach((docSnap) => {
+
+            const s = docSnap.data();
+
+            total++;
+
+            if (s.status === "Active") active++;
+            if (s.status === "Completed") completed++;
+            if (s.status === "Left") left++;
+
+            studentTable.innerHTML += `
+<tr>
+
+<td>${s.studentId}</td>
+
+<td>${s.name}</td>
+
+<td>${s.course}</td>
+
+<td>${s.batch}</td>
+
+<td>${s.mobile}</td>
+
+<td>${s.status}</td>
+
+<td>
+
+<button class="actionBtn viewBtn">View</button>
+
+<button class="actionBtn editBtn">Edit</button>
+
+<button class="actionBtn feeBtn">Fees</button>
+
+<button class="actionBtn deleteBtn">Delete</button>
+
+</td>
+
+</tr>
+`;
+
+        });
+
+        document.getElementById("totalStudents").innerText = total;
+        document.getElementById("activeStudents").innerText = active;
+        document.getElementById("completedStudents").innerText = completed;
+        document.getElementById("leftStudents").innerText = left;
+
+    });
+
+}
+
+loadStudents();
