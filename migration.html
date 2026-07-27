@@ -33,9 +33,15 @@ let count=0;
 
 for(const item of snapshot.docs){
 
-const s=item.data();
+const s = item.data();
 
-const studentRef=doc(db,"studentsERP",s.studentId);
+// अगर studentId नहीं है तो Skip कर दो
+if (!s.studentId) {
+    console.log("Skipped:", item.id);
+    continue;
+}
+
+const studentRef = doc(db, "studentsERP", s.studentId);
 
 const already=await getDoc(studentRef);
 
