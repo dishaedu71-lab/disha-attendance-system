@@ -108,6 +108,42 @@ saveStudentBtn.addEventListener("click", async () => {
             alert("Mobile Number Required");
             return;
         }
+        // =============================
+// Update Existing Student
+// =============================
+
+if (editStudentId != null) {
+
+    await updateDoc(doc(db, "studentsERP", editStudentId), {
+
+        name: studentName.value.trim(),
+        fatherName: fatherName.value.trim(),
+        motherName: motherName.value.trim(),
+        mobile: mobile.value.trim(),
+        email: email.value.trim(),
+        dob: dob.value,
+        gender: gender.value,
+        course: course.value.trim(),
+        batch: batch.value.trim(),
+        admissionDate: admissionDate.value,
+        totalFees: Number(totalFees.value || 0),
+        dueFees: Number(totalFees.value || 0),
+        status: status.value,
+        address: address.value.trim()
+
+    });
+
+    alert("✅ Student Updated Successfully");
+
+    studentModal.style.display = "none";
+    document.getElementById("studentForm").reset();
+
+    editStudentId = null;
+
+    document.getElementById("saveStudentBtn").innerHTML = "💾 Save Student";
+
+    return;
+}
 
         const studentId = await generateStudentId();
         console.log("Generated Student ID:", studentId);
