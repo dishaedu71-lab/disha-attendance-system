@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Student Management</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin-students.css">
+
+<script defer src="js/firebase.js"></script>
+<script defer src="js/admin-students.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎓 Student Management</h1>
+
+    <!-- Dashboard Cards -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <h2 id="totalStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Active</h3>
+            <h2 id="activeStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Completed</h3>
+            <h2 id="completedStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Left</h3>
+            <h2 id="leftStudents">0</h2>
+        </div>
+
+    </div>
+
+    <!-- Search -->
+
+    <div class="searchBox">
+
+        <input
+        type="text"
+        id="searchStudent"
+        placeholder="Search by Student ID / Name / Mobile">
+
+        <button id="searchBtn">
+            🔍 Search
+        </button>
+
+        <button id="addStudentBtn">
+            ➕ Add Student
+        </button>
+
+    </div>
+
+    <!-- Student Table -->
+
+    <div class="tableBox">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Batch</th>
+                    <th>Mobile</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
