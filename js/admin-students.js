@@ -11,6 +11,17 @@ import {
     runTransaction,
     serverTimestamp
 } from "./firebase-student.js";
+
+// =============================
+// Get Student ID From URL
+// =============================
+
+const params = new URLSearchParams(window.location.search);
+
+const studentId = params.get("studentId");
+
+console.log("Student ID :", studentId);
+
 // ==========================
 // Generate Student ID
 // ==========================
@@ -57,14 +68,32 @@ addStudentBtn.addEventListener("click", () => {
 
 // Close Modal
 closeModal.addEventListener("click", () => {
+
     studentModal.style.display = "none";
+
+    document.getElementById("studentForm").reset();
+
+    editStudentId = null;
+
+    saveStudentBtn.innerHTML = "💾 Save Student";
+
 });
 
 // Close when clicking outside
 window.addEventListener("click", (e) => {
+
     if (e.target === studentModal) {
+
         studentModal.style.display = "none";
+
+        document.getElementById("studentForm").reset();
+
+        editStudentId = null;
+
+        saveStudentBtn.innerHTML = "💾 Save Student";
+
     }
+
 });
 const saveStudentBtn = document.getElementById("saveStudentBtn");
 
@@ -262,7 +291,10 @@ onclick="editStudent('${docSnap.id}')">
 Edit
 </button>
 
-<button class="actionBtn feeBtn">Fees</button>
+<button class="actionBtn feeBtn"
+onclick="openFees('${s.studentId}')">
+Fees
+</button>
 
 <button class="actionBtn deleteBtn"
 onclick="deleteStudent('${docSnap.id}')">
@@ -386,5 +418,15 @@ window.deleteStudent = async function(studentId){
         alert(error.message);
 
     }
+
+}
+// =============================
+// Open Fees Page
+// =============================
+
+window.openFees = function(studentId){
+
+    window.location.href =
+    "student-fees.html?studentId=" + studentId;
 
 }
