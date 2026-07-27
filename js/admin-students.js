@@ -68,3 +68,89 @@ const admissionDate = document.getElementById("admissionDate");
 const totalFees = document.getElementById("totalFees");
 const status = document.getElementById("status");
 const address = document.getElementById("address");
+
+// =============================
+// Save Student
+// =============================
+
+saveStudentBtn.addEventListener("click", async () => {
+
+    try {
+
+        if (studentName.value.trim() === "") {
+            alert("Student Name Required");
+            return;
+        }
+
+        if (mobile.value.trim() === "") {
+            alert("Mobile Number Required");
+            return;
+        }
+
+        const studentId = await generateStudentId();
+
+        await setDoc(doc(db, "students", studentId), {
+
+            studentId: studentId,
+
+            name: studentName.value.trim(),
+
+            fatherName: fatherName.value.trim(),
+
+            motherName: motherName.value.trim(),
+
+            mobile: mobile.value.trim(),
+
+            email: email.value.trim(),
+
+            dob: dob.value,
+
+            gender: gender.value,
+
+            course: course.value.trim(),
+
+            batch: batch.value.trim(),
+
+            admissionDate: admissionDate.value,
+
+            totalFees: Number(totalFees.value || 0),
+
+            paidFees: 0,
+
+            dueFees: Number(totalFees.value || 0),
+
+            status: status.value,
+
+            address: address.value.trim(),
+
+            createdAt: serverTimestamp(),
+
+            createdBy: "Admin"
+
+        });
+
+        alert("Student Added Successfully\n\nID : " + studentId);
+
+        studentModal.style.display = "none";
+
+        document.querySelector(".formGrid").reset?.();
+
+        document
+            .querySelectorAll(".formGrid input,.formGrid textarea")
+            .forEach(e => e.value = "");
+
+        document
+            .querySelectorAll(".formGrid select")
+            .forEach(e => e.selectedIndex = 0);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+});
