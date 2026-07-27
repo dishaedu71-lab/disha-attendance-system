@@ -1,3 +1,16 @@
+import {
+    db,
+    collection,
+    doc,
+    getDocs,
+    getDoc,
+    setDoc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    runTransaction,
+    serverTimestamp
+} from "./firebase-student.js";
 // ==========================
 // Generate Student ID
 // ==========================
