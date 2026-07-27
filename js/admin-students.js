@@ -74,6 +74,8 @@ const address = document.getElementById("address");
 // =============================
 
 saveStudentBtn.addEventListener("click", async () => {
+  
+    console.log("Save Button Clicked");
 
     try {
 
@@ -88,6 +90,7 @@ saveStudentBtn.addEventListener("click", async () => {
         }
 
         const studentId = await generateStudentId();
+        console.log("Generated Student ID:", studentId);
 
         await setDoc(doc(db, "studentsERP", studentId), {
 
@@ -126,8 +129,11 @@ saveStudentBtn.addEventListener("click", async () => {
             createdAt: serverTimestamp(),
 
             createdBy: "Admin"
+          
 
         });
+
+          console.log("Student Saved Successfully");
 
         alert("Student Added Successfully\n\nID : " + studentId);
 
