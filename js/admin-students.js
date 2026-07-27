@@ -133,16 +133,8 @@ saveStudentBtn.addEventListener("click", async () => {
 
         studentModal.style.display = "none";
 
-        document.querySelector(".formGrid").reset?.();
-
-        document
-            .querySelectorAll(".formGrid input,.formGrid textarea")
-            .forEach(e => e.value = "");
-
-        document
-            .querySelectorAll(".formGrid select")
-            .forEach(e => e.selectedIndex = 0);
-
+       document.getElementById("studentForm").reset();
+        
     }
 
     catch (error) {
