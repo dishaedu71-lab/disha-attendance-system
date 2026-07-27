@@ -1,1 +1,167 @@
+/* ===== Student Management ===== */
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    padding:25px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    color:#1e3a8a;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    text-align:center;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#666;
+    margin-bottom:10px;
+}
+
+.card h2{
+    color:#2563eb;
+    font-size:32px;
+}
+
+.searchBox{
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.searchBox input{
+    flex:1;
+    min-width:250px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.searchBox button{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+#searchBtn{
+    background:#2563eb;
+    color:white;
+}
+
+#addStudentBtn{
+    background:#16a34a;
+    color:white;
+}
+
+.tableBox{
+    background:white;
+    border-radius:15px;
+    overflow:auto;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+    color:white;
+}
+
+th,td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+tbody tr:hover{
+    background:#f3f4f6;
+}
+
+.actionBtn{
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:2px;
+    color:#fff;
+}
+
+.viewBtn{
+    background:#2563eb;
+}
+
+.editBtn{
+    background:#f59e0b;
+}
+
+.feeBtn{
+    background:#16a34a;
+}
+
+.deleteBtn{
+    background:#dc2626;
+}
+
+@media(max-width:768px){
+
+.searchBox{
+    flex-direction:column;
+}
+
+.searchBox input,
+.searchBox button{
+    width:100%;
+}
+
+th,td{
+    font-size:13px;
+    padding:10px;
+}
+
+.card h2{
+    font-size:26px;
+}
+
+}
