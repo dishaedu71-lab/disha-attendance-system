@@ -209,7 +209,10 @@ function loadStudents() {
 
 <td>
 
-<button class="actionBtn viewBtn">View</button>
+<button class="actionBtn viewBtn"
+onclick="viewStudent('${docSnap.id}')">
+View
+</button>
 
 <button class="actionBtn editBtn">Edit</button>
 
@@ -234,3 +237,40 @@ function loadStudents() {
 }
 
 loadStudents();
+// =============================
+// View Student
+// =============================
+
+window.viewStudent = async function(studentId){
+
+    const studentRef = doc(db,"studentsERP",studentId);
+
+    const studentDoc = await getDoc(studentRef);
+
+    if(!studentDoc.exists()){
+        alert("Student Not Found");
+        return;
+    }
+
+    const s = studentDoc.data();
+
+    document.getElementById("vStudentId").innerText = s.studentId || "";
+    document.getElementById("vName").innerText = s.name || "";
+    document.getElementById("vFather").innerText = s.fatherName || "";
+    document.getElementById("vMobile").innerText = s.mobile || "";
+    document.getElementById("vEmail").innerText = s.email || "";
+    document.getElementById("vCourse").innerText = s.course || "";
+    document.getElementById("vBatch").innerText = s.batch || "";
+    document.getElementById("vFees").innerText = s.totalFees || 0;
+    document.getElementById("vStatus").innerText = s.status || "";
+    document.getElementById("vAddress").innerText = s.address || "";
+
+    document.getElementById("viewStudentModal").style.display = "flex";
+
+}
+
+document.getElementById("closeViewModal").onclick = function(){
+
+    document.getElementById("viewStudentModal").style.display = "none";
+
+}
