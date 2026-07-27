@@ -83,6 +83,13 @@ const status = document.getElementById("status");
 const address = document.getElementById("address");
 
 // =============================
+// =============================
+// Edit Student
+
+// =============================
+
+let editStudentId = null;
+
 // Save Student
 // =============================
 
@@ -214,7 +221,10 @@ onclick="viewStudent('${docSnap.id}')">
 View
 </button>
 
-<button class="actionBtn editBtn">Edit</button>
+<button class="actionBtn editBtn"
+onclick="editStudent('${docSnap.id}')">
+Edit
+</button>
 
 <button class="actionBtn feeBtn">Fees</button>
 
@@ -273,4 +283,42 @@ document.getElementById("closeViewModal").onclick = function(){
 
     document.getElementById("viewStudentModal").style.display = "none";
 
+}
+// =============================
+// Edit Student
+// =============================
+
+window.editStudent = async function(studentId){
+
+    editStudentId = studentId;
+
+    const studentRef = doc(db,"studentsERP",studentId);
+
+    const studentDoc = await getDoc(studentRef);
+
+    if(!studentDoc.exists()){
+        alert("Student Not Found");
+        return;
+    }
+
+    const s = studentDoc.data();
+
+    studentName.value = s.name || "";
+    fatherName.value = s.fatherName || "";
+    motherName.value = s.motherName || "";
+    mobile.value = s.mobile || "";
+    email.value = s.email || "";
+    dob.value = s.dob || "";
+    gender.value = s.gender || "Male";
+    course.value = s.course || "";
+    batch.value = s.batch || "";
+    admissionDate.value = s.admissionDate || "";
+    totalFees.value = s.totalFees || 0;
+    status.value = s.status || "Active";
+    address.value = s.address || "";
+
+    document.getElementById("saveStudentBtn").innerHTML =
+    "💾 Update Student";
+
+    studentModal.style.display = "flex";
 }
