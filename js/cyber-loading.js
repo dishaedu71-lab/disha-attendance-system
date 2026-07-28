@@ -1,11 +1,12 @@
-const steps = [
+const messages = [
 "Initializing Secure Connection...",
-"Connecting to DCE Server...",
+"Connecting to DCE Cloud Server...",
 "Authenticating Student...",
+"Verifying Secure Login...",
 "Loading Student Profile...",
-"Syncing Attendance...",
-"Loading Fee Records...",
-"ACCESS GRANTED ✓"
+"Syncing Attendance Records...",
+"Loading Fees Database...",
+"Access Granted ✓"
 ];
 
 const ids = [
@@ -15,44 +16,88 @@ const ids = [
 "line4",
 "line5",
 "line6",
+"line7",
 "line7"
 ];
 
-let i = 0;
-let progress = 0;
-
 const progressBar = document.getElementById("bar");
 const percent = document.getElementById("percent");
+const welcome = document.getElementById("welcome");
+const server = document.getElementById("server");
 
-const timer = setInterval(() => {
+let current = 0;
+let progress = 0;
 
-    if(i < steps.length){
+function typeText(element, text, callback){
 
-        document.getElementById(ids[i]).innerHTML =
-        "▶ " + steps[i];
+    let i = 0;
+
+    element.innerHTML = "";
+
+    const typing = setInterval(()=>{
+
+        element.innerHTML += text.charAt(i);
 
         i++;
-    }
 
-    progress += 15;
+        if(i >= text.length){
 
-    if(progress > 100){
-        progress = 100;
-    }
+            clearInterval(typing);
 
-    progressBar.style.width = progress + "%";
-    percent.innerHTML = progress + "%";
+            if(callback) callback();
 
-    if(progress >= 100){
+        }
 
-        clearInterval(timer);
+    },35);
+
+}
+
+function nextStep(){
+
+    if(current < messages.length){
+
+        const line = document.getElementById(ids[current]);
+
+        typeText(line,"▶ "+messages[current],()=>{
+
+            current++;
+
+            progress = Math.min(100,Math.round((current/messages.length)*100));
+
+            progressBar.style.width = progress+"%";
+
+            percent.innerHTML = progress+"%";
+
+            setTimeout(nextStep,450);
+
+        });
+
+    }else{
+
+        // Student Name
+        let studentName =
+        localStorage.getItem("studentName") ||
+        sessionStorage.getItem("studentName") ||
+        "Student";
+
+        welcome.innerHTML =
+        "👋 Welcome Back, <br><b>"+studentName+"</b>";
+
+        server.innerHTML =
+        "🛡 Secure Login Verified<br>☁ Connected to DCE Cloud Server ✓";
 
         setTimeout(()=>{
 
             window.location.href="student-dashboard.html";
 
-        },1200);
+        },2500);
 
     }
 
-},700);
+}
+
+window.onload=()=>{
+
+    nextStep();
+
+};
