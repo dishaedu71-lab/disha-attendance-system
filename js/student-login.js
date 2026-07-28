@@ -53,7 +53,7 @@ form.addEventListener("submit", async (e) => {
 
         alert("Login Successful");
 
-        window.location.href = "student-dashboard.html";
+       window.location.href="cyber-loading.html";
 
     } catch (error) {
         alert(error.message);
