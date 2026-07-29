@@ -1,3 +1,18 @@
+function speak(text){
+
+    const msg = new SpeechSynthesisUtterance(text);
+
+    msg.lang = "en-US";     // English Voice
+    // अगर Hindi चाहिए तो:
+    // msg.lang = "hi-IN";
+
+    msg.rate = 1;
+    msg.pitch = 1;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(msg);
+
+}
 const robot = document.getElementById("robot");
 const robotText = document.getElementById("robotText");
 const speech = document.getElementById("speech");
@@ -70,6 +85,12 @@ speech.innerHTML=`
 🎊 Welcome to<br>
 DISHA COMPUTER EDUCATION
 `;
+  speak(
+`Congratulations!
+Your registration is successful.
+Your Student ID is ${studentId}.
+Welcome to Disha Computer Education.`
+);
 
 let count=0;
 
