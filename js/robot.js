@@ -114,11 +114,21 @@ clearInterval(dance);
 
 robot.style.transform="scale(1.2)";
 
-setTimeout(()=>{
+const ok = confirm(
+`🎉 Registration Successful!
 
-window.location.href="student-login.html";
+Student ID: ${studentId}
 
-},1500);
+⚠️ कृपया अपना Student ID नोट कर लें।
+
+OK दबाने पर Login Page खुलेगा।`
+);
+
+if(ok){
+
+    window.location.href = "student-login.html";
+
+}
 
 }
 
