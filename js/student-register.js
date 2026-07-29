@@ -116,9 +116,7 @@ form.addEventListener("submit", async (e) => {
 
 });
 
-        alert("Registration Successful\n\nStudent ID : " + studentId);
-
-        window.location.href = "student-login.html";
+       window.robotDance(studentId);
 
     } catch (error) {
         alert(error.message);
