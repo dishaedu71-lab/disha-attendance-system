@@ -1,46 +1,106 @@
-window.robotDance = function(studentId){
+const robot = document.getElementById("robot");
+const robotText = document.getElementById("robotText");
+const speech = document.getElementById("speech");
 
-    const robot = document.getElementById("robot");
-    const text = document.getElementById("robotText");
+const nameInput = document.getElementById("name");
+const mobileInput = document.getElementById("mobile");
+const emailInput = document.getElementById("email");
+const passInput = document.getElementById("password");
 
-    text.innerHTML = `
-    🎉 Registration Successful<br>
-    Student ID : ${studentId}<br>
-    Welcome to DISHA COMPUTER EDUCATION
-    `;
+if(nameInput){
 
-    robot.style.transition = ".3s";
+nameInput.addEventListener("input",()=>{
 
-    let count = 0;
+robot.style.transform="translateY(-15px) scale(1.08)";
 
-    const dance = setInterval(()=>{
+robotText.innerHTML="👋 Hello "+nameInput.value;
 
-        if(count%2==0){
+speech.innerHTML="😊 Nice to meet you!";
 
-            robot.style.transform="rotate(18deg) scale(1.15)";
-
-        }else{
-
-            robot.style.transform="rotate(-18deg) scale(1.15)";
-
-        }
-
-        count++;
-
-        if(count>12){
-
-            clearInterval(dance);
-
-            robot.style.transform="scale(1.2)";
-
-            setTimeout(()=>{
-
-                window.location.href="student-login.html";
-
-            },1500);
-
-        }
-
-    },180);
+});
 
 }
+
+if(mobileInput){
+
+mobileInput.addEventListener("focus",()=>{
+
+speech.innerHTML="📱 Enter your mobile number";
+
+});
+
+}
+
+if(emailInput){
+
+emailInput.addEventListener("focus",()=>{
+
+speech.innerHTML="📧 Enter your email";
+
+});
+
+}
+
+if(passInput){
+
+passInput.addEventListener("focus",()=>{
+
+robot.style.transform="rotate(-10deg)";
+
+speech.innerHTML="🔒 Your password is secure";
+
+});
+
+passInput.addEventListener("blur",()=>{
+
+robot.style.transform="";
+
+});
+
+}
+
+window.robotDance=function(studentId){
+
+robotText.innerHTML=`
+🎉 Registration Successful<br>
+Student ID : ${studentId}
+`;
+
+speech.innerHTML=`
+🎊 Welcome to<br>
+DISHA COMPUTER EDUCATION
+`;
+
+let count=0;
+
+const dance=setInterval(()=>{
+
+if(count%2===0){
+
+robot.style.transform="rotate(18deg) scale(1.15)";
+
+}else{
+
+robot.style.transform="rotate(-18deg) scale(1.15)";
+
+}
+
+count++;
+
+if(count>12){
+
+clearInterval(dance);
+
+robot.style.transform="scale(1.2)";
+
+setTimeout(()=>{
+
+window.location.href="student-login.html";
+
+},1500);
+
+}
+
+},180);
+
+};
