@@ -1,1 +1,1104 @@
+/* ==========================================
+   DISHA COMPUTER EDUCATION
+   STUDENT ATTENDANCE PAGE
+========================================== */
 
+:root{
+    --glass:rgba(255,255,255,.12);
+    --border:rgba(255,255,255,.18);
+    --shadow:0 12px 30px rgba(0,0,0,.25);
+    --green:#00ff99;
+    --white:#ffffff;
+}
+
+/* ======================
+   PAGE CONTAINER
+====================== */
+
+.attendance-hero{
+
+width:95%;
+
+max-width:1400px;
+
+margin:30px auto;
+
+display:grid;
+
+grid-template-columns:330px 1fr;
+
+gap:25px;
+
+align-items:start;
+
+}
+
+/* ======================
+   LEFT CARD
+====================== */
+
+.glass.attendance-page{
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:40px 30px;
+
+text-align:center;
+
+color:white;
+
+box-shadow:var(--shadow);
+
+position:sticky;
+
+top:20px;
+
+}
+
+.glass.attendance-page i{
+
+font-size:70px;
+
+color:white;
+
+margin-bottom:20px;
+
+}
+
+.glass.attendance-page h1{
+
+font-size:55px;
+
+line-height:1.15;
+
+margin-bottom:20px;
+
+font-weight:800;
+
+}
+
+.glass.attendance-page p{
+
+font-size:24px;
+
+line-height:1.5;
+
+opacity:.95;
+
+}
+
+/* ======================
+   RIGHT SIDE
+====================== */
+
+.attendance-container{
+
+width:100%;
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+/* ======================
+   STUDENT INFO
+====================== */
+
+.student-info{
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--border);
+
+border-radius:24px;
+
+padding:28px;
+
+color:white;
+
+box-shadow:var(--shadow);
+
+}
+
+.student-info h2{
+
+font-size:38px;
+
+margin-bottom:18px;
+
+}
+
+.student-info p{
+
+font-size:20px;
+
+margin:10px 0;
+
+line-height:1.6;
+
+}
+
+/* ======================
+   SUMMARY CARDS
+====================== */
+
+.attendance-cards{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+}
+
+.att-card{
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--border);
+
+border-radius:22px;
+
+padding:25px;
+
+text-align:center;
+
+color:white;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+}
+
+.att-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.att-card h3{
+
+font-size:22px;
+
+margin-bottom:15px;
+
+}
+
+.att-card h1{
+
+font-size:48px;
+
+color:var(--green);
+
+font-weight:800;
+
+}
+
+/* ======================
+   TABLET
+====================== */
+
+@media(max-width:1100px){
+
+.attendance-hero{
+
+grid-template-columns:1fr;
+
+}
+
+.glass.attendance-page{
+
+position:static;
+
+}
+
+.attendance-cards{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/* ======================
+   MOBILE
+====================== */
+
+@media(max-width:768px){
+
+.attendance-hero{
+
+width:95%;
+
+margin:20px auto;
+
+}
+
+.glass.attendance-page{
+
+padding:30px 20px;
+
+}
+
+.glass.attendance-page h1{
+
+font-size:38px;
+
+}
+
+.glass.attendance-page p{
+
+font-size:18px;
+
+}
+
+.student-info{
+
+padding:20px;
+
+}
+
+.student-info h2{
+
+font-size:28px;
+
+}
+
+.student-info p{
+
+font-size:16px;
+
+}
+
+.attendance-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.att-card h1{
+
+font-size:36px;
+
+}
+
+}
+/* ==========================================
+   PART 2
+   ATTENDANCE CIRCLE
+   MONTHLY REPORT
+==========================================*/
+
+/* ===== Overall Attendance ===== */
+
+.attendance-circle-box{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:25px;
+
+padding:35px;
+
+text-align:center;
+
+color:white;
+
+box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+}
+
+.attendance-circle-box h2{
+
+font-size:32px;
+
+margin-bottom:25px;
+
+}
+
+.circle{
+
+position:relative;
+
+width:240px;
+
+height:240px;
+
+margin:auto;
+
+}
+
+.circle svg{
+
+width:240px;
+
+height:240px;
+
+transform:rotate(-90deg);
+
+}
+
+.bg{
+
+fill:none;
+
+stroke:rgba(255,255,255,.20);
+
+stroke-width:15;
+
+}
+
+.progress{
+
+fill:none;
+
+stroke:#00ff99;
+
+stroke-width:15;
+
+stroke-linecap:round;
+
+stroke-dasharray:565;
+
+stroke-dashoffset:47;
+
+transition:1s;
+
+}
+
+.percentage-text{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+font-size:48px;
+
+font-weight:bold;
+
+color:#00ff99;
+
+}
+
+/* ===== Monthly Attendance ===== */
+
+.monthly-attendance{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:25px;
+
+padding:35px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+color:white;
+
+}
+
+.monthly-attendance h2{
+
+text-align:center;
+
+font-size:32px;
+
+margin-bottom:30px;
+
+}
+
+.month{
+
+margin-bottom:22px;
+
+}
+
+.month span{
+
+display:block;
+
+margin-bottom:10px;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+.progress-bar{
+
+width:100%;
+
+height:24px;
+
+background:rgba(255,255,255,.18);
+
+border-radius:50px;
+
+overflow:hidden;
+
+}
+
+.progress-fill{
+
+height:100%;
+
+background:linear-gradient(90deg,#00ff99,#00d084);
+
+border-radius:50px;
+
+text-align:right;
+
+padding-right:12px;
+
+line-height:24px;
+
+font-weight:bold;
+
+color:#000;
+
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:768px){
+
+.attendance-circle-box,
+.monthly-attendance{
+
+padding:22px;
+
+}
+
+.attendance-circle-box h2,
+.monthly-attendance h2{
+
+font-size:24px;
+
+}
+
+.circle{
+
+width:180px;
+
+height:180px;
+
+}
+
+.circle svg{
+
+width:180px;
+
+height:180px;
+
+}
+
+.percentage-text{
+
+font-size:34px;
+
+}
+
+.progress-bar{
+
+height:18px;
+
+}
+
+.progress-fill{
+
+line-height:18px;
+
+font-size:12px;
+
+}
+
+}
+/* ==========================================
+   PART 3
+   ATTENDANCE HISTORY
+========================================== */
+
+.attendance-history{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:25px;
+
+padding:30px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+color:#fff;
+
+overflow:hidden;
+
+}
+
+/* Heading */
+
+.attendance-history h2{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+font-size:30px;
+
+margin-bottom:25px;
+
+}
+
+/* Month Selector */
+
+.month-select{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-left:auto;
+
+}
+
+.month-select label{
+
+font-weight:600;
+
+font-size:16px;
+
+}
+
+.month-select select{
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+background:#fff;
+
+outline:none;
+
+}
+
+/* Table */
+
+.table-wrapper{
+
+overflow-x:auto;
+
+border-radius:18px;
+
+}
+
+.attendance-history table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:700px;
+
+}
+
+.attendance-history thead{
+
+background:#00c853;
+
+}
+
+.attendance-history th{
+
+padding:16px;
+
+font-size:18px;
+
+color:#fff;
+
+text-align:center;
+
+}
+
+.attendance-history td{
+
+padding:15px;
+
+text-align:center;
+
+border-bottom:1px solid rgba(255,255,255,.12);
+
+font-size:16px;
+
+}
+
+.attendance-history tbody tr{
+
+transition:.3s;
+
+}
+
+.attendance-history tbody tr:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
+/* Status */
+
+.present{
+
+display:inline-block;
+
+background:#00c853;
+
+color:#fff;
+
+padding:8px 20px;
+
+border-radius:50px;
+
+font-weight:bold;
+
+min-width:110px;
+
+}
+
+.absent{
+
+display:inline-block;
+
+background:#e53935;
+
+color:#fff;
+
+padding:8px 20px;
+
+border-radius:50px;
+
+font-weight:bold;
+
+min-width:110px;
+
+}
+
+.holiday{
+
+display:inline-block;
+
+background:#ff9800;
+
+color:#fff;
+
+padding:8px 20px;
+
+border-radius:50px;
+
+font-weight:bold;
+
+min-width:110px;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.attendance-history{
+
+padding:18px;
+
+}
+
+.attendance-history h2{
+
+font-size:24px;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.month-select{
+
+width:100%;
+
+justify-content:space-between;
+
+}
+
+.month-select select{
+
+width:180px;
+
+}
+
+.table-wrapper{
+
+overflow-x:auto;
+
+}
+
+.attendance-history table{
+
+min-width:650px;
+
+}
+
+}
+/* ==========================================
+   PART 4
+   FINAL RESPONSIVE + PREMIUM UI
+========================================== */
+
+/* Smooth Animation */
+
+*{
+    scroll-behavior:smooth;
+}
+
+.glass.attendance-page,
+.student-info,
+.att-card,
+.attendance-circle-box,
+.monthly-attendance,
+.attendance-history{
+
+    transition:.35s ease;
+
+}
+
+.student-info:hover,
+.att-card:hover,
+.attendance-circle-box:hover,
+.monthly-attendance:hover,
+.attendance-history:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+}
+
+/* Nice Scrollbar */
+
+::-webkit-scrollbar{
+
+width:10px;
+height:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#00ff99;
+border-radius:50px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:rgba(255,255,255,.12);
+
+}
+
+/* Desktop Large */
+
+@media(min-width:1600px){
+
+.attendance-hero{
+
+max-width:1600px;
+
+grid-template-columns:360px 1fr;
+
+}
+
+.student-info h2{
+
+font-size:42px;
+
+}
+
+.att-card h1{
+
+font-size:56px;
+
+}
+
+.circle{
+
+width:260px;
+height:260px;
+
+}
+
+.circle svg{
+
+width:260px;
+height:260px;
+
+}
+
+.percentage-text{
+
+font-size:54px;
+
+}
+
+}
+
+/* Laptop */
+
+@media(max-width:1200px){
+
+.attendance-hero{
+
+grid-template-columns:300px 1fr;
+
+gap:20px;
+
+}
+
+}
+
+/* Tablet */
+
+@media(max-width:992px){
+
+.attendance-hero{
+
+grid-template-columns:1fr;
+
+}
+
+.glass.attendance-page{
+
+position:relative;
+
+top:auto;
+
+}
+
+.attendance-cards{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.month-select{
+
+justify-content:flex-start;
+
+}
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+body{
+
+overflow-x:hidden;
+
+}
+
+.attendance-hero{
+
+width:95%;
+
+margin:15px auto;
+
+gap:20px;
+
+}
+
+.glass.attendance-page{
+
+padding:25px;
+
+}
+
+.glass.attendance-page h1{
+
+font-size:36px;
+
+}
+
+.glass.attendance-page p{
+
+font-size:18px;
+
+}
+
+.student-info{
+
+padding:20px;
+
+}
+
+.student-info h2{
+
+font-size:26px;
+
+}
+
+.student-info p{
+
+font-size:16px;
+
+}
+
+.attendance-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.att-card{
+
+padding:20px;
+
+}
+
+.att-card h3{
+
+font-size:18px;
+
+}
+
+.att-card h1{
+
+font-size:34px;
+
+}
+
+.circle{
+
+width:170px;
+
+height:170px;
+
+}
+
+.circle svg{
+
+width:170px;
+
+height:170px;
+
+}
+
+.percentage-text{
+
+font-size:30px;
+
+}
+
+.month-select{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+.month-select select{
+
+width:100%;
+
+}
+
+.attendance-history{
+
+padding:15px;
+
+}
+
+.attendance-history table{
+
+min-width:600px;
+
+}
+
+}
+
+/* Small Mobile */
+
+@media(max-width:480px){
+
+.logo{
+
+font-size:22px;
+
+}
+
+.glass.attendance-page h1{
+
+font-size:30px;
+
+}
+
+.student-info h2{
+
+font-size:22px;
+
+}
+
+.att-card h1{
+
+font-size:30px;
+
+}
+
+}
+
+/* End */
