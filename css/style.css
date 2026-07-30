@@ -1386,3 +1386,38 @@ width:230px;
 }
 
 }
+.money{
+
+position:fixed;
+
+top:-60px;
+
+font-size:40px;
+
+z-index:99999;
+
+pointer-events:none;
+
+animation:fall linear forwards;
+
+}
+
+@keyframes fall{
+
+0%{
+
+transform:translateY(-100px) rotate(0deg);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(120vh) rotate(720deg);
+
+opacity:0;
+
+}
+
+}
