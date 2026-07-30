@@ -40,7 +40,7 @@ function createMoney(){
 
     note.style.left=Math.random()*100+"vw";
 
-    note.style.width=(70+Math.random()*80)+"px";
+   note.style.width=(150+Math.random()*100)+"px";
 
     note.style.animationDuration=(2+Math.random()*3)+"s";
 
