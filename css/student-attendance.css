@@ -47,7 +47,7 @@ border:1px solid var(--border);
 
 border-radius:28px;
 
-padding:40px 30px;
+padding:30px;
 
 text-align:center;
 
@@ -58,6 +58,18 @@ box-shadow:var(--shadow);
 position:sticky;
 
 top:20px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:420px;
+
+overflow:hidden;
 
 }
 
@@ -71,25 +83,29 @@ margin-bottom:20px;
 
 }
 
-.glass.attendance-page h1{
+.glass.attendance-page h2{
 
-font-size:55px;
+font-size:42px;
 
-line-height:1.15;
+line-height:1.2;
 
-margin-bottom:20px;
+margin:15px 0;
 
 font-weight:800;
+
+word-break:break-word;
 
 }
 
 .glass.attendance-page p{
 
-font-size:24px;
+font-size:18px;
 
 line-height:1.5;
 
-opacity:.95;
+max-width:220px;
+
+margin:auto;
 
 }
 
