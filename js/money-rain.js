@@ -16,7 +16,7 @@ feesCard.addEventListener("click", function(e){
     cashSound.currentTime = 0;
     cashSound.play().catch(()=>{});
 
-    for(let i=0;i<150;i++){
+    for(let i=0;i<70;i++){
 
         createMoney();
 
