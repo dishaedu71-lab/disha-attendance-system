@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Student Attendance | Disha Computer Education</title>
 
 <link rel="stylesheet" href="css/style.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -21,23 +16,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <nav>
 
 <div class="logo">
-
 <i class="fa-solid fa-graduation-cap"></i>
-
 DISHA COMPUTER EDUCATION
-
 </div>
 
 <ul>
-
 <li><a href="student-dashboard.html">Dashboard</a></li>
-
 <li><a href="study.html">Study Portal</a></li>
-
 </ul>
 
 </nav>
-
 
 
 <section class="hero">
@@ -45,37 +33,36 @@ DISHA COMPUTER EDUCATION
 <div class="glass attendance-page">
 
 <h1>
-
 <i class="fa-solid fa-calendar-check"></i>
-
 Student Attendance
-
 </h1>
 
-<p>
-
-View your attendance details below
-
-</p>
+<p>View your attendance details below</p>
 
 </div>
 
-  <div class="attendance-container">
+
+<div class="attendance-container">
 
     <!-- Student Information -->
+
     <div class="student-info">
 
         <h2 id="studentName"></h2>
 
-        <p><strong>Student ID :</strong> <span id="studentId"></span></p>
+        <p><strong>Student ID :</strong>
+        <span id="studentId"></span></p>
 
-        <p><strong>Course :</strong> <span id="course"></span></p>
+        <p><strong>Course :</strong>
+        <span id="course"></span></p>
 
-        <p><strong>Batch :</strong> <span id="batch"></span></p>
+        <p><strong>Batch :</strong>
+        <span id="batch"></span></p>
 
     </div>
 
-    <!-- Attendance Summary -->
+
+    <!-- Attendance Cards -->
 
     <div class="attendance-cards">
 
@@ -83,7 +70,6 @@ View your attendance details below
             <h3>Total Classes</h3>
             <h1 id="totalClasses"></h1>
         </div>
-      
 
         <div class="att-card">
             <h3>Present</h3>
@@ -99,44 +85,147 @@ View your attendance details below
             <h3>Attendance %</h3>
             <h1 id="attendancePercent"></h1>
         </div>
-      <div class="attendance-circle-box">
 
-    <h2>Overall Attendance</h2>
+    </div>
 
-    <div class="circle">
 
-        <svg width="220" height="220">
+    <!-- Circle -->
 
-            <circle class="bg"
+    <div class="attendance-circle-box">
+
+        <h2>Overall Attendance</h2>
+
+        <div class="circle">
+
+            <svg width="220" height="220">
+
+                <circle
+                    class="bg"
                     cx="110"
                     cy="110"
                     r="90">
-            </circle>
+                </circle>
 
-            <circle class="progress"
+                <circle
+                    class="progress"
                     cx="110"
                     cy="110"
                     r="90">
-            </circle>
+                </circle>
 
-        </svg>
+            </svg>
 
-        <div class="percentage-text"
-             id="circlePercentage">
+            <div
+            class="percentage-text"
+            id="circlePercentage">
             91%
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Monthly Attendance -->
+
+    <div class="monthly-attendance">
+
+        <h2>
+        <i class="fa-solid fa-calendar-days"></i>
+        Monthly Attendance Report
+        </h2>
+
+        <div class="month">
+            <span>January</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:95%">95%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>February</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:90%">90%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>March</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:88%">88%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>April</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:100%">100%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>May</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:92%">92%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>June</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:96%">96%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>July</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:91%">91%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>August</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:94%">94%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>September</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:89%">89%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>October</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:93%">93%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>November</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:97%">97%</div>
+            </div>
+        </div>
+
+        <div class="month">
+            <span>December</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:98%">98%</div>
+            </div>
         </div>
 
     </div>
 
 </div>
 
-    </div>
-
-</div>
-
 </section>
-  <script src="js/student-attendance.js"></script>
+
+<script src="js/student-attendance.js"></script>
 
 </body>
-
 </html>
