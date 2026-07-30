@@ -1949,3 +1949,89 @@ padding:20px;
 }
 
 }
+/* Month Selector */
+
+.month-select{
+
+display:flex;
+
+justify-content:flex-end;
+
+align-items:center;
+
+gap:15px;
+
+margin:20px 0;
+
+color:white;
+
+}
+
+.month-select select{
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+font-weight:bold;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+.attendance-history table{
+
+width:100%;
+
+border-collapse:collapse;
+
+color:white;
+
+}
+
+.attendance-history th{
+
+background:#00c853;
+
+padding:14px;
+
+}
+
+.attendance-history td{
+
+padding:12px;
+
+text-align:center;
+
+border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+.present{
+
+color:#00ff99;
+
+font-weight:bold;
+
+}
+
+.absent{
+
+color:#ff4d4d;
+
+font-weight:bold;
+
+}
+
+.holiday{
+
+color:#ffd54f;
+
+font-weight:bold;
+
+}
