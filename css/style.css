@@ -1818,4 +1818,134 @@ color:#00ff99;
     border-radius:30px;
 
 }
+/* ===========================
+   RESPONSIVE ATTENDANCE PAGE
+=========================== */
 
+.hero{
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    padding:30px;
+}
+
+.glass.attendance-page{
+    flex:1;
+    min-width:320px;
+    max-width:420px;
+}
+
+.attendance-container{
+    flex:2;
+    min-width:350px;
+    max-width:900px;
+}
+
+.student-info{
+    margin-bottom:25px;
+}
+
+.attendance-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+}
+
+.attendance-circle-box,
+.monthly-attendance{
+    margin-top:30px;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media(max-width:992px){
+
+.hero{
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.glass.attendance-page{
+
+max-width:100%;
+
+width:100%;
+
+}
+
+.attendance-container{
+
+width:100%;
+
+max-width:100%;
+
+}
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.hero{
+
+padding:15px;
+
+}
+
+.attendance-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.student-info h2{
+
+font-size:24px;
+
+}
+
+.att-card h1{
+
+font-size:34px;
+
+}
+
+.circle{
+
+width:180px;
+
+height:180px;
+
+}
+
+.circle svg{
+
+width:180px;
+
+height:180px;
+
+}
+
+.percentage-text{
+
+font-size:32px;
+
+}
+
+.monthly-attendance{
+
+padding:20px;
+
+}
+
+}
