@@ -1453,3 +1453,63 @@ opacity:0;
 }
 
 }
+/* ===========================
+   STUDENT ATTENDANCE PAGE
+=========================== */
+
+.attendance-container{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.student-info{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:25px;
+    color:#fff;
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+    margin-bottom:30px;
+}
+
+.student-info h2{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.student-info p{
+    font-size:18px;
+    margin:8px 0;
+}
+
+.attendance-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.att-card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    color:#fff;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.att-card:hover{
+    transform:translateY(-8px);
+}
+
+.att-card h3{
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.att-card h1{
+    font-size:42px;
+    color:#00ff99;
+}
