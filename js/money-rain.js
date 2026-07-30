@@ -32,28 +32,32 @@ feesCard.addEventListener("click", function(e){
 
 function createMoney(){
 
-    const note=document.createElement("img");
+    const note = document.createElement("img");
 
-    note.src=notes[Math.floor(Math.random()*notes.length)];
+    note.src = notes[Math.floor(Math.random() * notes.length)];
 
-    note.className="money";
+    note.className = "money";
 
-   note.style.left=(10+Math.random()*80)+"vw";
+    note.style.left = Math.random() * window.innerWidth + "px";
 
-   note.style.width=(150+Math.random()*100)+"px";
+    note.style.top = "-180px";
 
-    note.style.animationDuration=(2+Math.random()*3)+"s";
+    note.style.width = (120 + Math.random() * 80) + "px";
 
-    note.style.animationDelay=(Math.random()*1.5)+"s";
+    note.style.animationDuration = (3 + Math.random() * 2) + "s";
 
-    note.style.transform=`rotate(${Math.random()*360}deg)`;
+    note.style.animationDelay = (Math.random() * 0.8) + "s";
+
+    note.style.animationTimingFunction = "linear";
+
+    note.style.transform = `rotate(${Math.random()*360}deg)`;
 
     document.body.appendChild(note);
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         note.remove();
 
-    },7000);
+    }, 6000);
 
 }
