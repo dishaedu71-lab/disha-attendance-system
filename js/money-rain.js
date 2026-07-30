@@ -38,7 +38,7 @@ function createMoney(){
 
     note.className="money";
 
-    note.style.left=Math.random()*100+"vw";
+   note.style.left=(10+Math.random()*80)+"vw";
 
    note.style.width=(150+Math.random()*100)+"px";
 
