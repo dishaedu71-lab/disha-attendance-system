@@ -404,12 +404,17 @@ Get Started
 
 <script src="js/app.js"></script>
 
-    <script>
-window.addEventListener("load", () => {
+ <script>
+(function () {
 
-    function speakWelcome() {
+    let hasSpoken = false;
 
-        if (!("speechSynthesis" in window)) return;
+    function welcomeVoice() {
+
+        if (hasSpoken) return;
+        hasSpoken = true;
+
+        if (!window.speechSynthesis) return;
 
         speechSynthesis.cancel();
 
@@ -418,7 +423,7 @@ window.addEventListener("load", () => {
         jarvis.rate = 0.9;
         jarvis.pitch = 0.8;
 
-        jarvis.onend = () => {
+        jarvis.onend = function () {
 
             const welcome = new SpeechSynthesisUtterance(
                 "नमस्कार! दिशा कंप्यूटर एजुकेशन, अयोध्या में आपका हार्दिक स्वागत है।"
@@ -433,14 +438,15 @@ window.addEventListener("load", () => {
 
         speechSynthesis.speak(jarvis);
 
-        document.removeEventListener("click", speakWelcome);
+        document.removeEventListener("click", welcomeVoice);
+        document.removeEventListener("touchstart", welcomeVoice);
+
     }
 
-    setTimeout(speakWelcome, 1000);
+    document.addEventListener("click", welcomeVoice);
+    document.addEventListener("touchstart", welcomeVoice);
 
-    document.addEventListener("click", speakWelcome, { once: true });
-
-});
+})();
 </script>
 </body>
 </html>
