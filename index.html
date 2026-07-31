@@ -404,31 +404,44 @@ Get Started
 
 <script src="js/app.js"></script>
 
-<audio id="welcomeAudio" preload="auto">
-    <source src="audio/welcome.mp3" type="audio/mpeg">
-</audio>
-
-<script>
+    <script>
 window.addEventListener("load", () => {
 
-    const audio = document.getElementById("welcomeAudio");
+    function speakWelcome() {
 
-    function playWelcome() {
-        audio.play().catch(() => {});
-        document.removeEventListener("click", playWelcome);
-        document.removeEventListener("keydown", playWelcome);
+        if (!("speechSynthesis" in window)) return;
+
+        speechSynthesis.cancel();
+
+        const jarvis = new SpeechSynthesisUtterance("System Initialized.");
+        jarvis.lang = "en-US";
+        jarvis.rate = 0.9;
+        jarvis.pitch = 0.8;
+
+        jarvis.onend = () => {
+
+            const welcome = new SpeechSynthesisUtterance(
+                "नमस्कार! दिशा कंप्यूटर एजुकेशन, अयोध्या में आपका हार्दिक स्वागत है।"
+            );
+
+            welcome.lang = "hi-IN";
+            welcome.rate = 0.9;
+            welcome.pitch = 1;
+
+            speechSynthesis.speak(welcome);
+        };
+
+        speechSynthesis.speak(jarvis);
+
+        document.removeEventListener("click", speakWelcome);
     }
 
-    setTimeout(() => {
-        audio.play().catch(() => {
-            document.addEventListener("click", playWelcome, { once: true });
-            document.addEventListener("keydown", playWelcome, { once: true });
-        });
-    }, 1000);
+    setTimeout(speakWelcome, 1000);
+
+    document.addEventListener("click", speakWelcome, { once: true });
 
 });
 </script>
-
 </body>
 </html>
 
