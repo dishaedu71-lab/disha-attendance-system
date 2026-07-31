@@ -71,11 +71,11 @@ animation:capRotate 5s linear infinite;
 
 .logo-text{
 
-font-size:42px;
+font-size:22px;
 
-font-weight:900;
+font-weight:800;
 
-letter-spacing:2px;
+letter-spacing:1px;
 
 text-transform:uppercase;
 
@@ -219,7 +219,7 @@ transform:rotate(360deg);
 
 .logo-text{
 
-font-size:22px;
+font-size:20px;
 
 }
 
