@@ -12,23 +12,16 @@
 
 body{
     min-height:100vh;
-    background:linear-gradient(135deg,#4f46e5,#7c3aed,#06b6d4);
     overflow-x:hidden;
-}
 
-/* Animated Background */
-body::before{
-    content:"";
-    position:fixed;
-    width:200%;
-    height:200%;
-    left:-50%;
-    top:-50%;
     background:
-    radial-gradient(circle,rgba(255,255,255,.12) 2px,transparent 2px);
-    background-size:40px 40px;
-    animation:bgMove 20s linear infinite;
-    z-index:-2;
+    linear-gradient(rgba(0,0,0,.70),rgba(0,0,0,.70)),
+    url("https://img.freepik.com/premium-photo/server-room-data-center-backup-mining-hosting-mainframe-farm-computer-rack-with-storage-inf_867442-8083.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
 }
 
 @keyframes bgMove{
