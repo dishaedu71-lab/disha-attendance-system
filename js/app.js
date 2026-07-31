@@ -47,9 +47,18 @@ statusText.innerHTML=msgs[4];
 
 if(progress==100){
 
-statusText.innerHTML=msgs[5];
+statusText.innerHTML = msgs[5];
 
 clearInterval(loading);
+
+const audio = new Audio("audio/welcome.mp3");
+
+audio.volume = 1;
+
+// Voice शुरू करो
+audio.play().catch(() => {
+    console.log("Autoplay blocked by browser.");
+});
 
 setTimeout(()=>{
 
