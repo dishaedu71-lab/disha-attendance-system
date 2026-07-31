@@ -48,55 +48,60 @@ flex-wrap:wrap;
 .logo{
 
 display:flex;
-
 align-items:center;
-
 gap:12px;
 
-font-size:20px;
-
+font-size:22px;
 font-weight:900;
-
-color:#fff;
 
 }
 
 .logo i{
 
 font-size:32px;
-
 color:#FFD700;
 
-animation:rotateCap 3s infinite linear;
+animation:capRotate 5s linear infinite;
 
 }
 
+/* ======================
+   DISHA COMPUTER EDUCATION
+====================== */
+
 .logo-text{
+
+font-size:42px;
+
+font-weight:900;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
 
 background:linear-gradient(
 90deg,
 #00ffff,
-#00ff99,
-#ffd700,
-#ff4dff,
+#00ff66,
+#FFD700,
+#ff00ff,
 #00ffff
 );
 
-background-size:300%;
+background-size:400%;
 
 -webkit-background-clip:text;
-
 -webkit-text-fill-color:transparent;
 
 animation:
-logoEntry 1.8s ease-out,
-gradientMove 5s linear infinite;
 
-text-shadow:
-0 0 10px rgba(0,255,255,.6),
-0 0 20px rgba(255,215,0,.5);
+logoEntry 2s ease-out,
+gradientMove 6s linear infinite,
+logoBlink 2.5s infinite;
 
 }
+
+/* ऊपर से उड़कर आए */
 
 @keyframes logoEntry{
 
@@ -105,7 +110,7 @@ text-shadow:
 opacity:0;
 
 transform:
-translateY(-150px)
+translateY(-180px)
 scale(.3)
 rotate(-10deg);
 
@@ -116,19 +121,21 @@ rotate(-10deg);
 opacity:1;
 
 transform:
-translateY(20px)
-scale(1.1);
+translateY(25px)
+scale(1.15);
 
 }
 
 80%{
 
 transform:
-translateY(-8px);
+translateY(-10px);
 
 }
 
 100%{
+
+opacity:1;
 
 transform:
 translateY(0)
@@ -137,6 +144,8 @@ scale(1);
 }
 
 }
+
+/* Color चलता रहेगा */
 
 @keyframes gradientMove{
 
@@ -148,27 +157,69 @@ background-position:0%;
 
 100%{
 
-background-position:300%;
+background-position:400%;
 
 }
 
 }
 
-@keyframes rotateCap{
+/* Blink + Glow */
+
+@keyframes logoBlink{
+
+0%,100%{
+
+filter:
+drop-shadow(0 0 8px cyan)
+drop-shadow(0 0 18px #00ffff);
+
+opacity:1;
+
+}
+
+50%{
+
+filter:
+drop-shadow(0 0 25px yellow)
+drop-shadow(0 0 45px #00ff99);
+
+opacity:.75;
+
+}
+
+}
+
+/* Graduation Cap */
+
+@keyframes capRotate{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+50%{
+
+transform:rotate(20deg);
+
+}
 
 100%{
 
 transform:rotate(360deg);
 
 }
+
 }
+
+/* Mobile */
+
 @media(max-width:768px){
 
-.logo{
+.logo-text{
 
-font-size:16px;
-
-gap:8px;
+font-size:22px;
 
 }
 
