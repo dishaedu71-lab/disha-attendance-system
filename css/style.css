@@ -45,23 +45,43 @@ align-items:center;
 flex-wrap:wrap;
 
 }
+/* ===========================
+   LOGO
+=========================== */
+
 .logo{
 
 display:flex;
+
 align-items:center;
+
 gap:12px;
 
-font-size:22px;
+font-size:26px;
+
 font-weight:900;
+
+color:#00ffff;
+
+white-space:nowrap;
+
+animation:logoEntry 1.5s ease-out,
+logoBlink 3s infinite;
+
+text-shadow:
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 35px cyan;
 
 }
 
 .logo i{
 
-font-size:32px;
+font-size:34px;
+
 color:#FFD700;
 
-animation:capRotate 5s linear infinite;
+animation:capRotate 6s linear infinite;
 
 }
 
@@ -1622,6 +1642,138 @@ translate3d(25px,120vh,0)
 rotate(720deg);
 
 opacity:0;
+
+}
+
+}
+/* ===========================
+   LOGO ANIMATION
+=========================== */
+
+@keyframes logoEntry{
+
+0%{
+
+opacity:0;
+
+transform:
+translateY(-150px)
+scale(.4);
+
+}
+
+60%{
+
+opacity:1;
+
+transform:
+translateY(15px)
+scale(1.08);
+
+}
+
+100%{
+
+transform:
+translateY(0)
+scale(1);
+
+}
+
+}
+
+@keyframes logoBlink{
+
+0%{
+
+color:#00ffff;
+
+text-shadow:
+0 0 8px cyan,
+0 0 18px cyan,
+0 0 30px cyan;
+
+}
+
+25%{
+
+color:#00ff66;
+
+text-shadow:
+0 0 10px #00ff66,
+0 0 22px #00ff66,
+0 0 35px #00ff66;
+
+}
+
+50%{
+
+color:#FFD700;
+
+text-shadow:
+0 0 10px gold,
+0 0 22px gold,
+0 0 35px gold;
+
+}
+
+75%{
+
+color:#ff00ff;
+
+text-shadow:
+0 0 10px #ff00ff,
+0 0 22px #ff00ff,
+0 0 35px #ff00ff;
+
+}
+
+100%{
+
+color:#00ffff;
+
+text-shadow:
+0 0 8px cyan,
+0 0 18px cyan,
+0 0 30px cyan;
+
+}
+
+}
+
+@keyframes capRotate{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.logo{
+
+font-size:18px;
+
+gap:8px;
+
+}
+
+.logo i{
+
+font-size:24px;
 
 }
 
