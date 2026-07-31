@@ -46,9 +46,138 @@ flex-wrap:wrap;
 
 }
 .logo{
-    color:#fff;
-    font-size:28px;
-    font-weight:bold;
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:20px;
+
+font-weight:900;
+
+color:#fff;
+
+}
+
+.logo i{
+
+font-size:32px;
+
+color:#FFD700;
+
+animation:rotateCap 3s infinite linear;
+
+}
+
+.logo-text{
+
+background:linear-gradient(
+90deg,
+#00ffff,
+#00ff99,
+#ffd700,
+#ff4dff,
+#00ffff
+);
+
+background-size:300%;
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+animation:
+logoEntry 1.8s ease-out,
+gradientMove 5s linear infinite;
+
+text-shadow:
+0 0 10px rgba(0,255,255,.6),
+0 0 20px rgba(255,215,0,.5);
+
+}
+
+@keyframes logoEntry{
+
+0%{
+
+opacity:0;
+
+transform:
+translateY(-150px)
+scale(.3)
+rotate(-10deg);
+
+}
+
+60%{
+
+opacity:1;
+
+transform:
+translateY(20px)
+scale(1.1);
+
+}
+
+80%{
+
+transform:
+translateY(-8px);
+
+}
+
+100%{
+
+transform:
+translateY(0)
+scale(1);
+
+}
+
+}
+
+@keyframes gradientMove{
+
+0%{
+
+background-position:0%;
+
+}
+
+100%{
+
+background-position:300%;
+
+}
+
+}
+
+@keyframes rotateCap{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+}
+@media(max-width:768px){
+
+.logo{
+
+font-size:16px;
+
+gap:8px;
+
+}
+
+.logo i{
+
+font-size:24px;
+
+}
+
 }
 .nav-links{
     display:flex;
