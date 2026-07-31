@@ -400,49 +400,37 @@ Get Started
 </div>
     <script src="js/app.js"></script>
 
- <script>
-(function () {
+<script src="js/app.js"></script>
 
-    let hasSpoken = false;
+<audio id="welcomeAudio" preload="auto">
+    <source src="audio/welcome.mp3" type="audio/mpeg">
+</audio>
 
-    function welcomeVoice() {
+<script>
+window.addEventListener("load", function () {
 
-        if (hasSpoken) return;
-        hasSpoken = true;
+    const audio = document.getElementById("welcomeAudio");
 
-        if (!window.speechSynthesis) return;
+    setTimeout(function () {
 
-        speechSynthesis.cancel();
+        audio.play().catch(() => {
 
-        const jarvis = new SpeechSynthesisUtterance("System Initialized.");
-        jarvis.lang = "en-US";
-        jarvis.rate = 0.9;
-        jarvis.pitch = 0.8;
+            document.addEventListener("click", function play() {
 
-        jarvis.onend = function () {
+                audio.play();
 
-            const welcome = new SpeechSynthesisUtterance(
-                "नमस्कार! दिशा कंप्यूटर एजुकेशन, अयोध्या में आपका हार्दिक स्वागत है।"
-            );
+                document.removeEventListener("click", play);
 
-            welcome.lang = "hi-IN";
-            welcome.rate = 0.9;
-            welcome.pitch = 1;
+            }, { once: true });
 
-            speechSynthesis.speak(welcome);
-        };
+        });
 
-        speechSynthesis.speak(jarvis);
+    }, 1500);
 
-        document.removeEventListener("click", welcomeVoice);
-        document.removeEventListener("touchstart", welcomeVoice);
-
-    }
-
-    document.addEventListener("click", welcomeVoice);
-    document.addEventListener("touchstart", welcomeVoice);
-
-})();
+});
 </script>
+
+</body>
+</html>
 </body>
 </html>
