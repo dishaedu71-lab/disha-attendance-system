@@ -138,7 +138,8 @@ Remaining Time
 <script type="module" src="js/firebase.js"></script>
 
 <script src="js/exam-engine.js"></script>
-  <script>
+ <script>
+
 document.addEventListener("contextmenu", function(e){
 
     e.preventDefault();
@@ -146,6 +147,37 @@ document.addEventListener("contextmenu", function(e){
     alert("Right Click Disabled During Exam");
 
 });
+
+// Disable Keyboard Shortcuts
+
+document.addEventListener("keydown", function(e){
+
+    if(
+
+        (e.ctrlKey && e.key.toLowerCase()=="c") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="v") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="x") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="a") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="u") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="s") ||
+
+        (e.ctrlKey && e.key.toLowerCase()=="p")
+
+    ){
+
+        e.preventDefault();
+
+        alert("Shortcut Disabled During Exam");
+
+    }
+
+});
+
 </script>
 
 </body>
