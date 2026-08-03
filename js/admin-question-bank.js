@@ -20,46 +20,45 @@ const questionList = document.getElementById("questionList");
 //================ SAVE QUESTION =================
 
 saveBtn.onclick = async () => {
-    console.log("Save Button Clicked");
 
-const data = {
+    try {
 
-course:document.getElementById("course").value,
+        console.log("Save Button Clicked");
 
-subject:document.getElementById("subject").value,
+        const data = {
 
-chapter:document.getElementById("chapter").value,
+            course: document.getElementById("course").value,
+            subject: document.getElementById("subject").value,
+            chapter: document.getElementById("chapter").value,
+            question: document.getElementById("question").value,
+            A: document.getElementById("optionA").value,
+            B: document.getElementById("optionB").value,
+            C: document.getElementById("optionC").value,
+            D: document.getElementById("optionD").value,
+            answer: document.getElementById("answer").value,
+            createdAt: Date.now()
 
-question:document.getElementById("question").value,
+        };
 
-A:document.getElementById("optionA").value,
+        console.log(data);
 
-B:document.getElementById("optionB").value,
+        await addDoc(
+            collection(db, "questions"),
+            data
+        );
 
-C:document.getElementById("optionC").value,
+        alert("Question Saved Successfully");
 
-D:document.getElementById("optionD").value,
+        loadQuestions();
 
-answer:document.getElementById("answer").value,
+    } catch (err) {
 
-createdAt:Date.now()
+        console.error("SAVE ERROR:", err);
+        alert(err.message);
+
+    }
 
 };
-
-await addDoc(
-
-collection(db,"questions"),
-
-data
-
-);
-
-alert("Question Saved Successfully");
-
-loadQuestions();
-
-};
-
 
 
 //================ LOAD QUESTION =================
