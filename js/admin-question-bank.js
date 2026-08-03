@@ -14,6 +14,8 @@ const docRef = window.doc;
 
 const saveBtn = document.getElementById("saveQuestion");
 
+    console.log("saveBtn =", saveBtn);
+
 const questionList = document.getElementById("questionList");
 
 
