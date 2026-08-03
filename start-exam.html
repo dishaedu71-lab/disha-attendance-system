@@ -74,6 +74,22 @@ Please verify your exam details before starting.
 <p><b>Question Type :</b> Random MCQ</p>
 
 <br>
+<div style="margin:20px 0;">
+
+<label><b>Enter Exam Code</b></label>
+
+<input
+type="password"
+id="examCode"
+placeholder="Enter Exam Code"
+style="
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+font-size:18px;">
+
+</div>
 
 <button id="startExamBtn" class="login-btn">
 
@@ -92,11 +108,38 @@ const course = localStorage.getItem("selectedCourse") || "Course";
 document.getElementById("courseName").innerHTML =
 "Selected Course : " + course;
 
-document.getElementById("startExamBtn").onclick = () =>{
+// अभी Testing के लिए
+const EXAM_CODES = {
+
+"O Level":"OLEVEL2026",
+
+"CCC":"CCC2026",
+
+"ADCA":"ADCA2026",
+
+"Python":"PYTHON2026",
+
+"Web Development":"WEB2026",
+
+"Cyber Security":"CYBER2026"
+
+};
+
+document.getElementById("startExamBtn").onclick=()=>{
+
+const code=document.getElementById("examCode").value.trim();
+
+if(code!==EXAM_CODES[course]){
+
+alert("Invalid Exam Code");
+
+return;
+
+}
 
 window.location.href="exam-screen.html";
 
-}
+};
 
 </script>
 
