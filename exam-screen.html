@@ -177,6 +177,27 @@ document.addEventListener("keydown", function(e){
     }
 
 });
+  // Disable Developer Tools
+
+document.addEventListener("keydown", function(e){
+
+    if(
+        e.key === "F12" ||
+
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
+
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") ||
+
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "c")
+    ){
+
+        e.preventDefault();
+
+        alert("Developer Tools Disabled During Exam");
+
+    }
+
+});
 
 </script>
 
