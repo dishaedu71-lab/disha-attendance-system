@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Online Exam</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/exam.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+DISHA COMPUTER EDUCATION
+
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div class="glass">
+
+<h2 id="courseName"></h2>
+
+</div>
+
+</section>
+
+<div class="dashboard">
+
+<div class="card">
+
+<h3>
+Question
+<span id="currentQuestion">1</span>
+/
+<span id="totalQuestion">100</span>
+</h3>
+
+<h2 id="question">
+Loading...
+</h2>
+
+<br>
+
+<label class="option">
+
+<input type="radio" name="answer" value="A">
+
+<span id="optionA"></span>
+
+</label>
+
+<br><br>
+
+<label class="option">
+
+<input type="radio" name="answer" value="B">
+
+<span id="optionB"></span>
+
+</label>
+
+<br><br>
+
+<label class="option">
+
+<input type="radio" name="answer" value="C">
+
+<span id="optionC"></span>
+
+</label>
+
+<br><br>
+
+<label class="option">
+
+<input type="radio" name="answer" value="D">
+
+<span id="optionD"></span>
+
+</label>
+
+<br><br>
+
+<button id="prevBtn" class="login-btn">
+
+Previous
+
+</button>
+
+<button id="nextBtn" class="login-btn">
+
+Next
+
+</button>
+
+<button id="submitBtn" class="student-btn">
+
+Submit Exam
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+Remaining Time
+
+</h2>
+
+<h1 id="timer">
+
+90:00
+
+</h1>
+
+</div>
+
+</div>
+
+<script src="js/question-bank.js"></script>
+
+<script src="js/exam-engine.js"></script>
+
+</body>
+
+</html>
