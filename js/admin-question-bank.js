@@ -1,4 +1,3 @@
-alert("admin-question-bank.js Loaded");
 // ===============================
 // QUESTION BANK
 // DISHA COMPUTER EDUCATION
@@ -21,6 +20,8 @@ const questionList = document.getElementById("questionList");
 //================ SAVE QUESTION =================
 
 saveBtn.onclick = async () => {
+    
+    alert("Save Button Clicked");
 
     try {
 
