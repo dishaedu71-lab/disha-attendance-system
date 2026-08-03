@@ -9,6 +9,8 @@ const db = window.db;
 const collection = window.collection;
 const addDoc = window.addDoc;
 const getDocs = window.getDocs;
+const deleteDoc = window.deleteDoc;
+const docRef = window.doc;
 
 const saveBtn = document.getElementById("saveQuestion");
 
@@ -73,9 +75,11 @@ collection(db,"questions")
 
 questionList.innerHTML="";
 
-snap.forEach(doc=>{
+snap.forEach(item=>{
 
-const q=doc.data();
+const q = item.data();
+
+const id = item.id;
 
 questionList.innerHTML+=`
 
@@ -99,6 +103,24 @@ Answer : ${q.answer}
 
 </p>
 
+<br>
+
+<button
+onclick="deleteQuestion('${id}')"
+style="
+background:red;
+color:white;
+padding:8px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;">
+
+🗑 Delete
+
+</button>
+
+
 </div>
 
 `;
@@ -106,7 +128,20 @@ Answer : ${q.answer}
 });
 
 }
-
 loadQuestions();
+
+window.deleteQuestion = async function(id){
+
+    if(!confirm("Delete this Question?")) return;
+
+    await deleteDoc(
+        docRef(db,"questions",id)
+    );
+
+    alert("Question Deleted Successfully");
+
+    loadQuestions();
+
+}
 
 });
