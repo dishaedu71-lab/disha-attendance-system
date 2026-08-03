@@ -1,64 +1,117 @@
+// =======================================
+// DISHA COMPUTER EDUCATION
+// ADMIN EXAM SETTINGS
+// PART-1
+// =======================================
+
 window.addEventListener("firebase-ready", async () => {
 
     const db = window.db;
 
-    const snap = await window.getDocs(
-        window.collection(db, "exam_settings")
-    );
+    const courseSelect = document.getElementById("course");
+
+    const examCode = document.getElementById("examCode");
+
+    const totalQuestions = document.getElementById("totalQuestions");
+
+    const examTime = document.getElementById("examTime");
+
+    const randomQuestion = document.getElementById("randomQuestion");
+
+    const examStatus = document.getElementById("examStatus");
+
+    const saveBtn = document.getElementById("saveSettings");
 
     let docId = "";
-    let setting = null;
 
-    snap.forEach(doc => {
+    // ================= LOAD SETTINGS =================
 
-        const data = doc.data();
+    async function loadSettings() {
 
-        if (data.course === "O Level") {
+        const snap = await window.getDocs(
 
-            docId = doc.id;
-            setting = data;
-
-        }
-
-    });
-
-    if (setting) {
-
-        document.getElementById("course").value = setting.course;
-        document.getElementById("examCode").value = setting.examCode;
-        document.getElementById("totalQuestions").value = setting.totalQuestions;
-        document.getElementById("examTime").value = setting.examTime;
-        document.getElementById("randomQuestion").checked = setting.random;
-        document.getElementById("examStatus").checked = setting.active;
-
-    }
-
-    document.getElementById("saveSettings").onclick = async () => {
-
-        await window.updateDoc(
-
-            window.doc(db, "exam_settings", docId),
-
-            {
-
-                course: document.getElementById("course").value,
-
-                examCode: document.getElementById("examCode").value,
-
-                totalQuestions: Number(document.getElementById("totalQuestions").value),
-
-                examTime: Number(document.getElementById("examTime").value),
-
-                random: document.getElementById("randomQuestion").checked,
-
-                active: document.getElementById("examStatus").checked
-
-            }
+            window.collection(db, "exam_settings")
 
         );
 
-        alert("Exam Settings Updated Successfully");
+        docId = "";
+
+        snap.forEach(doc => {
+
+            const data = doc.data();
+
+            if (data.course === courseSelect.value) {
+
+                docId = doc.id;
+
+                examCode.value = data.examCode;
+
+                totalQuestions.value = data.totalQuestions;
+
+                examTime.value = data.examTime;
+
+                randomQuestion.checked = data.random;
+
+                examStatus.checked = data.active;
+
+            }
+
+        });
+
+    }
+
+    await loadSettings();
+
+    courseSelect.onchange = loadSettings;
+        // ================= SAVE SETTINGS =================
+
+    saveBtn.onclick = async () => {
+
+        if (docId == "") {
+
+            alert("Course Settings Not Found");
+
+            return;
+
+        }
+
+        try {
+
+            await window.updateDoc(
+
+                window.doc(db, "exam_settings", docId),
+
+                {
+
+                    course: courseSelect.value,
+
+                    examCode: examCode.value,
+
+                    totalQuestions: Number(totalQuestions.value),
+
+                    examTime: Number(examTime.value),
+
+                    random: randomQuestion.checked,
+
+                    active: examStatus.checked
+
+                }
+
+            );
+
+            alert("Exam Settings Saved Successfully");
+
+            await loadSettings();
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert(err.message);
+
+        }
 
     };
+    });
 
-});
+                        
