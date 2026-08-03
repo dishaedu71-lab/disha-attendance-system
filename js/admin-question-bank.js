@@ -20,6 +20,7 @@ const questionList = document.getElementById("questionList");
 //================ SAVE QUESTION =================
 
 saveBtn.onclick = async () => {
+    console.log("Save Button Clicked");
 
 const data = {
 
