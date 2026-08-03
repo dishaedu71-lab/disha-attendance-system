@@ -116,31 +116,69 @@ document.getElementById("prevBtn").onclick = () => {
 
 };
 
-document.getElementById("submitBtn").onclick = () => {
+document.getElementById("submitBtn").onclick = async () => {
 
     let correct = 0;
 
-    questions.forEach((q,i)=>{
+    questions.forEach((q, i) => {
 
-        if(answers[i]===q.answer){
-
+        if (answers[i] === q.answer) {
             correct++;
-
         }
 
     });
 
-    alert(
+    let wrong = questions.length - correct;
 
-`Exam Finished
+    let percentage = Math.round((correct / questions.length) * 100);
+
+    try {
+
+        await window.addDoc(
+
+            window.collection(window.db, "results"),
+
+            {
+
+                studentId: localStorage.getItem("studentId") || "Unknown",
+
+                studentName: localStorage.getItem("studentName") || "Student",
+
+                course: course,
+
+                correct: correct,
+
+                wrong: wrong,
+
+                score: correct,
+
+                percentage: percentage,
+
+                date: new Date().toLocaleString()
+
+            }
+
+        );
+
+        alert(
+`Exam Submitted Successfully
 
 Correct : ${correct}
 
-Wrong : ${questions.length-correct}
+Wrong : ${wrong}
 
-Score : ${correct}/${questions.length}`
+Percentage : ${percentage}%`
+        );
 
-);
+        window.location.href = "student-dashboard.html";
+
+    } catch (e) {
+
+        console.error(e);
+
+        alert("Result Save Failed");
+
+    }
 
 };
 // ================= TIMER =================
