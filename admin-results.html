@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Student Results</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+DISHA COMPUTER EDUCATION
+
+</div>
+
+<ul>
+
+<li>
+
+<a href="admin-dashboard.html">
+
+Dashboard
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="glass">
+
+<h1>
+
+<i class="fa-solid fa-chart-column"></i>
+
+Student Results
+
+</h1>
+
+<p>
+
+View All Exam Results
+
+</p>
+
+</div>
+
+</section>
+
+<section class="dashboard">
+
+<div class="card">
+
+<h2>
+
+Exam Result List
+
+</h2>
+
+<br>
+
+<table
+border="1"
+width="100%"
+cellpadding="10"
+cellspacing="0">
+
+<thead>
+
+<tr>
+
+<th>Student</th>
+
+<th>Course</th>
+
+<th>Correct</th>
+
+<th>Wrong</th>
+
+<th>Score</th>
+
+<th>%</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody id="resultTable">
+
+<tr>
+
+<td colspan="7">
+
+Loading Results...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<script type="module" src="js/firebase.js"></script>
+
+<script src="js/admin-results.js"></script>
+
+</body>
+
+</html>
