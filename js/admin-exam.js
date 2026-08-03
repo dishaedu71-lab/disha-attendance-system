@@ -1,11 +1,9 @@
-alert("ADMIN JS RUNNING");
-// ==========================================
+// =========================================
 // DISHA COMPUTER EDUCATION
 // ADMIN EXAM SETTINGS
-// ==========================================
+// =========================================
 
-window.addEventListener("firebase-ready", () => {
-    alert("Firebase Ready");
+function initAdminExam() {
 
 const db = window.db;
 
@@ -17,12 +15,12 @@ const randomQuestion = document.getElementById("randomQuestion");
 const examStatus = document.getElementById("examStatus");
 const saveBtn = document.getElementById("saveSettings");
 
-console.log("Admin Exam JS Loaded");
-    // ==========================================
+console.log("Admin Exam JS Started");
+    // =========================================
 // LOAD SETTINGS
-// ==========================================
+// =========================================
 
-async function loadSettings(){
+async function loadSettings() {
 
 try{
 
@@ -36,7 +34,7 @@ const snap = await window.getDoc(ref);
 
 if(!snap.exists()){
 
-alert("No Settings Found For " + course.value);
+alert("No Settings Found");
 
 return;
 
@@ -44,17 +42,22 @@ return;
 
 const data = snap.data();
 
-examCode.value = data.examCode;
-totalQuestions.value = data.totalQuestions;
-examTime.value = data.examTime;
-randomQuestion.checked = data.random;
-examStatus.checked = data.active;
+examCode.value = data.examCode || "";
+
+totalQuestions.value = data.totalQuestions || 100;
+
+examTime.value = data.examTime || 90;
+
+randomQuestion.checked = data.random ?? true;
+
+examStatus.checked = data.active ?? true;
 
 console.log("Settings Loaded");
 
 }catch(err){
 
 console.error(err);
+
 alert(err.message);
 
 }
@@ -64,9 +67,9 @@ alert(err.message);
 loadSettings();
 
 course.addEventListener("change",loadSettings);
-    // ==========================================
+    // =========================================
 // SAVE SETTINGS
-// ==========================================
+// =========================================
 
 saveBtn.addEventListener("click", async () => {
 
@@ -107,8 +110,21 @@ alert(err.message);
 }
 
 });
-    // ==========================================
-// START
-// ==========================================
+    // =========================================
+// START SYSTEM
+// =========================================
 
-}); // firebase-ready end
+}
+
+// Firebase Ready होने का इंतज़ार मत करो
+// अगर Firebase पहले से Load है तो तुरंत Start करो
+
+if (window.db) {
+
+    initAdminExam();
+
+} else {
+
+    window.addEventListener("firebase-ready", initAdminExam);
+
+}
