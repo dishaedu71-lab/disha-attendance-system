@@ -5,13 +5,13 @@ import {
   getFirestore,
   collection,
   addDoc,
+  getDoc,
   getDocs,
   updateDoc,
   deleteDoc,
   doc,
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 // Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCi0gz9XPJvAUUaMaGYXEC2jTQuOmkRRGM",
@@ -33,6 +33,7 @@ const db = getFirestore(app);
 window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
+window.getDoc = getDoc;
 window.getDocs = getDocs;
 window.updateDoc = updateDoc;
 window.deleteDoc = deleteDoc;
