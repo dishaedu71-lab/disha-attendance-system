@@ -1,1 +1,144 @@
+/* ===========================
+   ONLINE EXAM
+=========================== */
 
+.hero{
+    width:100%;
+    padding:30px;
+}
+
+.glass{
+    max-width:1200px;
+    margin:auto;
+    padding:40px;
+    text-align:center;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.2);
+    color:#fff;
+}
+
+.glass h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.glass p{
+    font-size:20px;
+    color:#ddd;
+}
+
+/* Course Cards */
+
+.dashboard{
+
+    width:95%;
+    max-width:1400px;
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+
+}
+
+.course-card{
+
+    text-decoration:none;
+
+    text-align:center;
+
+    padding:35px 20px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    transition:.35s;
+
+    color:#fff;
+
+}
+
+.course-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 0 30px cyan;
+
+}
+
+.course-card i{
+
+    font-size:65px;
+
+    color:#00ffd5;
+
+    margin-bottom:20px;
+
+}
+
+.course-card h2{
+
+    font-size:28px;
+
+    margin-bottom:10px;
+
+}
+
+.course-card p{
+
+    font-size:17px;
+
+    color:#ddd;
+
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.glass{
+
+padding:25px;
+
+}
+
+.glass h1{
+
+font-size:30px;
+
+}
+
+.glass p{
+
+font-size:16px;
+
+}
+
+.course-card{
+
+padding:25px;
+
+}
+
+.course-card h2{
+
+font-size:22px;
+
+}
+
+.course-card i{
+
+font-size:50px;
+
+}
+
+}
