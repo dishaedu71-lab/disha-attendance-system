@@ -198,6 +198,74 @@ document.addEventListener("keydown", function(e){
     }
 
 });
+  // ================= FULL SCREEN =================
+
+function openFullscreen(){
+
+if(document.documentElement.requestFullscreen){
+
+document.documentElement.requestFullscreen();
+
+}
+
+}
+
+openFullscreen();
+
+  // ================= FULL SCREEN SECURITY =================
+
+let exitCount = 0;
+
+document.addEventListener("fullscreenchange", function(){
+
+    if(!document.fullscreenElement){
+
+        exitCount++;
+
+        alert("Please Stay In Full Screen!\n\nWarning : " + exitCount + " / 3");
+
+        if(exitCount >= 3){
+
+            alert("Exam Auto Submitted!");
+
+            document.getElementById("submitBtn").click();
+
+            return;
+
+        }
+
+        openFullscreen();
+
+    }
+
+});
+  // ================= TAB SECURITY =================
+
+let tabWarning = 0;
+
+document.addEventListener("visibilitychange", function(){
+
+    if(document.hidden){
+
+        tabWarning++;
+
+        alert(
+            "Tab Change Detected!\n\nWarning : "
+            + tabWarning +
+            " / 3"
+        );
+
+        if(tabWarning >= 3){
+
+            alert("Exam Auto Submitted!");
+
+            document.getElementById("submitBtn").click();
+
+        }
+
+    }
+
+});
 
 </script>
 
