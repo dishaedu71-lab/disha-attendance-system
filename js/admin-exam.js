@@ -1,3 +1,4 @@
+alert("ADMIN JS RUNNING");
 // ==========================================
 // DISHA COMPUTER EDUCATION
 // ADMIN EXAM SETTINGS
