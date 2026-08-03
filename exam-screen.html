@@ -228,26 +228,15 @@ document.addEventListener("fullscreenchange", function(){
 
             alert("Exam Auto Submitted!");
 
-            document.getElementById("startExamBtn").onclick = async () => {
+            document.getElementById("submitBtn").click();
 
-    const code = document.getElementById("examCode").value.trim();
+            return;
 
-    if(code !== EXAM_CODES[course]){
+        }
 
-        alert("Invalid Exam Code");
-        return;
-
-    }
-
-    if(document.documentElement.requestFullscreen){
-
-        await document.documentElement.requestFullscreen();
+        openFullscreen();
 
     }
-
-    window.location.href = "exam-screen.html";
-
-};
 
 });
   // ================= TAB SECURITY =================
