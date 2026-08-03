@@ -1,151 +1,154 @@
-// ===============================
-// QUESTION BANK
+// =========================================
 // DISHA COMPUTER EDUCATION
-// ===============================
+// QUESTION BANK (PART-1)
+// =========================================
 
-window.addEventListener("firebase-ready", () => {    
-console.log("Question Bank Loaded");
-const db = window.db;
-const collection = window.collection;
-const addDoc = window.addDoc;
-const getDocs = window.getDocs;
-const deleteDoc = window.deleteDoc;
-const docRef = window.doc;
+function initQuestionBank() {
 
-const saveBtn = document.getElementById("saveQuestion");
+    console.log("Question Bank Started");
 
-    console.log("saveBtn =", saveBtn);
+    const db = window.db;
+    const collection = window.collection;
+    const addDoc = window.addDoc;
+    const getDocs = window.getDocs;
+    const deleteDoc = window.deleteDoc;
+    const docRef = window.doc;
 
-const questionList = document.getElementById("questionList");
+    const saveBtn = document.getElementById("saveQuestion");
+    const questionList = document.getElementById("questionList");
 
+    if (!saveBtn) {
+        alert("Save Button Not Found");
+        return;
+    }
 
-//================ SAVE QUESTION =================
+    // ================= SAVE QUESTION =================
 
-saveBtn.onclick = async () => {
-    
-    alert("Save Button Clicked");
+    saveBtn.addEventListener("click", async () => {
 
-    try {
+        try {
 
-        console.log("Save Button Clicked");
+            const data = {
 
-        const data = {
+                course: document.getElementById("course").value,
+                subject: document.getElementById("subject").value,
+                chapter: document.getElementById("chapter").value,
+                question: document.getElementById("question").value,
+                A: document.getElementById("optionA").value,
+                B: document.getElementById("optionB").value,
+                C: document.getElementById("optionC").value,
+                D: document.getElementById("optionD").value,
+                answer: document.getElementById("answer").value,
+                createdAt: Date.now()
 
-            course: document.getElementById("course").value,
-            subject: document.getElementById("subject").value,
-            chapter: document.getElementById("chapter").value,
-            question: document.getElementById("question").value,
-            A: document.getElementById("optionA").value,
-            B: document.getElementById("optionB").value,
-            C: document.getElementById("optionC").value,
-            D: document.getElementById("optionD").value,
-            answer: document.getElementById("answer").value,
-            createdAt: Date.now()
+            };
 
-        };
+            await addDoc(
+                collection(db, "questions"),
+                data
+            );
 
-        console.log(data);
+            alert("Question Saved Successfully");
 
-        await addDoc(
-            collection(db, "questions"),
-            data
+            loadQuestions();
+
+        } catch (err) {
+
+            console.error(err);
+            alert(err.message);
+
+        }
+
+    });
+
+    // ================= LOAD QUESTIONS =================
+
+    async function loadQuestions() {
+
+        questionList.innerHTML = "Loading...";
+
+        const snap = await getDocs(
+            collection(db, "questions")
         );
 
-        alert("Question Saved Successfully");
+        questionList.innerHTML = "";
 
-        loadQuestions();
+            snap.forEach((item) => {
 
-    } catch (err) {
+            const q = item.data();
+            const id = item.id;
 
-        console.error("SAVE ERROR:", err);
-        alert(err.message);
+            questionList.innerHTML += `
+
+            <div class="question-item">
+
+                <h3>${q.question}</h3>
+
+                <p><b>Course :</b> ${q.course}</p>
+                <p><b>Subject :</b> ${q.subject}</p>
+                <p><b>Chapter :</b> ${q.chapter}</p>
+
+                <p>A : ${q.A}</p>
+                <p>B : ${q.B}</p>
+                <p>C : ${q.C}</p>
+                <p>D : ${q.D}</p>
+
+                <p style="color:lime;">
+                    <b>Answer :</b> ${q.answer}
+                </p>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteQuestion('${id}')">
+                    🗑 Delete
+                </button>
+
+            </div>
+
+            `;
+
+        });
 
     }
 
-};
-
-
-//================ LOAD QUESTION =================
-
-async function loadQuestions(){
-
-questionList.innerHTML="Loading...";
-
-const snap=await getDocs(
-
-collection(db,"questions")
-
-);
-
-questionList.innerHTML="";
-
-snap.forEach(item=>{
-
-const q = item.data();
-
-const id = item.id;
-
-questionList.innerHTML+=`
-
-<div class="question-item">
-
-<h3>${q.question}</h3>
-
-<p><b>Course :</b> ${q.course}</p>
-
-<p>A : ${q.A}</p>
-
-<p>B : ${q.B}</p>
-
-<p>C : ${q.C}</p>
-
-<p>D : ${q.D}</p>
-
-<p style="color:lime">
-
-Answer : ${q.answer}
-
-</p>
-
-<br>
-
-<button
-onclick="deleteQuestion('${id}')"
-style="
-background:red;
-color:white;
-padding:8px 15px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin-top:10px;">
-
-🗑 Delete
-
-</button>
-
-
-</div>
-
-`;
-
-});
-
-}
-loadQuestions();
-
-window.deleteQuestion = async function(id){
-
-    if(!confirm("Delete this Question?")) return;
-
-    await deleteDoc(
-        docRef(db,"questions",id)
-    );
-
-    alert("Question Deleted Successfully");
-
     loadQuestions();
 
-}
+    // ================= DELETE QUESTION =================
 
-});
+    window.deleteQuestion = async function(id){
+
+        if(!confirm("Delete this Question?")) return;
+
+        try{
+
+            await deleteDoc(
+                docRef(db,"questions",id)
+            );
+
+            alert("Question Deleted Successfully");
+
+            loadQuestions();
+
+        }catch(err){
+
+            console.error(err);
+
+            alert(err.message);
+
+        }
+
+    };
+
+} // initQuestionBank() समाप्त
+
+// ================= START =================
+
+if (window.db) {
+
+    initQuestionBank();
+
+} else {
+
+    window.addEventListener("firebase-ready", initQuestionBank);
+
+}
