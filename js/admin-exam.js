@@ -59,6 +59,8 @@ console.error(err);
 
 loadSettings();
 
+    alert("admin-exam.js Loaded");
+
 course.onchange = loadSettings;
     // ================= SAVE SETTINGS =================
 
