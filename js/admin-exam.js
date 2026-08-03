@@ -4,114 +4,114 @@
 // PART-1
 // =======================================
 
-window.addEventListener("firebase-ready", async () => {
+window.addEventListener("firebase-ready", () => {
 
-    const db = window.db;
+const db = window.db;
 
-    const courseSelect = document.getElementById("course");
+const course = document.getElementById("course");
 
-    const examCode = document.getElementById("examCode");
+const examCode = document.getElementById("examCode");
 
-    const totalQuestions = document.getElementById("totalQuestions");
+const totalQuestions = document.getElementById("totalQuestions");
 
-    const examTime = document.getElementById("examTime");
+const examTime = document.getElementById("examTime");
 
-    const randomQuestion = document.getElementById("randomQuestion");
+const randomQuestion = document.getElementById("randomQuestion");
 
-    const examStatus = document.getElementById("examStatus");
+const examStatus = document.getElementById("examStatus");
 
-    const saveBtn = document.getElementById("saveSettings");
+const saveBtn = document.getElementById("saveSettings");
 
-    let docId = "";
+let currentDocId = "";
 
-    // ================= LOAD SETTINGS =================
+// ================= LOAD =================
 
-    async function loadSettings() {
+async function loadSettings(){
 
-        const snap = await window.getDocs(
+const snap = await window.getDocs(
 
-            window.collection(db, "exam_settings")
+window.collection(db,"exam_settings")
 
-        );
+);
 
-        docId = "";
+currentDocId="";
 
-        snap.forEach(doc => {
+snap.forEach(doc=>{
 
-            const data = doc.data();
+const data = doc.data();
 
-            if (data.course === courseSelect.value) {
+if(data.course===course.value){
 
-                docId = doc.id;
+currentDocId=doc.id;
 
-                examCode.value = data.examCode;
+examCode.value=data.examCode;
 
-                totalQuestions.value = data.totalQuestions;
+totalQuestions.value=data.totalQuestions;
 
-                examTime.value = data.examTime;
+examTime.value=data.examTime;
 
-                randomQuestion.checked = data.random;
+randomQuestion.checked=data.random;
 
-                examStatus.checked = data.active;
+examStatus.checked=data.active;
 
-            }
+}
 
-        });
+});
+
+}
+
+loadSettings();
+
+course.onchange=loadSettings;
+    // ================= SAVE SETTINGS =================
+
+saveBtn.onclick = async () => {
+
+    if(currentDocId==""){
+
+        alert("Course Settings Not Found");
+
+        return;
 
     }
 
-    await loadSettings();
+    try{
 
-    courseSelect.onchange = loadSettings;
-        // ================= SAVE SETTINGS =================
+        await window.updateDoc(
 
-    saveBtn.onclick = async () => {
+            window.doc(db,"exam_settings",currentDocId),
 
-        if (docId == "") {
+            {
 
-            alert("Course Settings Not Found");
+                course:course.value,
 
-            return;
+                examCode:examCode.value,
 
-        }
+                totalQuestions:Number(totalQuestions.value),
 
-        try {
+                examTime:Number(examTime.value),
 
-            await window.updateDoc(
+                random:randomQuestion.checked,
 
-                window.doc(db, "exam_settings", docId),
+                active:examStatus.checked
 
-                {
+            }
 
-                    course: courseSelect.value,
+        );
 
-                    examCode: examCode.value,
+        alert("Settings Saved Successfully");
 
-                    totalQuestions: Number(totalQuestions.value),
+        loadSettings();
 
-                    examTime: Number(examTime.value),
+    }catch(err){
 
-                    random: randomQuestion.checked,
+        console.error(err);
 
-                    active: examStatus.checked
+        alert(err.message);
 
-                }
+    }
 
-            );
+};
+    // ================= END =================
 
-            alert("Exam Settings Saved Successfully");
-
-            await loadSettings();
-
-        } catch (err) {
-
-            console.error(err);
-
-            alert(err.message);
-
-        }
-
-    };
-    });
-
-                        
+}); // firebase-ready समाप्त
