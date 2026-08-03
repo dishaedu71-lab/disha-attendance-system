@@ -3,8 +3,8 @@
 // DISHA COMPUTER EDUCATION
 // ===============================
 
-window.addEventListener("firebase-ready", () => {
-
+window.addEventListener("firebase-ready", () => {    
+console.log("Question Bank Loaded");
 const db = window.db;
 const collection = window.collection;
 const addDoc = window.addDoc;
