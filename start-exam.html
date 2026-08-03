@@ -108,38 +108,75 @@ const course = localStorage.getItem("selectedCourse") || "Course";
 document.getElementById("courseName").innerHTML =
 "Selected Course : " + course;
 
-// अभी Testing के लिए
-const EXAM_CODES = {
+window.addEventListener("firebase-ready", async () => {
 
-"O Level":"OLEVEL2026",
+    const snap = await window.getDocs(
+        window.collection(window.db, "exam_settings")
+    );
 
-"CCC":"CCC2026",
+    let setting = null;
 
-"ADCA":"ADCA2026",
+    snap.forEach((doc) => {
 
-"Python":"PYTHON2026",
+        const data = doc.data();
 
-"Web Development":"WEB2026",
+        if (data.course === course) {
+            setting = data;
+        }
 
-"Cyber Security":"CYBER2026"
+    });
 
-};
+    if (!setting) {
 
-document.getElementById("startExamBtn").onclick=()=>{
+        alert("Exam Settings Not Found");
 
-const code=document.getElementById("examCode").value.trim();
+        return;
 
-if(code!==EXAM_CODES[course]){
+    }
 
-alert("Invalid Exam Code");
+    document.getElementById("totalQuestion").innerHTML =
+    setting.totalQuestions;
 
-return;
+    document.getElementById("examTime").innerHTML =
+    setting.examTime + " Minutes";
 
-}
+    document.getElementById("startExamBtn").onclick = () => {
 
-window.location.href="exam-screen.html";
+        const code =
+        document.getElementById("examCode").value.trim();
 
-};
+        if (!setting.active) {
+
+            alert("Exam is currently inactive.");
+
+            return;
+
+        }
+
+        if (code !== setting.examCode) {
+
+            alert("Invalid Exam Code");
+
+            return;
+
+        }
+
+        localStorage.setItem(
+            "examTime",
+            setting.examTime
+        );
+
+        localStorage.setItem(
+            "totalQuestions",
+            setting.totalQuestions
+        );
+
+        window.location.href = "exam-screen.html";
+
+    };
+
+});
+  <script type="module" src="js/firebase.js"></script>
 
 </script>
 
