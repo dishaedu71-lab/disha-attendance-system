@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Start Exam | Disha Computer Education</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/exam.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+DISHA COMPUTER EDUCATION
+</div>
+
+<ul>
+
+<li><a href="student-dashboard.html">Dashboard</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="glass">
+
+<h1>
+
+<i class="fa-solid fa-circle-play"></i>
+
+Start Online Exam
+
+</h1>
+
+<p>
+
+Please verify your exam details before starting.
+
+</p>
+
+</div>
+
+</section>
+
+<section class="dashboard">
+
+<div class="card" style="max-width:700px;margin:auto;padding:30px;">
+
+<h2 id="courseName"></h2>
+
+<hr><br>
+
+<p><b>Total Questions :</b> <span id="totalQuestion">100</span></p>
+
+<p><b>Exam Time :</b> <span id="examTime">90 Minutes</span></p>
+
+<p><b>Passing Marks :</b> 50%</p>
+
+<p><b>Negative Marking :</b> No</p>
+
+<p><b>Question Type :</b> Random MCQ</p>
+
+<br>
+
+<button id="startExamBtn" class="login-btn">
+
+START EXAM
+
+</button>
+
+</div>
+
+</section>
+
+<script>
+
+const course = localStorage.getItem("selectedCourse") || "Course";
+
+document.getElementById("courseName").innerHTML =
+"Selected Course : " + course;
+
+document.getElementById("startExamBtn").onclick = () =>{
+
+window.location.href="exam-screen.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
