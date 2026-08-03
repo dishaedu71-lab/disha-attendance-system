@@ -1,3 +1,4 @@
+alert("admin-question-bank.js Loaded");
 // ===============================
 // QUESTION BANK
 // DISHA COMPUTER EDUCATION
