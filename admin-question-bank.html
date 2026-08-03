@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Question Bank</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin-question-bank.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+DISHA COMPUTER EDUCATION
+
+</div>
+
+<ul>
+
+<li><a href="admin-dashboard.html">Dashboard</a></li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="glass">
+
+<h1>
+
+<i class="fa-solid fa-database"></i>
+
+Question Bank
+
+</h1>
+
+<p>
+
+Admin Control Panel
+
+</p>
+
+</div>
+
+</section>
+
+<section class="dashboard">
+
+<div class="card">
+
+<h2>Add New Question</h2>
+
+<select id="course">
+
+<option>O Level</option>
+
+<option>CCC</option>
+
+<option>ADCA</option>
+
+<option>Python</option>
+
+<option>Web Development</option>
+
+<option>Cyber Security</option>
+
+</select>
+
+<input
+type="text"
+id="subject"
+placeholder="Subject">
+
+<input
+type="text"
+id="chapter"
+placeholder="Chapter">
+
+<textarea
+id="question"
+placeholder="Question"></textarea>
+
+<input
+type="text"
+id="optionA"
+placeholder="Option A">
+
+<input
+type="text"
+id="optionB"
+placeholder="Option B">
+
+<input
+type="text"
+id="optionC"
+placeholder="Option C">
+
+<input
+type="text"
+id="optionD"
+placeholder="Option D">
+
+<select id="answer">
+
+<option>A</option>
+
+<option>B</option>
+
+<option>C</option>
+
+<option>D</option>
+
+</select>
+
+<button id="saveQuestion">
+
+Save Question
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Question List</h2>
+
+<div id="questionList">
+
+No Question Found
+
+</div>
+
+</div>
+
+</section>
+
+<script type="module" src="js/admin-question-bank.js"></script>
+
+</body>
+
+</html>
