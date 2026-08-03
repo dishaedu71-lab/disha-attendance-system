@@ -5,6 +5,7 @@ alert("ADMIN JS RUNNING");
 // ==========================================
 
 window.addEventListener("firebase-ready", () => {
+    alert("Firebase Ready");
 
 const db = window.db;
 
