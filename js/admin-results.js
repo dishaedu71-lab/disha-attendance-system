@@ -51,6 +51,24 @@ table.innerHTML += `
 
 <td>${r.date}</td>
 
+<td>
+
+<button
+onclick="deleteResult('${doc.id}')"
+style="
+background:red;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;">
+
+🗑 Delete
+
+</button>
+
+</td>
+
 </tr>
 
 `;
@@ -68,3 +86,35 @@ table.innerHTML =
 }
 
 });
+
+// ================= DELETE RESULT =================
+
+window.deleteResult = async function(id){
+
+    if(!confirm("Delete this Result?")){
+
+        return;
+
+    }
+
+    try{
+
+        await window.deleteDoc(
+
+            window.doc(window.db,"results",id)
+
+        );
+
+        alert("Result Deleted Successfully");
+
+        location.reload();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+};
