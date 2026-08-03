@@ -8,7 +8,34 @@ const course = localStorage.getItem("selectedCourse") || "O Level";
 document.getElementById("courseName").innerHTML =
 "Course : " + course;
 
-let questions = QUESTION_BANK[course] || [];
+let questions = [];
+
+window.addEventListener("firebase-ready", async () => {
+
+    const snap = await window.getDocs(
+        window.collection(window.db, "questions")
+    );
+
+    questions = [];
+
+    snap.forEach((doc) => {
+
+        const q = doc.data();
+
+        if (q.course === course) {
+
+            questions.push(q);
+
+        }
+
+    });
+
+    // Random Question Order
+    questions.sort(() => Math.random() - 0.5);
+
+    loadQuestion();
+
+});
 
 let current = 0;
 
@@ -53,8 +80,6 @@ function loadQuestion() {
     }
 
 }
-
-loadQuestion();
 
 document.querySelectorAll("input[name='answer']")
 .forEach(r => {
