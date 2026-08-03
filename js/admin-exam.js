@@ -1,7 +1,6 @@
 // =======================================
-// DISHA COMPUTER EDUCATION
 // ADMIN EXAM SETTINGS
-// PART-1
+// DISHA COMPUTER EDUCATION
 // =======================================
 
 window.addEventListener("firebase-ready", () => {
@@ -12,9 +11,9 @@ const course = document.getElementById("course");
 
 const examCode = document.getElementById("examCode");
 
-const totalQuestions = document.getElementById("totalQuestions");
-
 const examTime = document.getElementById("examTime");
+
+const totalQuestions = document.getElementById("totalQuestions");
 
 const randomQuestion = document.getElementById("randomQuestion");
 
@@ -22,86 +21,72 @@ const examStatus = document.getElementById("examStatus");
 
 const saveBtn = document.getElementById("saveSettings");
 
-let currentDocId = "";
-
-// ================= LOAD =================
-
 async function loadSettings(){
 
-const snap = await window.getDocs(
+try{
 
-window.collection(db,"exam_settings")
+const ref = window.doc(db,"exam_settings",course.value);
 
-);
+const snap = await window.getDoc(ref);
 
-currentDocId="";
+if(!snap.exists()){
 
-snap.forEach(doc=>{
+alert("Settings Not Found");
 
-const data = doc.data();
-
-if(data.course===course.value){
-
-currentDocId=doc.id;
-
-examCode.value=data.examCode;
-
-totalQuestions.value=data.totalQuestions;
-
-examTime.value=data.examTime;
-
-randomQuestion.checked=data.random;
-
-examStatus.checked=data.active;
+return;
 
 }
 
-});
+const data = snap.data();
+
+examCode.value = data.examCode;
+
+examTime.value = data.examTime;
+
+totalQuestions.value = data.totalQuestions;
+
+randomQuestion.checked = data.random;
+
+examStatus.checked = data.active;
+
+}catch(err){
+
+console.error(err);
+
+}
 
 }
 
 loadSettings();
 
-course.onchange=loadSettings;
+course.onchange = loadSettings;
     // ================= SAVE SETTINGS =================
 
 saveBtn.onclick = async () => {
 
-    if(currentDocId==""){
-
-        alert("Course Settings Not Found");
-
-        return;
-
-    }
-
     try{
 
-        await window.updateDoc(
+        const ref = window.doc(db,"exam_settings",course.value);
 
-            window.doc(db,"exam_settings",currentDocId),
+        await window.updateDoc(ref,{
 
-            {
+            course: course.value,
 
-                course:course.value,
+            examCode: examCode.value,
 
-                examCode:examCode.value,
+            examTime: Number(examTime.value),
 
-                totalQuestions:Number(totalQuestions.value),
+            totalQuestions: Number(totalQuestions.value),
 
-                examTime:Number(examTime.value),
+            random: randomQuestion.checked,
 
-                random:randomQuestion.checked,
+            active: examStatus.checked
 
-                active:examStatus.checked
-
-            }
-
-        );
+        });
 
         alert("Settings Saved Successfully");
 
-        loadSettings();
+        await loadSettings();
 
     }catch(err){
 
@@ -112,6 +97,6 @@ saveBtn.onclick = async () => {
     }
 
 };
-    // ================= END =================
+    // ================= START =================
 
-}); // firebase-ready समाप्त
+}); // firebase-ready end
