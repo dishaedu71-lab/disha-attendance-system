@@ -160,17 +160,60 @@ document.getElementById("submitBtn").onclick = async () => {
 
         );
 
-        alert(
-`Exam Submitted Successfully
+        // ================= RESULT POPUP =================
 
-Correct : ${correct}
+let status = percentage >= 50 ? "PASS" : "FAIL";
 
-Wrong : ${wrong}
+document.getElementById("resultCourse").innerHTML =
+"Course : " + course;
 
-Percentage : ${percentage}%`
-        );
+document.getElementById("resultMarks").innerHTML =
+"Marks : " + correct + " / " + questions.length;
 
-        window.location.href = "student-dashboard.html";
+document.getElementById("resultPercentage").innerHTML =
+"Percentage : " + percentage + "%";
+
+const statusBox = document.getElementById("resultStatus");
+
+if(status=="PASS"){
+
+statusBox.innerHTML="🟢 PASS";
+
+statusBox.style.color="green";
+
+}else{
+
+statusBox.innerHTML="🔴 FAIL";
+
+statusBox.style.color="red";
+
+}
+
+document.getElementById("resultIcon").innerHTML =
+status == "PASS"
+? "🎉"
+: "📄";
+
+document.getElementById("resultPopup").style.display = "flex";
+
+        document.querySelector("#resultPopup > div").animate(
+
+[
+{transform:"scale(.5)",opacity:0},
+{transform:"scale(1)",opacity:1}
+],
+
+{
+duration:400
+}
+
+);
+
+document.getElementById("resultOkBtn").onclick = () => {
+
+    window.location.href = "student-dashboard.html";
+
+};
 
     } catch (e) {
 
