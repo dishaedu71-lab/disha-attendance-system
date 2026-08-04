@@ -223,6 +223,11 @@ window.addEventListener("firebase-ready", async () => {
             setting.totalQuestions
         );
 
+        localStorage.setItem(
+    "passingMarks",
+    setting.passingMarks
+);
+
         window.location.href = "exam-screen.html";
 
     };
