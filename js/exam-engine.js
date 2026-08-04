@@ -162,7 +162,14 @@ document.getElementById("submitBtn").onclick = async () => {
 
         // ================= RESULT POPUP =================
 
-let status = percentage >= 50 ? "PASS" : "FAIL";
+const passingMarks = Number(
+    localStorage.getItem("passingMarks") || 50
+);
+
+let status =
+correct >= passingMarks
+? "PASS"
+: "FAIL";
 
 document.getElementById("resultCourse").innerHTML =
 "Course : " + course;
