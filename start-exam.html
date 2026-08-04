@@ -185,13 +185,13 @@ window.addEventListener("firebase-ready", async () => {
 
     });
 
-    if (!setting) {
+    if (!setting.active) {
 
-        alert("Exam Settings Not Found");
+    document.getElementById("examClosedPopup").style.display = "flex";
 
-        return;
+    return;
 
-    }
+}
 
     document.getElementById("totalQuestion").innerHTML =
     setting.totalQuestions;
@@ -204,14 +204,7 @@ window.addEventListener("firebase-ready", async () => {
         const code =
         document.getElementById("examCode").value.trim();
 
-        if (!setting.active) {
-
-            alert("Exam is currently inactive.");
-
-            return;
-
-        }
-
+        
         if (code !== setting.examCode) {
 
             alert("Invalid Exam Code");
@@ -235,6 +228,11 @@ window.addEventListener("firebase-ready", async () => {
     };
 
 });
+    document.getElementById("closePopup").onclick = function(){
+
+    document.getElementById("examClosedPopup").style.display = "none";
+
+};
 </script>
 
 </body>
