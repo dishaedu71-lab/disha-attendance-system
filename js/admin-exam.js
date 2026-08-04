@@ -11,6 +11,7 @@ const course = document.getElementById("course");
 const examCode = document.getElementById("examCode");
 const totalQuestions = document.getElementById("totalQuestions");
 const examTime = document.getElementById("examTime");
+const passingMarks = document.getElementById("passingMarks");
 const randomQuestion = document.getElementById("randomQuestion");
 const examStatus = document.getElementById("examStatus");
 const saveBtn = document.getElementById("saveSettings");
@@ -45,6 +46,8 @@ const data = snap.data();
 examCode.value = data.examCode || "";
 
 totalQuestions.value = data.totalQuestions || 100;
+
+passingMarks.value = data.passingMarks || 50;
 
 examTime.value = data.examTime || 90;
 
@@ -88,6 +91,8 @@ course: course.value,
 examCode: examCode.value,
 
 totalQuestions: Number(totalQuestions.value),
+
+passingMarks: Number(passingMarks.value),
 
 examTime: Number(examTime.value),
 
