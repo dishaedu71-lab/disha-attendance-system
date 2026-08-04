@@ -167,7 +167,7 @@ const passingMarks = Number(
 );
 
 let status =
-correct >= passingMarks
+percentage >= passingMarks
 ? "PASS"
 : "FAIL";
 
