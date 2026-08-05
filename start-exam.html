@@ -204,6 +204,54 @@ window.addEventListener("firebase-ready", async () => {
         const code =
         document.getElementById("examCode").value.trim();
 
+        // =====================
+// DATE & TIME CHECK
+// =====================
+
+const today = new Date();
+
+const currentDate =
+today.toISOString().split("T")[0];
+
+const currentTime =
+today.toTimeString().substring(0,5);
+
+// Wrong Date
+
+if(currentDate != setting.examDate){
+
+alert("❌ Exam is not scheduled today.");
+
+return;
+
+}
+
+// Exam Not Started
+
+if(currentTime < setting.startTime){
+
+alert(
+"⏳ Exam has not started yet.\n\nStart Time : "
++ setting.startTime
+);
+
+return;
+
+}
+
+// Login Time Over
+
+if(currentTime > setting.lastLoginTime){
+
+alert(
+"🚫 Login Time Over.\n\nLast Login Time : "
++ setting.lastLoginTime
+);
+
+return;
+
+}
+
         
         if (code !== setting.examCode) {
 
