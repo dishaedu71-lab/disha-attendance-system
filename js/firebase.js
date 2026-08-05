@@ -5,12 +5,13 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDoc,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   doc,
-  onSnapshot
+  onSnapshot,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 // Firebase Config
 const firebaseConfig = {
@@ -33,12 +34,13 @@ const db = getFirestore(app);
 window.db = db;
 window.collection = collection;
 window.addDoc = addDoc;
-window.getDoc = getDoc;
 window.getDocs = getDocs;
+window.getDoc = getDoc;
 window.updateDoc = updateDoc;
 window.deleteDoc = deleteDoc;
 window.doc = doc;
 window.onSnapshot = onSnapshot;
+window.serverTimestamp = serverTimestamp;
 
 console.log("Firebase Connected Successfully");
 
