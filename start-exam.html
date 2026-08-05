@@ -291,6 +291,59 @@ window.addEventListener("firebase-ready", async () => {
 
     document.getElementById("examClosedPopup").style.display = "flex";
 
+        // ================= LIVE COUNTDOWN =================
+
+const timerBox = document.getElementById("countDown");
+
+const interval = setInterval(() => {
+
+    const now = new Date();
+
+    const today = now.toISOString().split("T")[0];
+
+    const start = new Date(
+        today + "T" + setting.startTime + ":00"
+    );
+
+    const diff = start - now;
+
+   if(diff <= 0){
+
+    clearInterval(interval);
+
+    timerBox.innerHTML = "00:00:00";
+
+    document.getElementById("timeIcon").innerHTML = "✅";
+
+    document.getElementById("timeTitle").innerHTML =
+    "EXAM STARTED";
+
+    document.getElementById("timeMessage").innerHTML =
+    "Refreshing...";
+
+    setTimeout(() => {
+
+        location.reload();
+
+    },1500);
+
+    return;
+
+}
+
+    const h = Math.floor(diff / 3600000);
+
+    const m = Math.floor((diff % 3600000) / 60000);
+
+    const s = Math.floor((diff % 60000) / 1000);
+
+    timerBox.innerHTML =
+        String(h).padStart(2,"0") + ":" +
+        String(m).padStart(2,"0") + ":" +
+        String(s).padStart(2,"0");
+
+},1000);
+
     return;
 
 }
