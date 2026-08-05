@@ -14,6 +14,29 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <style>
+
+@keyframes blink{
+
+0%{
+transform:scale(1);
+opacity:1;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.4;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -159,6 +182,72 @@ OK
 </div>
 
 </div>
+
+<div id="timePopup"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+z-index:99999;
+justify-content:center;
+align-items:center;">
+
+<div id="timePopupBox"
+style="
+background:white;
+width:450px;
+max-width:90%;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 35px #00bfff;">
+
+<h1
+id="timeIcon"
+style="
+font-size:70px;
+animation:blink 1s infinite;">
+⏳
+</h1>
+
+<h2 id="timeTitle">
+
+EXAM NOT STARTED
+
+</h2>
+
+<hr><br>
+
+<h3 id="timeMessage">
+
+Please Wait...
+
+</h3>
+
+<br>
+
+<button
+id="timeOkBtn"
+style="
+padding:12px 35px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;">
+
+OK
+
+</button>
+
+</div>
+
+</div>
     <script type="module" src="js/firebase.js"></script>
 <script>
 
@@ -230,9 +319,27 @@ return;
 
 if(currentTime < setting.startTime){
 
-alert(
-"⏳ Exam has not started yet.\n\nStart Time : "
-+ setting.startTime
+document.getElementById("timeIcon").innerHTML = "⏳";
+
+document.getElementById("timeTitle").innerHTML =
+"EXAM NOT STARTED";
+
+document.getElementById("timeMessage").innerHTML =
+"Start Time : " + setting.startTime;
+
+document.getElementById("timePopup").style.display = "flex";
+
+document.getElementById("timePopupBox").animate(
+
+[
+{transform:"scale(.5)",opacity:0},
+{transform:"scale(1)",opacity:1}
+],
+
+{
+duration:400
+}
+
 );
 
 return;
@@ -243,9 +350,27 @@ return;
 
 if(currentTime > setting.lastLoginTime){
 
-alert(
-"🚫 Login Time Over.\n\nLast Login Time : "
-+ setting.lastLoginTime
+document.getElementById("timeIcon").innerHTML = "🚫";
+
+document.getElementById("timeTitle").innerHTML =
+"LOGIN TIME OVER";
+
+document.getElementById("timeMessage").innerHTML =
+"Last Login Time : " + setting.lastLoginTime;
+
+document.getElementById("timePopup").style.display = "flex";
+
+document.getElementById("timePopupBox").animate(
+
+[
+{transform:"scale(.5)",opacity:0},
+{transform:"scale(1)",opacity:1}
+],
+
+{
+duration:400
+}
+
 );
 
 return;
@@ -286,6 +411,13 @@ return;
     document.getElementById("examClosedPopup").style.display = "none";
 
 };
+
+    document.getElementById("timeOkBtn").onclick = function(){
+
+    document.getElementById("timePopup").style.display = "none";
+
+};
+    
 </script>
 
 </body>
