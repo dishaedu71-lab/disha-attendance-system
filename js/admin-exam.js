@@ -11,6 +11,9 @@ const course = document.getElementById("course");
 const examCode = document.getElementById("examCode");
 const totalQuestions = document.getElementById("totalQuestions");
 const examTime = document.getElementById("examTime");
+const examDate = document.getElementById("examDate");
+const startTime = document.getElementById("startTime");
+const lastLoginTime = document.getElementById("lastLoginTime");
 const passingMarks = document.getElementById("passingMarks");
 const randomQuestion = document.getElementById("randomQuestion");
 const examStatus = document.getElementById("examStatus");
@@ -50,6 +53,12 @@ totalQuestions.value = data.totalQuestions || 100;
 passingMarks.value = data.passingMarks || 50;
 
 examTime.value = data.examTime || 90;
+
+examDate.value = data.examDate || "";
+
+startTime.value = data.startTime || "";
+
+lastLoginTime.value = data.lastLoginTime || "";
 
 randomQuestion.checked = data.random ?? true;
 
@@ -95,6 +104,12 @@ totalQuestions: Number(totalQuestions.value),
 passingMarks: Number(passingMarks.value),
 
 examTime: Number(examTime.value),
+
+examDate: examDate.value,
+
+startTime: startTime.value,
+
+lastLoginTime: lastLoginTime.value,
 
 random: randomQuestion.checked,
 
