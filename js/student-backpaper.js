@@ -139,19 +139,21 @@ localStorage.getItem("selectedCourse") || "";
 
 document.getElementById("bpMobile").value =
 localStorage.getItem("studentMobile") || "";
-  
-});
-// =====================================
+
+ // =====================================
 // SUBMIT BACK PAPER FORM
 // =====================================
 
 document.getElementById("submitBackForm").onclick = async () => {
 
-    const subject = document.getElementById("bpSubject").value;
+    const subject =
+    document.getElementById("bpSubject").value;
 
-    const reason = document.getElementById("bpReason").value;
+    const reason =
+    document.getElementById("bpReason").value;
 
-    const agree = document.getElementById("bpAgree").checked;
+    const agree =
+    document.getElementById("bpAgree").checked;
 
     if(subject==""){
 
@@ -199,6 +201,12 @@ document.getElementById("submitBackForm").onclick = async () => {
 
         alert("✅ Back Paper Form Submitted Successfully");
 
+        document.getElementById("bpSubject").value="";
+
+        document.getElementById("bpReason").value="";
+
+        document.getElementById("bpAgree").checked=false;
+
     }catch(err){
 
         console.error(err);
@@ -208,3 +216,5 @@ document.getElementById("submitBackForm").onclick = async () => {
     }
 
 };
+  
+});
