@@ -44,71 +44,152 @@ document.querySelector(".card").innerHTML = `
 
 <hr><br>
 
-<label><b>Student Name</b></label>
+<div
+style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:20px;">
+
+<div>
+
+<label><b>👤 Student Name</b></label>
 
 <input
 id="bpName"
 type="text"
 readonly
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
+style="
+width:100%;
+padding:14px;
+border-radius:12px;
+font-size:16px;">
 
-<label><b>Roll Number</b></label>
+</div>
+
+<div>
+
+<label><b>🆔 Roll Number</b></label>
 
 <input
 id="bpRoll"
 type="text"
 readonly
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
+style="
+width:100%;
+padding:14px;
+border-radius:12px;
+font-size:16px;">
 
-<label><b>Course</b></label>
+</div>
+
+<div>
+
+<label><b>🎓 Course</b></label>
 
 <input
 id="bpCourse"
 type="text"
 readonly
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
+style="
+width:100%;
+padding:14px;
+border-radius:12px;
+font-size:16px;">
 
-<label><b>Mobile Number</b></label>
+</div>
+
+<div>
+
+<label><b>📱 Mobile Number</b></label>
 
 <input
 id="bpMobile"
 type="text"
 readonly
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
+style="
+width:100%;
+padding:14px;
+border-radius:12px;
+font-size:16px;">
 
-<label><b>Back Subject</b></label>
+</div>
+
+</div>
+
+<hr style="margin:25px 0;">
+
+<label style="font-size:18px;">
+<b>📚 Back Paper Type</b>
+</label>
 
 <select
 id="bpSubject"
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
+style="
+width:100%;
+padding:15px;
+border-radius:12px;
+font-size:17px;
+margin-top:10px;
+margin-bottom:25px;">
+
 </select>
 
-<label><b>Reason (Optional)</b></label>
+<label style="font-size:18px;">
+<b>📝 Reason (Optional)</b>
+</label>
 
 <textarea
 id="bpReason"
-rows="4"
-style="width:100%;padding:12px;border-radius:10px;margin:8px 0;"></textarea>
+rows="5"
+placeholder="Write your reason here..."
+style="
+width:100%;
+padding:15px;
+border-radius:12px;
+font-size:16px;
+resize:none;
+margin-top:10px;
+margin-bottom:20px;"></textarea>
 
-<label>
+<div
+style="
+background:#f8f9fa;
+padding:15px;
+border-radius:12px;
+margin-bottom:25px;">
 
-<input type="checkbox" id="bpAgree">
+<label
+style="
+font-size:16px;
+cursor:pointer;">
 
-I declare that all information is correct.
+<input
+type="checkbox"
+id="bpAgree">
+
+I hereby declare that the above information is true and correct.
 
 </label>
 
-<br><br>
+</div>
 
 <button
 id="submitBackForm"
-class="login-btn"
-style="width:100%;">
+style="
+width:100%;
+padding:18px;
+border:none;
+border-radius:12px;
+font-size:20px;
+font-weight:bold;
+background:#007bff;
+color:white;
+cursor:pointer;">
 
-SUBMIT APPLICATION
+🚀 SUBMIT BACK PAPER APPLICATION
 
 </button>
-
 `;
 
   // ============================
