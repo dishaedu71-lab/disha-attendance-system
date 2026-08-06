@@ -57,6 +57,5 @@ Fill Form
 </button>
 
 `;
-
-};
+  
 });
