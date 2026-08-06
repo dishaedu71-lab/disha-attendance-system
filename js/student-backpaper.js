@@ -146,6 +146,8 @@ localStorage.getItem("studentMobile") || "";
 
 document.getElementById("submitBackForm").onclick = async () => {
 
+  console.log("Submit Button Clicked");
+
     const subject =
     document.getElementById("bpSubject").value;
 
