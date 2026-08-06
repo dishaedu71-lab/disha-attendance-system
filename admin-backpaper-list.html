@@ -4,11 +4,18 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Back Paper Requests</title>
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-<link rel="stylesheet" href="css/style.css">
+<title>
+
+Back Paper Requests
+
+</title>
+
+<link rel="stylesheet"
+href="css/style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -55,35 +62,77 @@ Back Paper Requests
 
 </h1>
 
+<p>
+
+Manage Student Back Paper Applications
+
+</p>
+
 </div>
 
 </section>
-
 <section class="dashboard">
 
-<div class="card"
+<div
 style="
-width:95%;
-max-width:1400px;
-margin:auto;
+width:98%;
+max-width:1700px;
+margin:auto;">
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:15px;">
+
+<h2
+style="
+color:white;
+font-size:32px;">
+
+📋 Back Paper Applications
+
+</h2>
+
+<input
+type="text"
+id="searchBox"
+placeholder="Search Student..."
+style="
+padding:12px 18px;
+width:320px;
+font-size:17px;
+border-radius:10px;
+border:none;">
+
+</div>
+
+<div
+class="card"
+style="
 padding:20px;
 overflow-x:auto;
-background:white;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,.2);">
+border-radius:18px;">
 
 <table
-width="100%"
+id="backTableMain"
 style="
+width:100%;
+min-width:1450px;
 border-collapse:collapse;
-min-width:1200px;
 text-align:center;">
 
 <thead>
 
-<tr style="background:#007bff;color:white;">
+<tr
+style="
+background:#007bff;
+color:white;">
 
-<th>Name</th>
+<th style="padding:15px;">Name</th>
 
 <th>Student ID</th>
 
@@ -95,11 +144,14 @@ text-align:center;">
 
 <th>Reason</th>
 
+<th>Date</th>
+
 <th>Status</th>
 
 <th>Action</th>
 
 </tr>
+
 </thead>
 
 <tbody id="backTable">
@@ -110,8 +162,9 @@ text-align:center;">
 
 </div>
 
-</section>
+</div>
 
+</section>
 <script type="module" src="js/firebase.js"></script>
 
 <script src="js/admin-backpaper-list.js"></script>
