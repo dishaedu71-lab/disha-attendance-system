@@ -141,3 +141,70 @@ document.getElementById("bpMobile").value =
 localStorage.getItem("studentMobile") || "";
   
 });
+// =====================================
+// SUBMIT BACK PAPER FORM
+// =====================================
+
+document.getElementById("submitBackForm").onclick = async () => {
+
+    const subject = document.getElementById("bpSubject").value;
+
+    const reason = document.getElementById("bpReason").value;
+
+    const agree = document.getElementById("bpAgree").checked;
+
+    if(subject==""){
+
+        alert("Please Select Back Subject");
+
+        return;
+
+    }
+
+    if(!agree){
+
+        alert("Please Accept Declaration");
+
+        return;
+
+    }
+
+    try{
+
+        await window.addDoc(
+
+            window.collection(window.db,"back_forms"),
+
+            {
+
+                studentId: localStorage.getItem("studentId"),
+
+                studentName: localStorage.getItem("studentName"),
+
+                mobile: localStorage.getItem("studentMobile"),
+
+                course: localStorage.getItem("selectedCourse"),
+
+                subject: subject,
+
+                reason: reason,
+
+                status: "Pending",
+
+                date: new Date().toLocaleString()
+
+            }
+
+        );
+
+        alert("✅ Back Paper Form Submitted Successfully");
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(err.message);
+
+    }
+
+};
