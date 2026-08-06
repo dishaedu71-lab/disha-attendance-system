@@ -47,9 +47,10 @@ document.querySelector(".card").innerHTML = `
 <div
 style="
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-margin-bottom:20px;">
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+margin-bottom:25px;
+">
 
 <div>
 
@@ -154,15 +155,22 @@ margin-bottom:20px;"></textarea>
 
 <div
 style="
-background:#f8f9fa;
-padding:15px;
+background:#eef7ff;
+padding:20px;
 border-radius:12px;
-margin-bottom:25px;">
+margin-top:20px;
+margin-bottom:25px;
+color:#222;
+font-size:17px;
+">
 
 <label
 style="
-font-size:16px;
-cursor:pointer;">
+display:flex;
+align-items:center;
+gap:10px;
+cursor:pointer;
+line-height:28px;">
 
 <input
 type="checkbox"
@@ -177,7 +185,9 @@ I hereby declare that the above information is true and correct.
 <button
 id="submitBackForm"
 style="
-width:100%;
+width:350px;
+display:block;
+margin:auto;
 padding:18px;
 border:none;
 border-radius:12px;
