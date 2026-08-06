@@ -1,6 +1,6 @@
 window.addEventListener("firebase-ready", () => {
 
-const tbody = document.getElementById("backTable");
+const table = document.getElementById("backTable");
 
 window.onSnapshot(
 
@@ -8,13 +8,13 @@ window.collection(window.db,"back_forms"),
 
 (snapshot)=>{
 
-tbody.innerHTML="";
+table.innerHTML="";
 
 snapshot.forEach((doc)=>{
 
 const data = doc.data();
 
-tbody.innerHTML += `
+table.innerHTML += `
 
 <tr>
 
@@ -26,12 +26,31 @@ tbody.innerHTML += `
 
 <td>${data.subject}</td>
 
-<td>${data.status}</td>
+<td>
+
+<span style="
+padding:6px 12px;
+border-radius:20px;
+background:#ffd54f;
+font-weight:bold;">
+
+${data.status}
+
+</span>
+
+</td>
 
 <td>
 
 <button
-onclick="deleteBackForm('${doc.id}')">
+onclick="deleteBack('${doc.id}')"
+style="
+padding:8px 15px;
+background:red;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;">
 
 Delete
 
@@ -49,11 +68,15 @@ Delete
 
 });
 
-// =====================
+// ==========================
 
-window.deleteBackForm = async(id)=>{
+window.deleteBack = async(id)=>{
 
-if(!confirm("Delete this Form?")) return;
+if(!confirm("Delete this Back Paper Form?")){
+
+return;
+
+}
 
 await window.deleteDoc(
 
@@ -63,4 +86,4 @@ window.doc(window.db,"back_forms",id)
 
 alert("Deleted Successfully");
 
-}
+};
