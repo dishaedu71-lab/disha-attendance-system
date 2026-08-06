@@ -50,6 +50,8 @@ form.addEventListener("submit", async (e) => {
         localStorage.setItem("studentId", student.studentId);
         localStorage.setItem("studentName", student.name);
         localStorage.setItem("studentEmail", student.email);
+        localStorage.setItem("studentMobile", student.mobile || "");
+        localStorage.setItem("selectedCourse", student.course || "");
 
         alert("Login Successful");
 
