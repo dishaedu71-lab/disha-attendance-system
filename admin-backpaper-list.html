@@ -61,17 +61,27 @@ Back Paper Requests
 
 <section class="dashboard">
 
-<div class="card" style="width:100%;overflow:auto;">
+<div class="card"
+style="
+width:95%;
+max-width:1400px;
+margin:auto;
+padding:20px;
+overflow-x:auto;
+background:white;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,.2);">
 
 <table
-border="1"
-cellpadding="10"
 width="100%"
-style="border-collapse:collapse;text-align:center;">
+style="
+border-collapse:collapse;
+min-width:1200px;
+text-align:center;">
 
 <thead>
 
-<tr>
+<tr style="background:#007bff;color:white;">
 
 <th>Name</th>
 
@@ -79,14 +89,17 @@ style="border-collapse:collapse;text-align:center;">
 
 <th>Course</th>
 
+<th>Mobile</th>
+
 <th>Subject</th>
+
+<th>Reason</th>
 
 <th>Status</th>
 
 <th>Action</th>
 
 </tr>
-
 </thead>
 
 <tbody id="backTable">
