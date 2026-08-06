@@ -81,19 +81,6 @@ style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
 <select
 id="bpSubject"
 style="width:100%;padding:12px;border-radius:10px;margin:8px 0;">
-
-<option value="">Select Subject</option>
-
-<option>MS Office</option>
-
-<option>Internet</option>
-
-<option>LibreOffice</option>
-
-<option>HTML & CSS</option>
-
-<option>Python</option>
-
 </select>
 
 <label><b>Reason (Optional)</b></label>
@@ -139,6 +126,68 @@ localStorage.getItem("selectedCourse") || "";
 
 document.getElementById("bpMobile").value =
 localStorage.getItem("studentMobile") || "";
+
+  // ===========================
+// COURSE WISE SUBJECT LIST
+// ===========================
+
+const subject =
+document.getElementById("bpSubject");
+
+const course =
+localStorage.getItem("selectedCourse") || "";
+
+subject.innerHTML =
+'<option value="">Select Subject</option>';
+
+if(course=="ADCA"){
+
+subject.innerHTML += `
+<option>Theory</option>
+<option>Practical</option>
+`;
+
+}
+
+else if(course=="O Level"){
+
+subject.innerHTML += `
+<option>M1 (IT Tools & Network Basics)</option>
+<option>M2 (Web Designing)</option>
+<option>M3 (Python Programming)</option>
+<option>M4 (IoT)</option>
+<option>Practical</option>
+`;
+
+}
+
+else if(course=="CCC"){
+
+subject.innerHTML += `
+<option>CCC Theory</option>
+<option>CCC Practical</option>
+`;
+
+}
+
+else if(course=="Web Development"){
+
+subject.innerHTML += `
+<option>Theory</option>
+<option>Practical</option>
+`;
+
+}
+
+else{
+
+subject.innerHTML += `
+<option>Theory</option>
+<option>Practical</option>
+`;
+
+}
+  
 
  // =====================================
 // SUBMIT BACK PAPER FORM
