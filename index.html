@@ -499,51 +499,69 @@ Close
     <script type="module" src="js/firebase.js"></script>
     <script>
 
-window.addEventListener("firebase-ready", async()=>{
+window.addEventListener("firebase-ready",()=>{
 
-const ref = window.doc(
+window.onSnapshot(
 
-window.db,
+window.collection(window.db,"website_notice"),
 
-"website_notice",
+(snapshot)=>{
 
-"popup"
+let html="";
 
-);
+snapshot.forEach((doc)=>{
 
-const snap = await window.getDoc(ref);
+const data=doc.data();
 
-if(!snap.exists()){
+if(data.active){
 
-return;
+html+=`
+
+<div style="
+border-bottom:1px solid #ddd;
+padding:15px 0;">
+
+<h3 style="
+color:#007bff;
+margin-bottom:8px;">
+
+📢 ${data.title}
+
+</h3>
+
+<p>
+
+${data.message}
+
+</p>
+
+</div>
+
+`;
 
 }
 
-const data = snap.data();
+});
 
-if(!data.active){
+if(html!=""){
 
-return;
+document.getElementById("noticePopup").style.display="flex";
 
-}
+document.getElementById("noticeTitle").innerHTML="IMPORTANT NOTICE";
 
-document.getElementById("noticeTitle").innerHTML =
-data.title;
+document.getElementById("noticeMessage").innerHTML=html;
 
-document.getElementById("noticeMessage").innerHTML =
-data.message;
-
-document.getElementById("noticePopup").style.display =
-"flex";
-
-document.getElementById("noticeBtn").innerHTML =
-data.buttonText;
+document.getElementById("noticeBtn").innerHTML="LOGIN & APPLY";
 
 document.getElementById("noticeBtn").onclick=()=>{
 
-location.href=data.buttonLink;
+location.href="student-login.html";
 
 };
+
+}
+
+});
 
 document.getElementById("noticeClose").onclick=()=>{
 
