@@ -179,17 +179,27 @@ Delete
 
 window.approveBack = async(id)=>{
 
+if(!confirm("Approve this Back Paper Application?")){
+
+return;
+
+}
+
 await window.updateDoc(
 
 window.doc(window.db,"back_forms",id),
 
 {
 
-status:"Approved"
+status:"Approved",
+
+approvedDate:new Date().toLocaleString()
 
 }
 
 );
+
+alert("✅ Student Approved Successfully");
 
 };
 
@@ -198,6 +208,12 @@ status:"Approved"
 // =========================
 
 window.rejectBack = async(id)=>{
+
+if(!confirm("Reject this Back Paper Application?")){
+
+return;
+
+}
 
 await window.updateDoc(
 
@@ -210,6 +226,8 @@ status:"Rejected"
 }
 
 );
+
+alert("❌ Application Rejected");
 
 };
 
