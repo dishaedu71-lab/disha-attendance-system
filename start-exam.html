@@ -306,6 +306,53 @@ window.addEventListener("firebase-ready", async () => {
         const code =
         document.getElementById("examCode").value.trim();
 
+        // ===============================
+// BACK PAPER STATUS CHECK
+// ===============================
+
+const studentId =
+localStorage.getItem("studentId");
+
+const backQuery = await window.getDocs(
+
+window.query(
+
+window.collection(window.db,"back_forms"),
+
+window.where("studentId","==",studentId)
+
+)
+
+);
+
+let backData = null;
+
+backQuery.forEach((doc)=>{
+
+backData = doc.data();
+
+});
+
+if(backData){
+
+if(backData.status=="Pending"){
+
+alert("⏳ Your Back Paper Application is Under Review.");
+
+return;
+
+}
+
+if(backData.status=="Rejected"){
+
+alert("❌ Your Back Paper Application has been Rejected.");
+
+return;
+
+}
+
+}
+
         // =====================
 // DATE & TIME CHECK
 // =====================
