@@ -61,28 +61,47 @@ const data=doc.data();
 list.innerHTML+=`
 
 <div style="
-margin:15px 0;
+background:#ffffff;
+color:#222;
+border-left:6px solid #007bff;
+border-radius:15px;
 padding:15px;
-background:#f8f9fa;
-border-radius:10px;
-border-left:6px solid #007bff;">
+margin:15px 0;
+box-shadow:0 5px 15px rgba(0,0,0,.15);">
 
-<h3>${data.title}</h3>
+<h3 style="
+color:#007bff;
+margin-bottom:10px;
+font-size:20px;">
 
-<p>${data.message}</p>
+📢 ${data.title}
+
+</h3>
+
+<p style="
+color:#333;
+font-size:15px;
+line-height:24px;
+margin-bottom:15px;">
+
+${data.message}
+
+</p>
 
 <td>
+
+<div style="display:flex;gap:10px;">
 
 <button
 onclick="editNotice('${doc.id}')"
 style="
-background:#007bff;
+flex:1;
+padding:10px;
+background:#0d6efd;
 color:white;
 border:none;
-padding:8px 15px;
 border-radius:8px;
-cursor:pointer;
-margin-right:8px;">
+cursor:pointer;">
 
 ✏ Edit
 
@@ -91,16 +110,19 @@ margin-right:8px;">
 <button
 onclick="deleteNotice('${doc.id}')"
 style="
-background:red;
+flex:1;
+padding:10px;
+background:#dc3545;
 color:white;
 border:none;
-padding:8px 15px;
 border-radius:8px;
 cursor:pointer;">
 
 🗑 Delete
 
 </button>
+
+</div>
 
 </td>
 
