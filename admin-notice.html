@@ -1,1 +1,127 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Website Notice</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+📢 WEBSITE NOTICE
+
+</div>
+
+<ul>
+
+<li>
+
+<a href="admin-dashboard.html">
+
+Dashboard
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+<section class="dashboard">
+
+<div
+class="card"
+style="
+max-width:700px;
+margin:auto;
+padding:30px;">
+
+<h2>
+
+Website Popup Notice
+
+</h2>
+
+<hr><br>
+
+<label>Notice Title</label>
+
+<input
+id="title"
+type="text"
+style="width:100%;padding:12px;">
+
+<br><br>
+
+<label>Notice Message</label>
+
+<textarea
+id="message"
+rows="5"
+style="width:100%;padding:12px;"></textarea>
+
+<br><br>
+
+<label>Button Text</label>
+
+<input
+id="buttonText"
+type="text"
+style="width:100%;padding:12px;">
+
+<br><br>
+
+<label>Button Link</label>
+
+<input
+id="buttonLink"
+type="text"
+style="width:100%;padding:12px;">
+
+<br><br>
+
+<label>
+
+<input
+type="checkbox"
+id="active">
+
+Popup Active
+
+</label>
+
+<br><br>
+
+<button
+id="saveNotice"
+class="login-btn">
+
+SAVE NOTICE
+
+</button>
+
+</div>
+
+</section>
+
+<script type="module" src="js/firebase.js"></script>
+
+<script src="js/admin-notice.js"></script>
+
+</body>
+
+</html>
