@@ -1,40 +1,12 @@
-window.addEventListener("firebase-ready", async()=>{
+window.addEventListener("firebase-ready",()=>{
 
-const ref = window.doc(
-window.db,
-"website_notice",
-"popup"
-);
+document.getElementById("saveNotice").onclick = async()=>{
 
-const snap = await window.getDoc(ref);
+try{
 
-if(snap.exists()){
+await window.addDoc(
 
-const data = snap.data();
-
-document.getElementById("title").value =
-data.title || "";
-
-document.getElementById("message").value =
-data.message || "";
-
-document.getElementById("buttonText").value =
-data.buttonText || "";
-
-document.getElementById("buttonLink").value =
-data.buttonLink || "";
-
-document.getElementById("active").checked =
-data.active || false;
-
-}
-
-document.getElementById("saveNotice").onclick =
-async()=>{
-
-await window.setDoc(
-
-ref,
+window.collection(window.db,"website_notice"),
 
 {
 
@@ -51,44 +23,16 @@ buttonLink:
 document.getElementById("buttonLink").value,
 
 active:
-document.getElementById("active").checked
+document.getElementById("active").checked,
+
+date:
+new Date().toLocaleString()
 
 }
 
 );
 
-alert("✅ Website Notice Saved");
-
-};
-
-// ============================
-// DELETE NOTICE
-// ============================
-
-document.getElementById("deleteNotice").onclick =
-async()=>{
-
-if(!confirm("Delete Website Notice?")){
-
-return;
-
-}
-
-try{
-
-await window.deleteDoc(ref);
-
-document.getElementById("title").value="";
-
-document.getElementById("message").value="";
-
-document.getElementById("buttonText").value="";
-
-document.getElementById("buttonLink").value="";
-
-document.getElementById("active").checked=false;
-
-alert("🗑 Notice Deleted Successfully");
+alert("✅ Notice Added Successfully");
 
 }catch(err){
 
