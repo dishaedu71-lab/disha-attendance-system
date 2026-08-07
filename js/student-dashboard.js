@@ -43,11 +43,92 @@ onAuthStateChanged(auth, async(user) => {
 
     snap.forEach((doc)=>{
 
-        const data = doc.data();
+const data = doc.data();
 
-        console.log(data.status);
+const popup =
+document.getElementById("backStatusPopup");
 
-    });
+const icon =
+document.getElementById("backIcon");
+
+const title =
+document.getElementById("backTitle");
+
+const message =
+document.getElementById("backMessage");
+
+const btn =
+document.getElementById("backOkBtn");
+
+if(data.status=="Pending"){
+
+icon.innerHTML="⏳";
+
+title.innerHTML="BACK PAPER UNDER REVIEW";
+
+message.innerHTML=`
+Your Back Paper Application
+is under review.
+
+<br><br>
+
+Status :
+<b style="color:orange;">
+Pending
+</b>
+`;
+
+popup.style.display="flex";
+
+}
+
+else if(data.status=="Rejected"){
+
+icon.innerHTML="❌";
+
+title.innerHTML="APPLICATION REJECTED";
+
+message.innerHTML=`
+Your Back Paper Application
+has been rejected.
+
+<br><br>
+
+Please Contact
+
+<b>DISHA COMPUTER EDUCATION</b>
+`;
+
+popup.style.display="flex";
+
+}
+
+else if(data.status=="Approved"){
+
+icon.innerHTML="🎉";
+
+title.innerHTML="CONGRATULATIONS";
+
+message.innerHTML=`
+Your Back Paper Application
+has been Approved.
+
+<br><br>
+
+Press OK to Continue.
+`;
+
+popup.style.display="flex";
+
+}
+
+btn.onclick=()=>{
+
+popup.style.display="none";
+
+};
+
+});
 
 });
 logoutBtn.addEventListener("click", async (e) => {
