@@ -61,4 +61,41 @@ alert("✅ Website Notice Saved");
 
 };
 
+// ============================
+// DELETE NOTICE
+// ============================
+
+document.getElementById("deleteNotice").onclick =
+async()=>{
+
+if(!confirm("Delete Website Notice?")){
+
+return;
+
+}
+
+try{
+
+await window.deleteDoc(ref);
+
+document.getElementById("title").value="";
+
+document.getElementById("message").value="";
+
+document.getElementById("buttonText").value="";
+
+document.getElementById("buttonLink").value="";
+
+document.getElementById("active").checked=false;
+
+alert("🗑 Notice Deleted Successfully");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+};
+
 });
