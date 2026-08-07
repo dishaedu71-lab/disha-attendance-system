@@ -301,7 +301,7 @@ window.addEventListener("firebase-ready", async () => {
     document.getElementById("examTime").innerHTML =
     setting.examTime + " Minutes";
 
-    document.getElementById("startExamBtn").onclick = () => {
+   document.getElementById("startExamBtn").onclick = async () => {
 
         const code =
         document.getElementById("examCode").value.trim();
