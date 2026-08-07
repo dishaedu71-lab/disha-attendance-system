@@ -71,19 +71,38 @@ border-left:6px solid #007bff;">
 
 <p>${data.message}</p>
 
+<td>
+
+<button
+onclick="editNotice('${doc.id}')"
+style="
+background:#007bff;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+margin-right:8px;">
+
+✏ Edit
+
+</button>
+
 <button
 onclick="deleteNotice('${doc.id}')"
 style="
 background:red;
 color:white;
 border:none;
-padding:10px 18px;
+padding:8px 15px;
 border-radius:8px;
 cursor:pointer;">
 
 🗑 Delete
 
 </button>
+
+</td>
 
 </div>
 
