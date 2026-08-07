@@ -35,6 +35,63 @@ Back Paper Form is currently closed.
 return;
 
 }
+  // ===============================
+// COURSE CHECK
+// ===============================
+
+const allowedCourse = snap.data().course || "";
+
+const studentCourse =
+localStorage.getItem("selectedCourse") || "";
+
+if(studentCourse !== allowedCourse){
+
+document.querySelector(".card").innerHTML = `
+
+<div style="
+text-align:center;
+padding:40px;">
+
+<h1 style="
+color:red;
+font-size:60px;">
+
+🚫
+
+</h1>
+
+<h2>
+
+BACK PAPER FORM CLOSED
+
+</h2>
+
+<p style="
+font-size:18px;
+line-height:30px;">
+
+Back Paper Form is currently not available
+for your course.
+
+</p>
+
+<br>
+
+<p>
+
+Current Open Course :
+
+<b>${allowedCourse}</b>
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
 
 document.querySelector(".card").innerHTML = `
 
