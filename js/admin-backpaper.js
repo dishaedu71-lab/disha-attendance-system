@@ -23,6 +23,9 @@ window.addEventListener("firebase-ready", async () => {
         if (snap.exists()) {
 
             status.checked = snap.data().active;
+            document.getElementById("backCourse").value =
+snap.data().course || "ADCA";
+            
 
         }
 
@@ -40,10 +43,11 @@ window.addEventListener("firebase-ready", async () => {
 
             await window.updateDoc(ref, {
 
-                active: status.checked
+    active: status.checked,
 
-            });
+    course: document.getElementById("backCourse").value
 
+});
             alert("Back Paper Setting Saved");
 
         } catch (err) {
