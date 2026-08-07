@@ -496,5 +496,63 @@ Close
 </div>
 
 </div>
+    <script type="module" src="js/firebase.js"></script>
+    <script>
+
+window.addEventListener("firebase-ready", async()=>{
+
+const ref = window.doc(
+
+window.db,
+
+"website_notice",
+
+"popup"
+
+);
+
+const snap = await window.getDoc(ref);
+
+if(!snap.exists()){
+
+return;
+
+}
+
+const data = snap.data();
+
+if(!data.active){
+
+return;
+
+}
+
+document.getElementById("noticeTitle").innerHTML =
+data.title;
+
+document.getElementById("noticeMessage").innerHTML =
+data.message;
+
+document.getElementById("noticePopup").style.display =
+"flex";
+
+document.getElementById("noticeBtn").innerHTML =
+data.buttonText;
+
+document.getElementById("noticeBtn").onclick=()=>{
+
+location.href=data.buttonLink;
+
+};
+
+document.getElementById("noticeClose").onclick=()=>{
+
+document.getElementById("noticePopup").style.display="none";
+
+};
+
+});
+
+</script>
 </body>
 </html>
