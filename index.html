@@ -427,6 +427,74 @@ window.addEventListener("load", function () {
 
 });
 </script>
+<div id="noticePopup"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+z-index:99999;
+justify-content:center;
+align-items:center;">
 
+<div
+style="
+background:white;
+width:500px;
+max-width:90%;
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 30px #00bfff;">
+
+<h1
+id="noticeTitle"
+style="
+color:#007bff;
+margin-bottom:15px;">
+NOTICE
+</h1>
+
+<p
+id="noticeMessage"
+style="
+line-height:30px;
+font-size:18px;">
+Message
+</p>
+
+<br>
+
+<button
+id="noticeBtn"
+style="
+padding:12px 30px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;">
+LOGIN
+</button>
+
+<button
+id="noticeClose"
+style="
+padding:12px 30px;
+background:red;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-left:10px;">
+Close
+</button>
+
+</div>
+
+</div>
 </body>
 </html>
