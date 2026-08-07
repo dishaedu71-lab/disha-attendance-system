@@ -41,6 +41,8 @@ window.deleteDoc = deleteDoc;
 window.doc = doc;
 window.onSnapshot = onSnapshot;
 window.serverTimestamp = serverTimestamp;
+window.query = query;
+window.where = where;
 
 console.log("Firebase Connected Successfully");
 
