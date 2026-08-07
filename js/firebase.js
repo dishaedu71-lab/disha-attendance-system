@@ -38,6 +38,7 @@ window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
 window.getDoc = getDoc;
+window.setDoc = setDoc;
 window.updateDoc = updateDoc;
 window.deleteDoc = deleteDoc;
 window.doc = doc;
