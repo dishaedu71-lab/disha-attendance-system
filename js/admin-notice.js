@@ -1,3 +1,51 @@
+// ==========================
+// NEW BADGE STYLE
+// ==========================
+
+const newBadgeStyle = document.createElement("style");
+
+newBadgeStyle.innerHTML = `
+
+.new-badge{
+
+    display:inline-block;
+
+    margin-left:8px;
+
+    padding:5px 10px;
+
+    background:red;
+
+    color:white;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    animation:newNoticeBlink 1s infinite;
+
+}
+
+@keyframes newNoticeBlink{
+
+    0%,100%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.25;
+        transform:scale(.9);
+    }
+
+}
+
+`;
+
+document.head.appendChild(newBadgeStyle);
+
 window.addEventListener("firebase-ready", () => {
 
     // ==========================
