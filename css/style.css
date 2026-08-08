@@ -1778,3 +1778,72 @@ font-size:24px;
 }
 
 }
+/* =========================
+   TOP LOGIN BUTTONS
+========================= */
+
+nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px;
+}
+
+/* Login buttons ka container */
+.nav-buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+    margin-left: auto;
+}
+
+/* Student Login */
+.student-btn {
+    display: inline-block !important;
+    position: relative !important;
+
+    padding: 10px 20px !important;
+
+    background: #1677ff !important;
+    color: white !important;
+
+    border-radius: 25px !important;
+
+    text-decoration: none !important;
+    font-weight: bold !important;
+
+    z-index: 1000 !important;
+}
+
+/* Teacher Login */
+.login-btn {
+    display: inline-block !important;
+    position: relative !important;
+
+    padding: 10px 20px !important;
+
+    background: #9900cc !important;
+    color: white !important;
+
+    border-radius: 25px !important;
+
+    text-decoration: none !important;
+    font-weight: bold !important;
+
+    z-index: 1000 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .student-btn,
+    .login-btn {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+    }
+
+    .nav-buttons {
+        gap: 4px;
+    }
+
+}
