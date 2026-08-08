@@ -11,6 +11,166 @@
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <style>
+
+/* ============================= */
+/* DISHA IMAGE SLIDER */
+/* ============================= */
+
+.disha-slider {
+
+    width: 100%;
+    max-width: 1200px;
+
+    height: 315px;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background: rgba(20,20,40,.75);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.35);
+
+}
+
+
+/* Slider Track */
+
+.slider-track {
+
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+}
+
+
+/* Images */
+
+.disha-slide {
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    left: 0;
+    top: 0;
+
+    object-fit: cover;
+
+    opacity: 0;
+
+    transition:
+    opacity .8s ease,
+    transform .8s ease;
+
+    transform: scale(1.03);
+
+}
+
+
+/* Active Image */
+
+.disha-slide.active {
+
+    opacity: 1;
+
+    transform: scale(1);
+
+}
+
+
+/* ============================= */
+/* SLIDER DOTS */
+/* ============================= */
+
+.slider-dots {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 8px;
+
+    z-index: 10;
+
+}
+
+
+.slider-dot {
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.6);
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.slider-dot.active {
+
+    width: 25px;
+
+    border-radius: 10px;
+
+    background: white;
+
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media(max-width:768px){
+
+    .disha-slider {
+
+        height: 220px;
+
+        width: 94%;
+
+        border-radius: 20px;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .disha-slider {
+
+        height: 190px;
+
+        width: 94%;
+
+    }
+
+}
+
+</style>
+
 </head>
 <body>
     <!-- ================= LOADER ================= -->
@@ -82,28 +242,52 @@ DISHA COMPUTER EDUCATION
         Teacher Login
     </a>
 
+<!-- ============================= -->
+<!-- DISHA IMAGE SLIDER -->
+<!-- ============================= -->
+
+<div class="disha-slider">
+
+    <div class="slider-track">
+
+        <img
+        src="https://maps.app.goo.gl/98f92m4tQhStVAGy5"
+        class="disha-slide active"
+        alt="Disha Computer Education">
+
+        <img
+        src="https://maps.app.goo.gl/bUCMnKc7J7tBBbkM8"
+        class="disha-slide"
+        alt="Disha Computer Education">
+
+        <img
+        src="https://maps.app.goo.gl/VdyyCc2bwWxzpABU8"
+        class="disha-slide"
+        alt="Disha Computer Education">
+
+        <img
+        src="https://maps.app.goo.gl/kWDD55MK5AUgJf7bA"
+        class="disha-slide"
+        alt="Disha Computer Education">
+
+    </div>
+
+
+    <!-- Slider Dots -->
+
+    <div class="slider-dots">
+
+        <span class="slider-dot active"></span>
+
+        <span class="slider-dot"></span>
+
+        <span class="slider-dot"></span>
+
+        <span class="slider-dot"></span>
+
+    </div>
+
 </div>
-
-</nav>
-
-<section class="hero">
-
-<div class="glass">
-
-<h1>Student Attendance Management System</h1>
-
-<p>
-Student Record & Attendance Portal
-</p>
-
-<a href="login.html" class="start-btn">
-
-Get Started
-
-</a>
-
-</div>
-
 </section>
 <!-- Dashboard -->
 
