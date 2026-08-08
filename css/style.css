@@ -2010,10 +2010,10 @@ nav .login-btn {
 
 .disha-slider {
 
-    width: 600px;
-    max-width: 90%;
+    width: 760px;
+    max-width: 92%;
 
-    height: 310px;
+    height: 400px;
 
     position: relative;
 
@@ -2029,7 +2029,6 @@ nav .login-btn {
         0 15px 35px rgba(0, 0, 0, 0.45);
 
 }
-
 
 /* Slider Track */
 
@@ -2132,9 +2131,9 @@ nav .login-btn {
 
     .disha-slider {
 
-        width: 92%;
+        width: 94%;
 
-        height: 220px;
+        height: 280px;
 
         border-radius: 20px;
 
@@ -2147,9 +2146,9 @@ nav .login-btn {
 
     .disha-slider {
 
-        width: 94%;
+        width: 95%;
 
-        height: 190px;
+        height: 240px;
 
         border-radius: 18px;
 
