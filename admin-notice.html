@@ -19,9 +19,9 @@ content="width=device-width,initial-scale=1.0">
 
     display: inline-block;
 
-    margin-left: 8px;
+    margin-left: 10px;
 
-    padding: 4px 9px;
+    padding: 5px 10px;
 
     background: red;
 
@@ -33,21 +33,82 @@ content="width=device-width,initial-scale=1.0">
 
     font-weight: bold;
 
+    vertical-align: middle;
+
     animation: noticeNewBlink 0.8s infinite;
+
+    box-shadow: 0 0 10px red;
 
 }
 
+
 @keyframes noticeNewBlink {
 
-    0%, 100% {
+    0% {
+
         opacity: 1;
+
         transform: scale(1);
+
     }
 
     50% {
+
         opacity: 0.2;
+
         transform: scale(0.85);
+
     }
+
+    100% {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}
+
+
+.notice-heading {
+
+    display: block;
+
+}
+
+
+.single-notice {
+
+    margin-bottom: 20px;
+
+}
+
+
+.notice-action-btn {
+
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 11px 20px;
+
+    background: #007bff;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+
+}
+
+
+.notice-text {
+
+    line-height: 26px;
 
 }
 
