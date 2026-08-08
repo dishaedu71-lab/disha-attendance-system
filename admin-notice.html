@@ -13,9 +13,31 @@ content="width=device-width,initial-scale=1.0">
 
 <link rel="stylesheet" href="css/style.css">
 
-  <style>
+<style>
 
-@keyframes newBlink {
+.notice-new-badge {
+
+    display: inline-block;
+
+    margin-left: 8px;
+
+    padding: 4px 9px;
+
+    background: red;
+
+    color: white;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    animation: noticeNewBlink 0.8s infinite;
+
+}
+
+@keyframes noticeNewBlink {
 
     0%, 100% {
         opacity: 1;
@@ -23,8 +45,8 @@ content="width=device-width,initial-scale=1.0">
     }
 
     50% {
-        opacity: 0.25;
-        transform: scale(0.9);
+        opacity: 0.2;
+        transform: scale(0.85);
     }
 
 }
