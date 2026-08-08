@@ -156,16 +156,6 @@ window.addEventListener("firebase-ready", () => {
 
         (snapshot) => {
 
-            // ==========================
-// BLINKING NEW BADGE
-// ==========================
-
-const newBadge = `
-<span class="notice-new-badge">
-🔴 NEW
-</span>
-`;
-
             let html = "";
 
             snapshot.forEach((doc) => {
@@ -178,64 +168,35 @@ const newBadge = `
 
 
                 // ==========================
-                // CHECK NOTICE AGE
+                // NEW BADGE
                 // ==========================
 
-                let newBadge = "";
-
-                if (data.date) {
-
-                    const noticeDate =
-                        new Date(data.date);
-
-                    const now =
-                        new Date();
-
-                    const hoursPassed =
-                        (now - noticeDate)
-                        / (1000 * 60 * 60);
-
-
-                    // NEW = 48 HOURS
-                    if (
-                        hoursPassed >= 0 &&
-                        hoursPassed < 48
-                    ) {
-
-                        newBadge = `
-                        
-                        <span class="notice-new-badge">
-                            🔴 NEW
-                        </span>
-
-                        `;
-
-                    }
-
-                }
+                const newBadge = `
+                    <span class="notice-new-badge">
+                        🔴 NEW
+                    </span>
+                `;
 
 
                 // ==========================
                 // BUTTON
                 // ==========================
 
-                let button = "";
+                let buttonHTML = "";
 
                 if (
                     data.buttonText &&
                     data.buttonLink
                 ) {
 
-                    button = `
+                    buttonHTML = `
+                        <a
+                            href="${data.buttonLink}"
+                            class="notice-action-btn">
 
-                    <a
-                    href="${data.buttonLink}"
-                    class="notice-action-btn">
+                            ${data.buttonText}
 
-                        ${data.buttonText}
-
-                    </a>
-
+                        </a>
                     `;
 
                 }
@@ -247,50 +208,61 @@ const newBadge = `
 
                 html += `
 
-                <div class="single-notice">
+                    <div class="single-notice">
 
-                    <h3>
+                        <h3 class="notice-heading">
 
-                        📢 ${data.title} ${newBadge}
+                            📢 ${data.title}
 
-                        ${newBadge}
+                            ${newBadge}
 
-                    </h3>
-
-
-                    <p>
-
-                        ${data.message}
-
-                    </p>
+                        </h3>
 
 
-                    ${button}
+                        <div class="notice-text">
 
-                </div>
+                            ${data.message}
+
+                        </div>
+
+
+                        ${buttonHTML}
+
+                    </div>
 
                 `;
 
             });
 
 
+            // ==========================
+            // SHOW POPUP
+            // ==========================
+
             if (html !== "") {
 
-                document.getElementById(
-                    "noticePopup"
-                ).style.display = "flex";
+                const popup =
+                    document.getElementById("noticePopup");
+
+                const title =
+                    document.getElementById("noticeTitle");
+
+                const message =
+                    document.getElementById("noticeMessage");
 
 
-                document.getElementById(
-                    "noticeTitle"
-                ).innerHTML =
-                    "📢 IMPORTANT NOTICE";
+                if (popup) {
+                    popup.style.display = "flex";
+                }
 
+                if (title) {
+                    title.innerHTML =
+                        "📢 IMPORTANT NOTICE";
+                }
 
-                document.getElementById(
-                    "noticeMessage"
-                ).innerHTML =
-                    html;
+                if (message) {
+                    message.innerHTML = html;
+                }
 
             }
 
@@ -300,19 +272,23 @@ const newBadge = `
 
 
     // ==========================
-    // CLOSE
+    // CLOSE POPUP
     // ==========================
 
     const closeButton =
         document.getElementById("noticeClose");
 
+
     if (closeButton) {
 
         closeButton.onclick = () => {
 
-            document.getElementById(
-                "noticePopup"
-            ).style.display = "none";
+            const popup =
+                document.getElementById("noticePopup");
+
+            if (popup) {
+                popup.style.display = "none";
+            }
 
         };
 
