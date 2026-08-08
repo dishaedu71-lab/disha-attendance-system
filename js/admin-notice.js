@@ -156,6 +156,16 @@ window.addEventListener("firebase-ready", () => {
 
         (snapshot) => {
 
+            // ==========================
+// BLINKING NEW BADGE
+// ==========================
+
+const newBadge = `
+<span class="notice-new-badge">
+🔴 NEW
+</span>
+`;
+
             let html = "";
 
             snapshot.forEach((doc) => {
@@ -241,7 +251,7 @@ window.addEventListener("firebase-ready", () => {
 
                     <h3>
 
-                        📢 ${data.title}
+                        📢 ${data.title} ${newBadge}
 
                         ${newBadge}
 
