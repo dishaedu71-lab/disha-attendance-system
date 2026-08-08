@@ -6,6 +6,37 @@ window.addEventListener("firebase-ready", () => {
 
     document.getElementById("saveNotice").onclick = async () => {
 
+        const title =
+            document.getElementById("title").value.trim();
+
+        const message =
+            document.getElementById("message").value.trim();
+
+        const buttonText =
+            document.getElementById("buttonText").value.trim();
+
+        const buttonLink =
+            document.getElementById("buttonLink").value.trim();
+
+        const active =
+            document.getElementById("active").checked;
+
+
+        // ==========================
+        // VALIDATION
+        // ==========================
+
+        if (!title) {
+            alert("⚠️ Please Enter Notice Title");
+            return;
+        }
+
+        if (!message) {
+            alert("⚠️ Please Enter Notice Message");
+            return;
+        }
+
+
         try {
 
             await window.addDoc(
@@ -16,42 +47,57 @@ window.addEventListener("firebase-ready", () => {
                 ),
 
                 {
+                    title: title,
+                    message: message,
+                    buttonText: buttonText,
+                    buttonLink: buttonLink,
+                    active: active,
 
-                    title:
-                    document.getElementById("title").value.trim(),
-
-                    message:
-                    document.getElementById("message").value.trim(),
-
-                    buttonText:
-                    document.getElementById("buttonText").value.trim(),
-
-                    buttonLink:
-                    document.getElementById("buttonLink").value.trim(),
-
-                    active:
-                    document.getElementById("active").checked,
-
-                    date:
-                    new Date().toISOString()
-
+                    // Exact creation time
+                    date: new Date().toISOString()
                 }
 
             );
 
-            alert("✅ Notice Added Successfully");
+
+            alert(
+                "✅ Notice Added Successfully"
+            );
+
+
+            // Clear form
+
+            document.getElementById("title").value = "";
+
+            document.getElementById("message").value = "";
+
+            document.getElementById("buttonText").value = "";
+
+            document.getElementById("buttonLink").value = "";
+
+            document.getElementById("active").checked = false;
 
         }
 
-        catch (err) {
+        catch (error) {
 
-            console.error(err);
+            console.error(error);
 
-            alert(err.message);
+            alert(
+                "❌ " + error.message
+            );
 
         }
 
     };
+
+});
+
+// ==========================
+// LOAD SAVED NOTICES
+// ==========================
+
+window.addEventListener("firebase-ready", () => {
 
     window.onSnapshot(
 
@@ -62,98 +108,52 @@ window.addEventListener("firebase-ready", () => {
 
         (snapshot) => {
 
-            let html = "";
+            const list =
+                document.getElementById("noticeList");
+
+            if (!list) {
+                return;
+            }
+
+            list.innerHTML = "";
+
 
             snapshot.forEach((doc) => {
 
                 const data = doc.data();
-
-                // ==========================
-                // ACTIVE NOTICE ONLY
-                // ==========================
-
-                if (!data.active) {
-                    return;
-                }
 
 
                 // ==========================
                 // NEW BADGE - 48 HOURS
                 // ==========================
 
-                const noticeDate =
-                    new Date(data.date);
-
-                const now =
-                    new Date();
-
-                const hoursPassed =
-                    (now - noticeDate)
-                    / (1000 * 60 * 60);
-
                 let newBadge = "";
 
+                if (data.date) {
 
-                if (
-                    hoursPassed >= 0 &&
-                    hoursPassed < 48
-                ) {
+                    const noticeDate =
+                        new Date(data.date);
 
-                    newBadge = `
+                    const now =
+                        new Date();
 
-                    <span style="
-                    display:inline-block;
-                    margin-left:8px;
-                    padding:4px 9px;
-                    background:red;
-                    color:white;
-                    border-radius:6px;
-                    font-size:12px;
-                    font-weight:bold;
-                    animation:newBlink 1s infinite;
-                    ">
-
-                    NEW
-
-                    </span>
-
-                    `;
-
-                }
+                    const hoursPassed =
+                        (now - noticeDate)
+                        / (1000 * 60 * 60);
 
 
-                // ==========================
-                // NOTICE BUTTON
-                // ==========================
+                    if (
+                        hoursPassed >= 0 &&
+                        hoursPassed < 48
+                    ) {
 
-                let noticeButton = "";
+                        newBadge = `
+                            <span class="new-badge">
+                                NEW
+                            </span>
+                        `;
 
-                if (
-                    data.buttonText &&
-                    data.buttonLink
-                ) {
-
-                    noticeButton = `
-
-                    <a
-                    href="${data.buttonLink}"
-                    style="
-                    display:inline-block;
-                    margin-top:12px;
-                    padding:11px 20px;
-                    background:#007bff;
-                    color:white;
-                    text-decoration:none;
-                    border-radius:9px;
-                    font-weight:bold;
-                    font-size:15px;
-                    ">
-
-                    ${data.buttonText}
-
-                    </a>
-
-                    `;
+                    }
 
                 }
 
@@ -162,129 +162,107 @@ window.addEventListener("firebase-ready", () => {
                 // NOTICE CARD
                 // ==========================
 
-                html += `
+                list.innerHTML += `
 
-                <div style="
-                background:white;
-                color:#222;
-                padding:18px;
-                margin-bottom:18px;
-                border-radius:14px;
-                border-left:5px solid #007bff;
-                box-shadow:0 5px 15px rgba(0,0,0,.15);
-                ">
-
-                    <h3 style="
-                    margin:0 0 10px 0;
-                    color:#007bff;
-                    font-size:20px;
+                    <div style="
+                    background:#ffffff;
+                    color:#222;
+                    border-left:6px solid #007bff;
+                    border-radius:15px;
+                    padding:18px;
+                    margin:15px 0;
+                    box-shadow:0 5px 15px rgba(0,0,0,.15);
                     ">
 
-                    📢 ${data.title}
+                        <h3 style="
+                        color:#007bff;
+                        margin:0 0 10px 0;
+                        font-size:20px;
+                        ">
 
-                    ${newBadge}
+                            📢 ${data.title}
 
-                    </h3>
+                            ${newBadge}
 
-
-                    <p style="
-                    line-height:26px;
-                    margin:0;
-                    color:#333;
-                    ">
-
-                    ${data.message}
-
-                    </p>
+                        </h3>
 
 
-                    ${noticeButton}
+                        <p style="
+                        color:#333;
+                        font-size:15px;
+                        line-height:24px;
+                        margin-bottom:15px;
+                        ">
 
-                </div>
+                            ${data.message}
+
+                        </p>
+
+
+                        <div style="
+                        display:flex;
+                        gap:10px;
+                        flex-wrap:wrap;
+                        ">
+
+                            <button
+                            onclick="deleteNotice('${doc.id}')"
+                            style="
+                            padding:10px 18px;
+                            background:#dc3545;
+                            color:white;
+                            border:none;
+                            border-radius:8px;
+                            cursor:pointer;
+                            ">
+
+                                🗑 Delete
+
+                            </button>
+
+                        </div>
+
+                    </div>
 
                 `;
 
             });
 
-
-            // ==========================
-            // SHOW POPUP
-            // ==========================
-
-            if (html !== "") {
-
-                document.getElementById(
-                    "noticePopup"
-                ).style.display = "flex";
-
-
-                document.getElementById(
-                    "noticeTitle"
-                ).innerHTML =
-                    "📢 IMPORTANT NOTICE";
-
-
-                document.getElementById(
-                    "noticeMessage"
-                ).innerHTML =
-                    html;
-
-            }
-
         }
 
     );
 
-
-    // ==========================
-    // CLOSE POPUP
-    // ==========================
-
-    document.getElementById(
-        "noticeClose"
-    ).onclick = () => {
-
-        document.getElementById(
-            "noticePopup"
-        ).style.display = "none";
-
-    };
-
 });
+
 // ==========================
 // DELETE NOTICE
 // ==========================
 
 window.deleteNotice = async (id) => {
 
-    const confirmDelete =
-    confirm("Are you sure you want to delete this Notice?");
-
-    if (!confirmDelete) {
+    if (!confirm("🗑 Are you sure you want to delete this Notice?")) {
         return;
     }
 
     try {
 
         await window.deleteDoc(
-
             window.doc(
                 window.db,
                 "website_notice",
                 id
             )
-
         );
 
-        alert("🗑 Notice Deleted Successfully");
+        alert("✅ Notice Deleted Successfully");
 
     }
 
-    catch (err) {
+    catch (error) {
 
-        console.error(err);
+        console.error(error);
 
-        alert("❌ " + err.message);
+        alert("❌ " + error.message);
 
     }
 
