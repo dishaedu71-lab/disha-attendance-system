@@ -53,11 +53,6 @@ window.addEventListener("firebase-ready", () => {
 
     };
 
-
-    // ==========================
-    // LOAD NOTICE LIST
-    // ==========================
-
     window.onSnapshot(
 
         window.collection(
@@ -67,15 +62,19 @@ window.addEventListener("firebase-ready", () => {
 
         (snapshot) => {
 
-            const list =
-            document.getElementById("noticeList");
-
-            list.innerHTML = "";
-
+            let html = "";
 
             snapshot.forEach((doc) => {
 
                 const data = doc.data();
+
+                // ==========================
+                // ACTIVE NOTICE ONLY
+                // ==========================
+
+                if (!data.active) {
+                    return;
+                }
 
 
                 // ==========================
@@ -83,15 +82,14 @@ window.addEventListener("firebase-ready", () => {
                 // ==========================
 
                 const noticeDate =
-                new Date(data.date);
+                    new Date(data.date);
 
                 const now =
-                new Date();
+                    new Date();
 
                 const hoursPassed =
-                (now - noticeDate)
-                / (1000 * 60 * 60);
-
+                    (now - noticeDate)
+                    / (1000 * 60 * 60);
 
                 let newBadge = "";
 
@@ -125,24 +123,60 @@ window.addEventListener("firebase-ready", () => {
 
 
                 // ==========================
+                // NOTICE BUTTON
+                // ==========================
+
+                let noticeButton = "";
+
+                if (
+                    data.buttonText &&
+                    data.buttonLink
+                ) {
+
+                    noticeButton = `
+
+                    <a
+                    href="${data.buttonLink}"
+                    style="
+                    display:inline-block;
+                    margin-top:12px;
+                    padding:11px 20px;
+                    background:#007bff;
+                    color:white;
+                    text-decoration:none;
+                    border-radius:9px;
+                    font-weight:bold;
+                    font-size:15px;
+                    ">
+
+                    ${data.buttonText}
+
+                    </a>
+
+                    `;
+
+                }
+
+
+                // ==========================
                 // NOTICE CARD
                 // ==========================
 
-                list.innerHTML += `
+                html += `
 
                 <div style="
-                background:#ffffff;
+                background:white;
                 color:#222;
-                border-left:6px solid #007bff;
-                border-radius:15px;
-                padding:15px;
-                margin:15px 0;
+                padding:18px;
+                margin-bottom:18px;
+                border-radius:14px;
+                border-left:5px solid #007bff;
                 box-shadow:0 5px 15px rgba(0,0,0,.15);
                 ">
 
                     <h3 style="
+                    margin:0 0 10px 0;
                     color:#007bff;
-                    margin-bottom:10px;
                     font-size:20px;
                     ">
 
@@ -154,10 +188,9 @@ window.addEventListener("firebase-ready", () => {
 
 
                     <p style="
+                    line-height:26px;
+                    margin:0;
                     color:#333;
-                    font-size:15px;
-                    line-height:24px;
-                    margin-bottom:15px;
                     ">
 
                     ${data.message}
@@ -165,45 +198,7 @@ window.addEventListener("firebase-ready", () => {
                     </p>
 
 
-                    <div style="
-                    display:flex;
-                    gap:10px;
-                    ">
-
-                        <button
-                        onclick="editNotice('${doc.id}')"
-                        style="
-                        flex:1;
-                        padding:10px;
-                        background:#0d6efd;
-                        color:white;
-                        border:none;
-                        border-radius:8px;
-                        cursor:pointer;
-                        ">
-
-                        ✏ Edit
-
-                        </button>
-
-
-                        <button
-                        onclick="deleteNotice('${doc.id}')"
-                        style="
-                        flex:1;
-                        padding:10px;
-                        background:#dc3545;
-                        color:white;
-                        border:none;
-                        border-radius:8px;
-                        cursor:pointer;
-                        ">
-
-                        🗑 Delete
-
-                        </button>
-
-                    </div>
+                    ${noticeButton}
 
                 </div>
 
@@ -211,12 +206,51 @@ window.addEventListener("firebase-ready", () => {
 
             });
 
+
+            // ==========================
+            // SHOW POPUP
+            // ==========================
+
+            if (html !== "") {
+
+                document.getElementById(
+                    "noticePopup"
+                ).style.display = "flex";
+
+
+                document.getElementById(
+                    "noticeTitle"
+                ).innerHTML =
+                    "📢 IMPORTANT NOTICE";
+
+
+                document.getElementById(
+                    "noticeMessage"
+                ).innerHTML =
+                    html;
+
+            }
+
         }
 
     );
 
-});
 
+    // ==========================
+    // CLOSE POPUP
+    // ==========================
+
+    document.getElementById(
+        "noticeClose"
+    ).onclick = () => {
+
+        document.getElementById(
+            "noticePopup"
+        ).style.display = "none";
+
+    };
+
+});
 // ==========================
 // DELETE NOTICE
 // ==========================
