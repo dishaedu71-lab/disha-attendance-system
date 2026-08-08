@@ -32,8 +32,6 @@ window.addEventListener("firebase-ready", () => {
                     active:
                     document.getElementById("active").checked,
 
-                    // IMPORTANT:
-                    // Save exact creation time
                     date:
                     new Date().toISOString()
 
@@ -219,37 +217,41 @@ window.addEventListener("firebase-ready", () => {
 
 });
 
-
 // ==========================
 // DELETE NOTICE
 // ==========================
 
 window.deleteNotice = async (id) => {
 
-    if (
-        !confirm(
-            "Delete this Notice?"
-        )
-    ) {
+    const confirmDelete =
+    confirm("Are you sure you want to delete this Notice?");
 
+    if (!confirmDelete) {
         return;
+    }
+
+    try {
+
+        await window.deleteDoc(
+
+            window.doc(
+                window.db,
+                "website_notice",
+                id
+            )
+
+        );
+
+        alert("🗑 Notice Deleted Successfully");
 
     }
 
+    catch (err) {
 
-    await window.deleteDoc(
+        console.error(err);
 
-        window.doc(
-            window.db,
-            "website_notice",
-            id
-        )
+        alert("❌ " + err.message);
 
-    );
-
-
-    alert(
-        "🗑 Notice Deleted"
-    );
+    }
 
 };
