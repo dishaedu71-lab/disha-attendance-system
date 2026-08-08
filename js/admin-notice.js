@@ -156,23 +156,19 @@ window.addEventListener("firebase-ready", () => {
 
         (snapshot) => {
 
-            const list =
-                document.getElementById("noticeList");
-
-            if (!list) {
-                return;
-            }
-
-            list.innerHTML = "";
-
+            let html = "";
 
             snapshot.forEach((doc) => {
 
                 const data = doc.data();
 
+                if (!data.active) {
+                    return;
+                }
+
 
                 // ==========================
-                // NEW BADGE - 48 HOURS
+                // CHECK NOTICE AGE
                 // ==========================
 
                 let newBadge = "";
@@ -190,15 +186,18 @@ window.addEventListener("firebase-ready", () => {
                         / (1000 * 60 * 60);
 
 
+                    // NEW = 48 HOURS
                     if (
                         hoursPassed >= 0 &&
                         hoursPassed < 48
                     ) {
 
                         newBadge = `
-                            <span class="new-badge">
-                                NEW
-                            </span>
+                        
+                        <span class="notice-new-badge">
+                            🔴 NEW
+                        </span>
+
                         `;
 
                     }
@@ -207,78 +206,107 @@ window.addEventListener("firebase-ready", () => {
 
 
                 // ==========================
-                // NOTICE CARD
+                // BUTTON
                 // ==========================
 
-                list.innerHTML += `
+                let button = "";
 
-                    <div style="
-                    background:#ffffff;
-                    color:#222;
-                    border-left:6px solid #007bff;
-                    border-radius:15px;
-                    padding:18px;
-                    margin:15px 0;
-                    box-shadow:0 5px 15px rgba(0,0,0,.15);
-                    ">
+                if (
+                    data.buttonText &&
+                    data.buttonLink
+                ) {
 
-                        <h3 style="
-                        color:#007bff;
-                        margin:0 0 10px 0;
-                        font-size:20px;
-                        ">
+                    button = `
 
-                            📢 ${data.title}
+                    <a
+                    href="${data.buttonLink}"
+                    class="notice-action-btn">
 
-                            ${newBadge}
+                        ${data.buttonText}
 
-                        </h3>
+                    </a>
+
+                    `;
+
+                }
 
 
-                        <p style="
-                        color:#333;
-                        font-size:15px;
-                        line-height:24px;
-                        margin-bottom:15px;
-                        ">
+                // ==========================
+                // NOTICE
+                // ==========================
 
-                            ${data.message}
+                html += `
 
-                        </p>
+                <div class="single-notice">
+
+                    <h3>
+
+                        📢 ${data.title}
+
+                        ${newBadge}
+
+                    </h3>
 
 
-                        <div style="
-                        display:flex;
-                        gap:10px;
-                        flex-wrap:wrap;
-                        ">
+                    <p>
 
-                            <button
-                            onclick="deleteNotice('${doc.id}')"
-                            style="
-                            padding:10px 18px;
-                            background:#dc3545;
-                            color:white;
-                            border:none;
-                            border-radius:8px;
-                            cursor:pointer;
-                            ">
+                        ${data.message}
 
-                                🗑 Delete
+                    </p>
 
-                            </button>
 
-                        </div>
+                    ${button}
 
-                    </div>
+                </div>
 
                 `;
 
             });
 
+
+            if (html !== "") {
+
+                document.getElementById(
+                    "noticePopup"
+                ).style.display = "flex";
+
+
+                document.getElementById(
+                    "noticeTitle"
+                ).innerHTML =
+                    "📢 IMPORTANT NOTICE";
+
+
+                document.getElementById(
+                    "noticeMessage"
+                ).innerHTML =
+                    html;
+
+            }
+
         }
 
     );
+
+
+    // ==========================
+    // CLOSE
+    // ==========================
+
+    const closeButton =
+        document.getElementById("noticeClose");
+
+    if (closeButton) {
+
+        closeButton.onclick = () => {
+
+            document.getElementById(
+                "noticePopup"
+            ).style.display = "none";
+
+        };
+
+    }
 
 });
 
