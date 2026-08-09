@@ -937,7 +937,291 @@ window.addEventListener(
 });
 
 </script>
+<script>
 
+window.addEventListener(
+    "firebase-ready",
+    function(){
+
+        const table =
+            document.getElementById(
+                "questionTable"
+            );
+
+        const loading =
+            document.getElementById(
+                "loading"
+            );
+
+        const filterCourse =
+            document.getElementById(
+                "filterCourse"
+            );
+
+
+        /* =========================
+           LOAD QUESTIONS
+        ========================= */
+
+        window.loadPracticeQuestions =
+        async function(){
+
+            try{
+
+                loading.style.display =
+                    "block";
+
+                loading.innerText =
+                    "⏳ Loading Questions...";
+
+
+                table.innerHTML = "";
+
+
+                const snapshot =
+                    await window.getDocs(
+
+                        window.collection(
+                            window.db,
+                            "practice_questions"
+                        )
+
+                    );
+
+
+                const selectedCourse =
+                    filterCourse.value;
+
+
+                let count = 0;
+
+
+                snapshot.forEach(
+                    function(doc){
+
+                        const data =
+                            doc.data();
+
+
+                        /* COURSE FILTER */
+
+                        if(
+                            selectedCourse !==
+                            "all"
+                            &&
+                            data.course !==
+                            selectedCourse
+                        ){
+
+                            return;
+
+                        }
+
+
+                        count++;
+
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        const statusClass =
+                            data.active
+                            ? "active"
+                            : "inactive";
+
+
+                        const statusText =
+                            data.active
+                            ? "Active"
+                            : "Inactive";
+
+
+                        row.innerHTML = `
+
+                            <td>
+                                ${count}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    ${data.course}
+                                </strong>
+                            </td>
+
+                            <td style="
+                                text-align:left;
+                                max-width:450px;
+                            ">
+
+                                ${data.question}
+
+                            </td>
+
+                            <td>
+
+                                ${data.answer}
+
+                            </td>
+
+                            <td class="${statusClass}">
+
+                                ${statusText}
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="delete-btn"
+                                    onclick="
+                                    deletePracticeQuestion(
+                                        '${doc.id}'
+                                    )">
+
+                                    🗑️ Delete
+
+                                </button>
+
+                            </td>
+
+                        `;
+
+
+                        table.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+
+                if(count === 0){
+
+                    table.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                style="
+                                padding:30px;
+                                color:#777;
+                                ">
+
+                                📭 No Questions Found
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+
+
+                loading.style.display =
+                    "none";
+
+            }
+
+            catch(error){
+
+                console.error(error);
+
+
+                loading.innerText =
+                    "❌ Questions Load Error: "
+                    + error.message;
+
+            }
+
+        };
+
+
+        /* =========================
+           DELETE QUESTION
+        ========================= */
+
+        window.deletePracticeQuestion =
+        async function(id){
+
+            const confirmDelete =
+                confirm(
+                    "⚠️ Delete this Practice Question?\n\nThis action cannot be undone."
+                );
+
+
+            if(!confirmDelete){
+
+                return;
+
+            }
+
+
+            try{
+
+                await window.deleteDoc(
+
+                    window.doc(
+                        window.db,
+                        "practice_questions",
+                        id
+                    )
+
+                );
+
+
+                alert(
+                    "✅ Question Deleted Successfully!"
+                );
+
+
+                window.loadPracticeQuestions();
+
+            }
+
+            catch(error){
+
+                console.error(error);
+
+
+                alert(
+                    "❌ Delete Error:\n"
+                    + error.message
+                );
+
+            }
+
+        };
+
+
+        /* =========================
+           FILTER CHANGE
+        ========================= */
+
+        filterCourse.addEventListener(
+            "change",
+            function(){
+
+                window.loadPracticeQuestions();
+
+            }
+        );
+
+
+        /* =========================
+           FIRST LOAD
+        ========================= */
+
+        window.loadPracticeQuestions();
+
+    }
+);
+
+</script>
 </body>
 
 </html>
