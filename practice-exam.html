@@ -1287,13 +1287,125 @@ window.startPracticeExam = function () {
 
     }
 
+/* =========================
+   LOAD EXAM SETTINGS
+========================= */
+
+async function loadExamSettings() {
+
+    try {
+
+        const settingsRef =
+            window.doc(
+                window.db,
+                "exam_settings",
+                window.practiceCourse || course
+            );
+
+        const settingsSnap =
+            await window.getDoc(settingsRef);
+
+
+        if (settingsSnap.exists()) {
+
+            const settings =
+                settingsSnap.data();
+
+            totalSeconds =
+                Number(settings.examTime || 30) * 60;
+
+        } else {
+
+            totalSeconds =
+                30 * 60;
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Exam Settings Error:",
+            error
+        );
+
+        totalSeconds =
+            30 * 60;
+
+    }
+
+}
+ /* =========================
+   TIMER
+========================= */
+
+let timerInterval;
+
+
+/* =========================
+   LOAD TIMER FROM FIREBASE
+========================= */
+
+async function startExamTimer() {
+
+    try {
+
+        const courseCode =
+            window.practiceCourse || course;
+
+        const settingsRef =
+            window.doc(
+                window.db,
+                "exam_settings",
+                courseCode
+            );
+
+        const settingsSnap =
+            await window.getDoc(
+                settingsRef
+            );
+
+
+        if (settingsSnap.exists()) {
+
+            const settings =
+                settingsSnap.data();
+
+            totalSeconds =
+                Number(
+                    settings.examTime || 30
+                ) * 60;
+
+        } else {
+
+            /* DEFAULT */
+
+            totalSeconds =
+                30 * 60;
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Timer Settings Error:",
+            error
+        );
+
+        /* DEFAULT */
+
+        totalSeconds =
+            30 * 60;
+
+    }
+
 
     /* =========================
-       TIMER
+       UPDATE TIMER
     ========================= */
-
-    let timerInterval;
-
 
     function updateTimer() {
 
@@ -1323,11 +1435,15 @@ window.startPracticeExam = function () {
 
         if (totalSeconds <= 0) {
 
-            clearInterval(timerInterval);
+            clearInterval(
+                timerInterval
+            );
+
 
             alert(
                 "⏰ Time Over! Test submitted automatically."
             );
+
 
             finishTest();
 
@@ -1336,8 +1452,12 @@ window.startPracticeExam = function () {
     }
 
 
+    /* FIRST DISPLAY */
+
     updateTimer();
 
+
+    /* START COUNTDOWN */
 
     timerInterval =
         setInterval(
@@ -1351,6 +1471,12 @@ window.startPracticeExam = function () {
             1000
         );
 
+}
+
+
+/* START TIMER */
+
+startExamTimer();
 
     /* =========================
        FIRST QUESTION
