@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Practice Result | Disha Computer Education</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    font-family:Arial,sans-serif;
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f2027,
+        #203a43,
+        #2c5364
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+
+.result-card{
+
+    width:100%;
+
+    max-width:650px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.3);
+
+}
+
+
+.icon{
+
+    font-size:65px;
+
+    margin-bottom:10px;
+}
+
+
+h1{
+
+    margin:10px 0;
+
+    color:#173b56;
+
+}
+
+
+.course{
+
+    color:#1677d2;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:25px;
+
+}
+
+
+.student{
+
+    font-size:17px;
+
+    margin-bottom:25px;
+
+}
+
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:12px;
+
+    margin:25px 0;
+
+}
+
+
+.stat{
+
+    padding:18px 8px;
+
+    border-radius:12px;
+
+    background:#f1f5f9;
+
+}
+
+
+.stat strong{
+
+    display:block;
+
+    font-size:25px;
+
+    color:#173b56;
+
+    margin-bottom:5px;
+
+}
+
+
+.stat span{
+
+    font-size:12px;
+
+    color:#666;
+
+}
+
+
+.percentage{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:#198754;
+
+    margin:20px 0;
+
+}
+
+
+.buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+
+.btn{
+
+    text-decoration:none;
+
+    padding:13px 22px;
+
+    border-radius:9px;
+
+    color:white;
+
+    font-weight:bold;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+}
+
+
+.home{
+
+    background:#173b56;
+
+}
+
+
+.again{
+
+    background:#1677d2;
+
+}
+
+
+@media(max-width:600px){
+
+    .result-card{
+
+        padding:25px 18px;
+
+    }
+
+
+    .stats{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+
+    .percentage{
+
+        font-size:35px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="result-card">
+
+
+<div class="icon">
+
+🎉
+
+</div>
+
+
+<h1>
+
+Practice Test Result
+
+</h1>
+
+
+<div
+class="course"
+id="courseName">
+
+Practice Test
+
+</div>
+
+
+<div
+class="student"
+id="studentName">
+
+Student
+
+</div>
+
+
+<div class="percentage"
+id="percentage">
+
+0%
+
+</div>
+
+
+<div class="stats">
+
+
+<div class="stat">
+
+<strong id="score">
+0
+</strong>
+
+<span>
+Correct
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="attempted">
+0
+</strong>
+
+<span>
+Attempted
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="wrong">
+0
+</strong>
+
+<span>
+Wrong
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="unanswered">
+0
+</strong>
+
+<span>
+Unanswered
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="buttons">
+
+
+<a
+href="index.html"
+class="btn home">
+
+🏠 Home
+
+</a>
+
+
+<a
+href="practice-test.html"
+class="btn again">
+
+🔄 Practice Again
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   RESULT DATA
+========================= */
+
+
+const score =
+
+localStorage.getItem(
+    "practiceScore"
+) || 0;
+
+
+const total =
+
+localStorage.getItem(
+    "practiceTotal"
+) || 0;
+
+
+const attempted =
+
+localStorage.getItem(
+    "practiceAttempted"
+) || 0;
+
+
+const wrong =
+
+localStorage.getItem(
+    "practiceWrong"
+) || 0;
+
+
+const unanswered =
+
+localStorage.getItem(
+    "practiceUnanswered"
+) || 0;
+
+
+const percentage =
+
+localStorage.getItem(
+    "practicePercentage"
+) || 0;
+
+
+const student =
+
+localStorage.getItem(
+    "practiceStudentName"
+) || "Student";
+
+
+const course =
+
+localStorage.getItem(
+    "practiceCourse"
+) || "Practice Test";
+
+
+/* =========================
+   DISPLAY
+========================= */
+
+
+document.getElementById(
+    "score"
+).innerText = score + " / " + total;
+
+
+document.getElementById(
+    "attempted"
+).innerText = attempted;
+
+
+document.getElementById(
+    "wrong"
+).innerText = wrong;
+
+
+document.getElementById(
+    "unanswered"
+).innerText = unanswered;
+
+
+document.getElementById(
+    "percentage"
+).innerText =
+    percentage + "%";
+
+
+document.getElementById(
+    "studentName"
+).innerText =
+    "👨‍🎓 " + student;
+
+
+document.getElementById(
+    "courseName"
+).innerText =
+    course;
+
+
+</script>
+
+
+</body>
+
+</html>
