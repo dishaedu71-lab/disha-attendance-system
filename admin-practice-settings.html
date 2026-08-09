@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Practice Exam Settings</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    margin:0;
+
+    font-family:Arial,sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #07152f,
+        #173b56
+    );
+
+    min-height:100vh;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+    background:
+    rgba(0,0,0,.25);
+
+    color:white;
+
+    padding:25px;
+
+    text-align:center;
+
+}
+
+
+.header h1{
+
+    margin:0 0 8px;
+
+    font-size:30px;
+
+}
+
+
+.header p{
+
+    margin:0;
+
+    opacity:.85;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+
+    width:95%;
+
+    max-width:800px;
+
+    margin:35px auto;
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:
+    0 10px 35px
+    rgba(0,0,0,.25);
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.card h2{
+
+    margin-top:0;
+
+    color:#173b56;
+
+    text-align:center;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+
+    margin-top:20px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    font-weight:bold;
+
+    margin-bottom:8px;
+
+    color:#333;
+
+}
+
+
+select,
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ccc;
+
+    border-radius:9px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+
+select:focus,
+input:focus{
+
+    border-color:#1677d2;
+
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#198754;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+.save-btn:hover{
+
+    background:#146c43;
+
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:#eef6ff;
+
+    border-left:
+    5px solid #1677d2;
+
+    border-radius:7px;
+
+    color:#333;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back-btn{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .card{
+
+        padding:20px;
+
+    }
+
+    .header h1{
+
+        font-size:24px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+<h1>
+
+⚙️ Practice Exam Settings
+
+</h1>
+
+<p>
+
+Timer & Passing Marks Management
+
+</p>
+
+</header>
+
+
+<main class="container">
+
+
+<section class="card">
+
+
+<h2>
+
+🎯 Exam Settings
+
+</h2>
+
+
+<!-- COURSE -->
+
+<div class="form-group">
+
+<label>
+
+Select Course
+
+</label>
+
+
+<select id="course">
+
+<option value="olevel">
+
+O Level
+
+</option>
+
+
+<option value="ccc">
+
+CCC
+
+</option>
+
+
+<option value="python">
+
+Python
+
+</option>
+
+</select>
+
+</div>
+
+
+<!-- TIMER -->
+
+<div class="form-group">
+
+<label>
+
+⏱️ Exam Time (Minutes)
+
+</label>
+
+
+<input
+type="number"
+id="examTime"
+min="1"
+max="300"
+value="30"
+placeholder="Example: 30">
+
+</div>
+
+
+<!-- PASSING -->
+
+<div class="form-group">
+
+<label>
+
+🎯 Passing Percentage (%)
+
+</label>
+
+
+<input
+type="number"
+id="passingMarks"
+min="1"
+max="100"
+value="40"
+placeholder="Example: 40">
+
+</div>
+
+
+<!-- SAVE -->
+
+<button
+id="saveSettings"
+class="save-btn">
+
+💾 SAVE SETTINGS
+
+</button>
+
+
+<!-- INFO -->
+
+<div class="info">
+
+<strong>ℹ️ How it works:</strong>
+
+<br><br>
+
+Admin यहाँ से हर course का
+<strong>Exam Time</strong> और
+<strong>Passing Percentage</strong>
+अपने हिसाब से set कर सकता है।
+
+<br><br>
+
+Example:
+
+<br>
+
+⏱️ Time = 30 Minutes
+
+<br>
+
+🎯 Passing = 40%
+
+</div>
+
+
+</section>
+
+
+<a
+href="admin-dashboard.html"
+class="back-btn">
+
+← Back to Admin Dashboard
+
+</a>
+
+
+</main>
+
+
+<script
+type="module"
+src="js/firebase.js">
+</script>
+
+
+</body>
+
+</html>
