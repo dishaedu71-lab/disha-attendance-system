@@ -1039,55 +1039,68 @@ window.addEventListener(
                             : "Inactive";
 
 
-                        row.innerHTML = `
+                       row.innerHTML = `
 
-                            <td>
-                                ${count}
-                            </td>
+    <td style="
+        color:#222;
+        font-weight:bold;
+    ">
+        ${count}
+    </td>
 
-                            <td>
-                                <strong>
-                                    ${data.course}
-                                </strong>
-                            </td>
 
-                            <td style="
-                                text-align:left;
-                                max-width:450px;
-                            ">
+    <td style="
+        color:#173b56;
+        font-weight:bold;
+        text-transform:uppercase;
+    ">
+        ${data.course || "—"}
+    </td>
 
-                                ${data.question}
 
-                            </td>
+    <td style="
+        color:#222;
+        text-align:left;
+        font-weight:500;
+        max-width:450px;
+        line-height:1.5;
+    ">
+        ${data.question || "Question not found"}
+    </td>
 
-                            <td>
 
-                                ${data.answer}
+    <td style="
+        color:#1677d2;
+        font-weight:bold;
+    ">
+        ${data.answer || "—"}
+    </td>
 
-                            </td>
 
-                            <td class="${statusClass}">
+    <td class="${statusClass}"
+        style="
+        font-weight:bold;
+    ">
+        ${statusText}
+    </td>
 
-                                ${statusText}
 
-                            </td>
+    <td>
 
-                            <td>
+        <button
+            class="delete-btn"
+            onclick="
+            deletePracticeQuestion(
+                '${doc.id}'
+            )">
 
-                                <button
-                                    class="delete-btn"
-                                    onclick="
-                                    deletePracticeQuestion(
-                                        '${doc.id}'
-                                    )">
+            🗑️ Delete
 
-                                    🗑️ Delete
+        </button>
 
-                                </button>
+    </td>
 
-                            </td>
-
-                        `;
+`;
 
 
                         table.appendChild(
