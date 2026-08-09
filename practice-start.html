@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Start Practice Test | Disha Computer Education</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef4f8;
+    color:#222;
+}
+
+/* MAIN */
+
+.test-wrapper{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+}
+
+/* CARD */
+
+.test-card{
+    width:100%;
+    max-width:850px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,.15);
+}
+
+/* HEADER */
+
+.test-header{
+    background:#173b56;
+    color:white;
+    padding:28px;
+}
+
+.test-header h1{
+    margin:0 0 8px;
+    font-size:28px;
+}
+
+.test-header p{
+    margin:0;
+    opacity:.9;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    padding:22px;
+}
+
+.stat{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px 8px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:23px;
+    color:#1769aa;
+}
+
+.stat span{
+    font-size:12px;
+    color:#666;
+}
+
+/* INSTRUCTIONS */
+
+.instructions{
+    padding:0 25px 22px;
+}
+
+.instructions h3{
+    color:#173b56;
+}
+
+.instructions li{
+    margin:12px 0;
+    line-height:1.5;
+}
+
+/* START AREA */
+
+.start-area{
+    border-top:1px solid #ddd;
+    padding:25px;
+    background:#fafafa;
+}
+
+.start-area label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+#studentName{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+#studentName:focus{
+    border-color:#1769aa;
+}
+
+/* BUTTON */
+
+#startTest{
+    margin-top:16px;
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:9px;
+    background:#1677d2;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#startTest:hover{
+    background:#075eaa;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+    display:block;
+    text-align:center;
+    margin-top:12px;
+    color:#555;
+    text-decoration:none;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .test-wrapper{
+        padding:12px;
+        align-items:flex-start;
+    }
+
+    .test-card{
+        margin-top:15px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .test-header{
+        padding:22px;
+    }
+
+    .test-header h1{
+        font-size:22px;
+    }
+
+    .instructions{
+        padding:0 18px 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="test-wrapper">
+
+
+<div class="test-card">
+
+
+<!-- HEADER -->
+
+<div class="test-header">
+
+<h1 id="testTitle">
+Practice Test
+</h1>
+
+<p id="testSubtitle">
+Read the instructions carefully before beginning.
+</p>
+
+</div>
+
+
+<!-- TEST INFORMATION -->
+
+<div class="stats">
+
+
+<div class="stat">
+
+<strong id="questionCount">
+10
+</strong>
+
+<span>
+QUESTIONS
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="testTime">
+10
+</strong>
+
+<span>
+MINUTES
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong>+1</strong>
+
+<span>
+CORRECT
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong>0</strong>
+
+<span>
+NEGATIVE
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- INSTRUCTIONS -->
+
+<div class="instructions">
+
+<h3>
+📋 Test Instructions
+</h3>
+
+<ol>
+
+<li>
+This practice test contains multiple-choice questions.
+</li>
+
+<li>
+Each question has only one correct answer.
+</li>
+
+<li>
+The timer will start after clicking
+<b>START TEST</b>.
+</li>
+
+<li>
+You can move between questions using
+Previous and Next.
+</li>
+
+<li>
+The test will automatically submit when
+the time is over.
+</li>
+
+<li>
+Make sure your internet connection is stable.
+</li>
+
+</ol>
+
+</div>
+
+
+<!-- STUDENT NAME -->
+
+<div class="start-area">
+
+<label for="studentName">
+
+👤 Enter Your Name
+
+</label>
+
+<input
+type="text"
+id="studentName"
+placeholder="Enter your full name"
+autocomplete="name"
+>
+
+
+<button id="startTest">
+
+🚀 START TEST
+
+</button>
+
+
+<a
+href="practice-test.html"
+class="back-btn">
+
+← Back to Practice Tests
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   COURSE FROM URL
+========================= */
+
+const params =
+new URLSearchParams(window.location.search);
+
+const course =
+(params.get("course") || "olevel")
+.toLowerCase();
+
+
+/* =========================
+   COURSE DATA
+========================= */
+
+const courseData = {
+
+    olevel: {
+
+        title:"O Level Practice Test",
+
+        subtitle:
+        "O Level M1-R5 / M2-R5 Practice",
+
+        questions:10,
+
+        time:10
+
+    },
+
+
+    ccc: {
+
+        title:"CCC Practice Test",
+
+        subtitle:
+        "CCC Daily Practice Quiz",
+
+        questions:10,
+
+        time:10
+
+    },
+
+
+    tally: {
+
+        title:"Tally Prime Practice",
+
+        subtitle:
+        "Accounting • GST • Voucher Practice",
+
+        questions:10,
+
+        time:10
+
+    },
+
+
+    python: {
+
+        title:"Python Practice Test",
+
+        subtitle:
+        "Python Programming Daily Quiz",
+
+        questions:10,
+
+        time:10
+
+    }
+
+};
+
+
+/* =========================
+   SELECT COURSE
+========================= */
+
+const selected =
+courseData[course] || courseData.olevel;
+
+
+/* =========================
+   SHOW COURSE
+========================= */
+
+document.getElementById("testTitle")
+.innerText =
+selected.title;
+
+
+document.getElementById("testSubtitle")
+.innerText =
+selected.subtitle;
+
+
+document.getElementById("questionCount")
+.innerText =
+selected.questions;
+
+
+document.getElementById("testTime")
+.innerText =
+selected.time;
+
+
+/* =========================
+   START TEST
+========================= */
+
+document.getElementById("startTest")
+.onclick = function(){
+
+    const name =
+    document
+    .getElementById("studentName")
+    .value
+    .trim();
+
+
+    if(!name){
+
+        alert("Please enter your name.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "practiceStudentName",
+        name
+    );
+
+
+    localStorage.setItem(
+        "practiceCourse",
+        course
+    );
+
+
+    localStorage.setItem(
+        "practiceQuestions",
+        selected.questions
+    );
+
+
+    localStorage.setItem(
+        "practiceTime",
+        selected.time
+    );
+
+
+    window.location.href =
+    "practice-exam.html?course="
+    + course;
+
+};
+
+</script>
+
+
+</body>
+
+</html>
