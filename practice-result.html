@@ -429,11 +429,30 @@ localStorage.getItem(
 ) || "Student";
 
 
-const course =
+const courseCode =
 
 localStorage.getItem(
     "practiceCourse"
-) || "Practice Test";
+) || "olevel";
+
+
+const courseNames = {
+
+    olevel: "O Level Practice Test",
+
+    ccc: "CCC Practice Test",
+
+    python: "Python Practice Test",
+
+    tally: "Tally Prime Practice"
+
+};
+
+
+const course =
+
+courseNames[courseCode]
+|| "Practice Test";
 
 
 /* =========================
