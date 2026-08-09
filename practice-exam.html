@@ -10,12 +10,7 @@ content="width=device-width, initial-scale=1.0">
 
 <title>Practice Exam | Disha Computer Education</title>
 
-
 <style>
-
-/* =========================
-   BASIC
-========================= */
 
 *{
     box-sizing:border-box;
@@ -23,56 +18,42 @@ content="width=device-width, initial-scale=1.0">
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#eef3f8;
     color:#222;
 }
 
 
 /* =========================
-   TOP HEADER
+   HEADER
 ========================= */
 
 .exam-header{
 
     background:#173b56;
-
     color:white;
 
     padding:15px 25px;
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     gap:15px;
 
     position:sticky;
-
     top:0;
-
     z-index:1000;
-
 }
-
 
 .exam-title h2{
-
-    margin:0 0 6px;
-
+    margin:0 0 5px;
     font-size:21px;
-
 }
 
-
 .exam-title span{
-
     font-size:13px;
-
     opacity:.85;
-
 }
 
 
@@ -83,7 +64,6 @@ body{
 .timer{
 
     background:#dc3545;
-
     color:white;
 
     padding:10px 18px;
@@ -91,24 +71,21 @@ body{
     border-radius:8px;
 
     font-size:20px;
-
     font-weight:bold;
 
     min-width:110px;
 
     text-align:center;
-
 }
 
 
 /* =========================
-   MAIN CONTAINER
+   MAIN
 ========================= */
 
 .exam-container{
 
     width:95%;
-
     max-width:1250px;
 
     margin:25px auto;
@@ -119,7 +96,6 @@ body{
     minmax(0,1fr) 280px;
 
     gap:20px;
-
 }
 
 
@@ -137,9 +113,7 @@ body{
 
     box-shadow:
     0 5px 20px rgba(0,0,0,.12);
-
 }
-
 
 .question-number{
 
@@ -148,9 +122,7 @@ body{
     font-weight:bold;
 
     margin-bottom:15px;
-
 }
-
 
 .question-text{
 
@@ -161,7 +133,6 @@ body{
     line-height:1.6;
 
     margin-bottom:25px;
-
 }
 
 
@@ -187,28 +158,22 @@ body{
 
     cursor:pointer;
 
-    transition:.2s;
-
     background:white;
 
+    transition:.2s;
 }
-
 
 .option:hover{
 
     background:#f0f7ff;
 
     border-color:#1677d2;
-
 }
-
 
 .option input{
 
     width:18px;
-
     height:18px;
-
 }
 
 
@@ -227,9 +192,7 @@ body{
     margin-top:30px;
 
     flex-wrap:wrap;
-
 }
-
 
 .nav-btn{
 
@@ -244,34 +207,24 @@ body{
     font-size:16px;
 
     font-weight:bold;
-
 }
-
 
 .previous{
 
     background:#6c757d;
-
     color:white;
-
 }
-
 
 .next{
 
     background:#1677d2;
-
     color:white;
-
 }
-
 
 .submit{
 
     background:#198754;
-
     color:white;
-
 }
 
 
@@ -291,18 +244,14 @@ body{
     0 5px 20px rgba(0,0,0,.12);
 
     height:max-content;
-
 }
-
 
 .palette-card h3{
 
     margin-top:0;
 
     color:#173b56;
-
 }
-
 
 .palette{
 
@@ -312,9 +261,7 @@ body{
     repeat(5,1fr);
 
     gap:8px;
-
 }
-
 
 .q-btn{
 
@@ -331,25 +278,20 @@ body{
     color:#222;
 
     font-weight:bold;
-
 }
-
 
 .q-btn.current{
 
     background:#1677d2;
 
     color:white;
-
 }
-
 
 .q-btn.answered{
 
     background:#198754;
 
     color:white;
-
 }
 
 
@@ -362,50 +304,35 @@ body{
     margin-top:20px;
 
     font-size:13px;
-
 }
-
 
 .legend div{
 
     margin:8px 0;
-
 }
-
 
 .dot{
 
     display:inline-block;
 
     width:13px;
-
     height:13px;
 
     border-radius:50%;
 
     margin-right:7px;
-
 }
-
 
 .blue{
-
     background:#1677d2;
-
 }
-
 
 .green{
-
     background:#198754;
-
 }
 
-
 .grey{
-
     background:#e9ecef;
-
 }
 
 
@@ -417,12 +344,11 @@ body{
 
     text-align:center;
 
-    padding:40px;
+    padding:50px 20px;
 
     font-size:20px;
 
     color:#1769aa;
-
 }
 
 
@@ -435,16 +361,12 @@ body{
     .exam-header{
 
         padding:13px 15px;
-
     }
-
 
     .exam-title h2{
 
         font-size:17px;
-
     }
-
 
     .timer{
 
@@ -453,46 +375,35 @@ body{
         padding:8px 12px;
 
         min-width:95px;
-
     }
-
 
     .exam-container{
 
         grid-template-columns:1fr;
 
         width:94%;
-
     }
-
 
     .question-card{
 
         padding:20px;
-
     }
-
 
     .question-text{
 
         font-size:18px;
-
     }
-
 
     .palette-card{
 
         order:2;
-
     }
-
 
     .nav-btn{
 
         flex:1;
 
         min-width:100px;
-
     }
 
 }
@@ -506,7 +417,7 @@ body{
 
 
 <!-- =========================
-     EXAM HEADER
+     HEADER
 ========================= -->
 
 <header class="exam-header">
@@ -525,7 +436,8 @@ Student
 </div>
 
 
-<div class="timer"
+<div
+class="timer"
 id="timer">
 
 10:00
@@ -537,13 +449,11 @@ id="timer">
 
 
 <!-- =========================
-     MAIN EXAM
+     EXAM AREA
 ========================= -->
 
 <main class="exam-container">
 
-
-<!-- QUESTION AREA -->
 
 <section class="question-card">
 
@@ -555,7 +465,8 @@ id="timer">
 </div>
 
 
-<div id="examArea"
+<div
+id="examArea"
 style="display:none;">
 
 
@@ -579,12 +490,11 @@ of
 <div
 class="question-text"
 id="questionText">
-
 </div>
 
 
-<div id="optionsContainer">
-
+<div
+id="optionsContainer">
 </div>
 
 
@@ -623,26 +533,24 @@ Submit
 
 </div>
 
-
 </section>
 
 
-<!-- QUESTION PALETTE -->
+<!-- =========================
+     PALETTE
+========================= -->
 
 <aside class="palette-card">
 
 
 <h3>
-
 Question Palette
-
 </h3>
 
 
 <div
 class="palette"
 id="questionPalette">
-
 </div>
 
 
@@ -652,7 +560,6 @@ id="questionPalette">
 <div>
 
 <span class="dot blue"></span>
-
 Current
 
 </div>
@@ -661,7 +568,6 @@ Current
 <div>
 
 <span class="dot green"></span>
-
 Answered
 
 </div>
@@ -670,7 +576,6 @@ Answered
 <div>
 
 <span class="dot grey"></span>
-
 Not Answered
 
 </div>
@@ -678,14 +583,15 @@ Not Answered
 
 </div>
 
-
 </aside>
 
 
 </main>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script
 type="module"
@@ -693,104 +599,149 @@ src="js/firebase.js">
 </script>
 <script>
 
-window.addEventListener("firebase-ready", async () => {
+window.addEventListener("firebase-ready", async function(){
 
     /* =========================
-       COURSE
+       GET COURSE
     ========================= */
 
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
     const course =
-        (params.get("course") || "olevel").toLowerCase();
+        (params.get("course") || "olevel")
+        .toLowerCase();
 
 
     /* =========================
-       STUDENT
+       STUDENT NAME
     ========================= */
 
     const studentName =
-        localStorage.getItem("practiceStudentName")
-        || "Student";
+        localStorage.getItem(
+            "practiceStudentName"
+        ) || "Student";
 
 
-    document.getElementById("studentDisplay").innerText =
-        studentName;
+    document.getElementById(
+        "studentDisplay"
+    ).innerText = studentName;
 
 
     /* =========================
-       COURSE NAME
+       COURSE TITLE
     ========================= */
 
     const courseNames = {
 
-        olevel: "O Level Practice Test",
+        olevel:
+            "O Level Practice Test",
 
-        ccc: "CCC Practice Test",
+        ccc:
+            "CCC Practice Test",
 
-        python: "Python Practice Test",
+        python:
+            "Python Practice Test",
 
-        tally: "Tally Prime Practice"
+        tally:
+            "Tally Prime Practice"
 
     };
 
 
-    document.getElementById("courseTitle").innerText =
-        courseNames[course] || "Practice Test";
+    document.getElementById(
+        "courseTitle"
+    ).innerText =
+        courseNames[course]
+        || "Practice Test";
 
 
     /* =========================
-       FIREBASE REFERENCES
+       FIREBASE
     ========================= */
 
-    const db = window.db;
+    try{
 
-    const collection = window.collection;
+        const db =
+            window.db;
 
-    const getDocs = window.getDocs;
+        const collection =
+            window.collection;
 
-    const query = window.query;
+        const getDocs =
+            window.getDocs;
 
-    const where = window.where;
+        const query =
+            window.query;
 
+        const where =
+            window.where;
 
-    try {
 
         /* =========================
-           GET COURSE QUESTIONS
+           COLLECTION
         ========================= */
 
         const questionsRef =
-            collection(db, "practice_questions");
-
-
-        const q =
-            query(
-                questionsRef,
-                where("course", "==", course),
-                where("active", "==", true)
+            collection(
+                db,
+                "practice_questions"
             );
 
 
-        const snapshot =
-            await getDocs(q);
+        /* =========================
+           COURSE FILTER
+        ========================= */
+
+        const questionQuery =
+            query(
+
+                questionsRef,
+
+                where(
+                    "course",
+                    "==",
+                    course
+                ),
+
+                where(
+                    "active",
+                    "==",
+                    true
+                )
+
+            );
 
 
         /* =========================
-           CHECK QUESTIONS
+           GET DATA
         ========================= */
 
-        if (snapshot.empty) {
+        const snapshot =
+            await getDocs(
+                questionQuery
+            );
 
-            document.getElementById("loadingBox").innerHTML = `
+
+        /* =========================
+           NO QUESTIONS
+        ========================= */
+
+        if(snapshot.empty){
+
+            document.getElementById(
+                "loadingBox"
+            ).innerHTML = `
 
                 ❌ No Practice Questions Found
 
                 <br><br>
 
                 <small>
-                Course: ${course}
+                Course:
+                ${course}
                 </small>
 
             `;
@@ -801,15 +752,16 @@ window.addEventListener("firebase-ready", async () => {
 
 
         /* =========================
-           CONVERT FIREBASE DATA
+           CREATE QUESTIONS ARRAY
         ========================= */
 
         window.practiceQuestions = [];
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(function(doc){
 
-            const data = doc.data();
+            const data =
+                doc.data();
 
 
             window.practiceQuestions.push({
@@ -819,7 +771,7 @@ window.addEventListener("firebase-ready", async () => {
                 question:
                     data.question || "",
 
-                options: [
+                options:[
 
                     data.optionA || "",
 
@@ -832,7 +784,9 @@ window.addEventListener("firebase-ready", async () => {
                 ],
 
                 answer:
-                    String(data.answer || "")
+                    String(
+                        data.answer || ""
+                    )
                     .trim()
                     .toUpperCase()
 
@@ -842,67 +796,73 @@ window.addEventListener("firebase-ready", async () => {
 
 
         /* =========================
-           RANDOMIZE QUESTIONS
+           RANDOM QUESTIONS
         ========================= */
 
-        window.practiceQuestions =
-            window.practiceQuestions.sort(
-                () => Math.random() - 0.5
-            );
+        window.practiceQuestions.sort(
+            function(){
+
+                return Math.random() - 0.5;
+
+            }
+        );
 
 
         /* =========================
-           SHOW EXAM
+           SHOW EXAM AREA
         ========================= */
 
-        document.getElementById("loadingBox")
-            .style.display = "none";
+        document.getElementById(
+            "loadingBox"
+        ).style.display = "none";
 
 
-        document.getElementById("examArea")
-            .style.display = "block";
+        document.getElementById(
+            "examArea"
+        ).style.display = "block";
 
 
-        document.getElementById("totalQuestions")
-            .innerText =
+        document.getElementById(
+            "totalQuestions"
+        ).innerText =
             window.practiceQuestions.length;
 
 
         /* =========================
-           START EXAM ENGINE
+           START ENGINE
         ========================= */
 
         window.startPracticeExam();
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(
-            "Practice Question Error:",
+            "Practice Firebase Error:",
             error
         );
 
 
-        document.getElementById("loadingBox")
-            .innerHTML = `
+        document.getElementById(
+            "loadingBox"
+        ).innerHTML = `
 
-                ❌ Questions Load नहीं हो सके।
+            ❌ Questions Load नहीं हो सके।
 
-                <br><br>
+            <br><br>
 
-                <small>
-                ${error.message}
-                </small>
+            <small>
+            ${error.message}
+            </small>
 
-            `;
+        `;
 
     }
 
 });
 
 </script>
-
 </body>
 
 </html>
