@@ -357,14 +357,14 @@ class="btn home">
 </a>
 
 
-<a
-href="practice-test.html"
-class="btn again">
+<button
+type="button"
+class="btn again"
+onclick="practiceAgain()">
 
 🔄 Practice Again
 
-</a>
-
+</button>
 
 </div>
 
@@ -497,6 +497,23 @@ document.getElementById(
 ).innerText =
     course;
 
+/* =========================
+   PRACTICE AGAIN
+========================= */
+
+function practiceAgain(){
+
+    const courseCode =
+        localStorage.getItem(
+            "practiceCourse"
+        ) || "olevel";
+
+
+    window.location.href =
+        "practice-exam.html?course="
+        + encodeURIComponent(courseCode);
+
+}
 
 </script>
 
