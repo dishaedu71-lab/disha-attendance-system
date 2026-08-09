@@ -1280,50 +1280,43 @@ window.startPracticeExam = function(){
 
 
         localStorage.setItem(
-            "practiceScore",
-            score
-        );
+    "practiceScore",
+    score
+);
 
+localStorage.setItem(
+    "practiceTotal",
+    questions.length
+);
 
-        localStorage.setItem(
-            "practiceTotal",
-            questions.length
-        );
+localStorage.setItem(
+    "practiceAttempted",
+    attempted
+);
 
+localStorage.setItem(
+    "practiceWrong",
+    wrong
+);
 
-        localStorage.setItem(
-            "practiceAttempted",
-            attempted
-        );
+localStorage.setItem(
+    "practiceUnanswered",
+    unanswered
+);
 
+localStorage.setItem(
+    "practicePercentage",
+    percentage
+);
 
-        localStorage.setItem(
-            "practiceWrong",
-            wrong
-        );
+localStorage.setItem(
+    "practiceCourse",
+    course
+);
 
-
-        localStorage.setItem(
-            "practiceUnanswered",
-            unanswered
-        );
-
-
-        localStorage.setItem(
-            "practicePercentage",
-            percentage
-        );
-
-
-        window.location.href =
+window.location.href =
     "practice-result.html";
-
-        window.location.href =
-            "practice-test.html";
-
     }
-
-
     /* =========================
        TIMER
     ========================= */
