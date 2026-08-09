@@ -808,6 +808,26 @@ window.addEventListener("firebase-ready", async function(){
             }
         );
 
+        /* =========================
+   RANDOM QUESTION LIMIT
+========================= */
+
+const questionLimit = 25;
+
+
+/* अगर questions 25 से कम हैं
+   तो जितने available हैं उतने ही आएँगे */
+
+if(window.practiceQuestions.length > questionLimit){
+
+    window.practiceQuestions =
+        window.practiceQuestions.slice(
+            0,
+            questionLimit
+        );
+
+}
+
 
         /* =========================
            SHOW EXAM AREA
