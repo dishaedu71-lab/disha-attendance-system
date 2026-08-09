@@ -1,1 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Practice Question Management</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef3f8;
+    color:#222;
+}
+
+/* HEADER */
+
+.page-header{
+
+    background:#173b56;
+    color:white;
+
+    padding:25px;
+
+    text-align:center;
+}
+
+.page-header h1{
+
+    margin:0 0 8px;
+
+    font-size:28px;
+}
+
+.page-header p{
+
+    margin:0;
+
+    opacity:.85;
+}
+
+
+/* MAIN */
+
+.container{
+
+    width:95%;
+
+    max-width:1200px;
+
+    margin:25px auto;
+}
+
+
+/* CARD */
+
+.card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.12);
+}
+
+
+/* FORM */
+
+.form-title{
+
+    margin-top:0;
+
+    color:#173b56;
+
+}
+
+
+label{
+
+    display:block;
+
+    font-weight:bold;
+
+    margin-top:15px;
+
+    margin-bottom:7px;
+
+}
+
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    outline:none;
+
+}
+
+
+textarea{
+
+    min-height:100px;
+
+    resize:vertical;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#1677d2;
+
+}
+
+
+/* OPTIONS */
+
+.options-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+/* BUTTON */
+
+.add-btn{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:14px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#198754;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+.add-btn:hover{
+
+    background:#146c43;
+
+}
+
+
+/* FILTER */
+
+.filter-row{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+}
+
+
+.filter-row select{
+
+    max-width:300px;
+
+}
+
+
+/* TABLE */
+
+.table-wrap{
+
+    width:100%;
+
+    overflow-x:auto;
+
+}
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:850px;
+
+}
+
+
+th{
+
+    background:#173b56;
+
+    color:white;
+
+    padding:12px;
+
+}
+
+
+td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+    text-align:center;
+
+}
+
+
+tr:hover{
+
+    background:#f7f9fb;
+
+}
+
+
+/* DELETE */
+
+.delete-btn{
+
+    background:#dc3545;
+
+    color:white;
+
+    border:0;
+
+    padding:8px 13px;
+
+    border-radius:7px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+.delete-btn:hover{
+
+    background:#b02a37;
+
+}
+
+
+/* STATUS */
+
+.active{
+
+    color:#198754;
+
+    font-weight:bold;
+
+}
+
+
+.inactive{
+
+    color:#dc3545;
+
+    font-weight:bold;
+
+}
+
+
+/* LOADING */
+
+#loading{
+
+    text-align:center;
+
+    padding:25px;
+
+    color:#1769aa;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .container{
+
+        width:94%;
+
+    }
+
+
+    .card{
+
+        padding:18px;
+
+    }
+
+
+    .options-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .filter-row{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+    .filter-row select{
+
+        max-width:none;
+
+    }
+
+
+    .page-header h1{
+
+        font-size:23px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="page-header">
+
+<h1>
+
+📝 Practice Question Management
+
+</h1>
+
+<p>
+
+O Level • CCC • Python
+
+</p>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =========================
+     ADD QUESTION
+========================= -->
+
+<section class="card">
+
+
+<h2 class="form-title">
+
+➕ Add Practice Question
+
+</h2>
+
+
+<label>
+
+Course
+
+</label>
+
+
+<select id="course">
+
+<option value="olevel">
+O Level
+</option>
+
+<option value="ccc">
+CCC
+</option>
+
+<option value="python">
+Python
+</option>
+
+</select>
+
+
+<label>
+
+Question
+
+</label>
+
+
+<textarea
+id="question"
+placeholder="Enter your question...">
+</textarea>
+
+
+<div class="options-grid">
+
+
+<div>
+
+<label>
+
+Option A
+
+</label>
+
+<input
+type="text"
+id="optionA"
+placeholder="Enter option A">
+
+</div>
+
+
+<div>
+
+<label>
+
+Option B
+
+</label>
+
+<input
+type="text"
+id="optionB"
+placeholder="Enter option B">
+
+</div>
+
+
+<div>
+
+<label>
+
+Option C
+
+</label>
+
+<input
+type="text"
+id="optionC"
+placeholder="Enter option C">
+
+</div>
+
+
+<div>
+
+<label>
+
+Option D
+
+</label>
+
+<input
+type="text"
+id="optionD"
+placeholder="Enter option D">
+
+</div>
+
+
+</div>
+
+
+<label>
+
+Correct Answer
+
+</label>
+
+
+<select id="answer">
+
+<option value="">
+
+Select Correct Answer
+
+</option>
+
+<option value="A">
+A
+</option>
+
+<option value="B">
+B
+</option>
+
+<option value="C">
+C
+</option>
+
+<option value="D">
+D
+</option>
+
+</select>
+
+
+<label>
+
+Status
+
+</label>
+
+
+<select id="active">
+
+<option value="true">
+Active
+</option>
+
+<option value="false">
+Inactive
+</option>
+
+</select>
+
+
+<button
+class="add-btn"
+id="addQuestion">
+
+➕ ADD QUESTION
+
+</button>
+
+
+</section>
+
+
+<!-- =========================
+     QUESTION LIST
+========================= -->
+
+<section class="card">
+
+
+<h2 class="form-title">
+
+📚 Practice Question Bank
+
+</h2>
+
+
+<div class="filter-row">
+
+
+<select id="filterCourse">
+
+<option value="all">
+All Courses
+</option>
+
+<option value="olevel">
+O Level
+</option>
+
+<option value="ccc">
+CCC
+</option>
+
+<option value="python">
+Python
+</option>
+
+</select>
+
+
+</div>
+
+
+<br>
+
+
+<div id="loading">
+
+⏳ Loading Questions...
+
+</div>
+
+
+<div class="table-wrap">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+#
+</th>
+
+<th>
+Course
+</th>
+
+<th>
+Question
+</th>
+
+<th>
+Answer
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="questionTable">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+<!-- FIREBASE -->
+
+<script
+type="module"
+src="js/firebase.js">
+</script>
+<script>
+
+window.addEventListener(
+    "firebase-ready",
+    function(){
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const course =
+            document.getElementById("course");
+
+        const question =
+            document.getElementById("question");
+
+        const optionA =
+            document.getElementById("optionA");
+
+        const optionB =
+            document.getElementById("optionB");
+
+        const optionC =
+            document.getElementById("optionC");
+
+        const optionD =
+            document.getElementById("optionD");
+
+        const answer =
+            document.getElementById("answer");
+
+        const active =
+            document.getElementById("active");
+
+        const addQuestion =
+            document.getElementById("addQuestion");
+
+
+        /* =========================
+           ADD QUESTION
+        ========================= */
+
+        addQuestion.onclick =
+        async function(){
+
+            const courseValue =
+                course.value;
+
+            const questionValue =
+                question.value.trim();
+
+            const optionAValue =
+                optionA.value.trim();
+
+            const optionBValue =
+                optionB.value.trim();
+
+            const optionCValue =
+                optionC.value.trim();
+
+            const optionDValue =
+                optionD.value.trim();
+
+            const answerValue =
+                answer.value;
+
+            const activeValue =
+                active.value === "true";
+
+
+            /* =========================
+               VALIDATION
+            ========================= */
+
+            if(!questionValue){
+
+                alert(
+                    "Please enter question."
+                );
+
+                question.focus();
+
+                return;
+
+            }
+
+
+            if(
+                !optionAValue ||
+                !optionBValue ||
+                !optionCValue ||
+                !optionDValue
+            ){
+
+                alert(
+                    "Please enter all four options."
+                );
+
+                return;
+
+            }
+
+
+            if(!answerValue){
+
+                alert(
+                    "Please select correct answer."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               SAVE FIREBASE
+            ========================= */
+
+            try{
+
+                addQuestion.disabled =
+                    true;
+
+                addQuestion.innerText =
+                    "⏳ SAVING...";
+
+
+                await window.addDoc(
+
+                    window.collection(
+                        window.db,
+                        "practice_questions"
+                    ),
+
+                    {
+
+                        course:
+                            courseValue,
+
+                        question:
+                            questionValue,
+
+                        optionA:
+                            optionAValue,
+
+                        optionB:
+                            optionBValue,
+
+                        optionC:
+                            optionCValue,
+
+                        optionD:
+                            optionDValue,
+
+                        answer:
+                            answerValue,
+
+                        active:
+                            activeValue,
+
+                        createdAt:
+                            new Date().toISOString()
+
+                    }
+
+                );
+
+
+                alert(
+                    "✅ Practice Question Added Successfully!"
+                );
+
+
+                /* =========================
+                   CLEAR FORM
+                ========================= */
+
+                question.value = "";
+
+                optionA.value = "";
+
+                optionB.value = "";
+
+                optionC.value = "";
+
+                optionD.value = "";
+
+                answer.value = "";
+
+                active.value = "true";
+
+
+                /* =========================
+                   REFRESH LIST
+                ========================= */
+
+                if(
+                    typeof window.loadPracticeQuestions
+                    === "function"
+                ){
+
+                    window.loadPracticeQuestions();
+
+                }
+
+            }
+
+            catch(error){
+
+                console.error(error);
+
+                alert(
+                    "❌ Question Save Error:\n"
+                    + error.message
+                );
+
+            }
+
+            finally{
+
+                addQuestion.disabled =
+                    false;
+
+                addQuestion.innerText =
+                    "➕ ADD QUESTION";
+
+            }
+
+        };
+
+
+});
+
+</script>
+
+</body>
+
+</html>
