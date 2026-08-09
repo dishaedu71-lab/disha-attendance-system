@@ -1,1 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Practice Test | Disha Computer Education</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#07152f;
+    color:white;
+}
+
+.practice-header{
+    text-align:center;
+    padding:55px 20px 35px;
+}
+
+.practice-header h1{
+    font-size:40px;
+    margin:10px 0;
+}
+
+.practice-header p{
+    font-size:18px;
+    opacity:.85;
+}
+
+.practice-grid{
+    width:92%;
+    max-width:1100px;
+    margin:20px auto 70px;
+
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+}
+
+.practice-card{
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    border-radius:20px;
+
+    padding:28px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+    backdrop-filter:blur(12px);
+
+    transition:.3s;
+}
+
+.practice-card:hover{
+    transform:translateY(-7px);
+}
+
+.practice-icon{
+    font-size:55px;
+    margin-bottom:12px;
+}
+
+.practice-card h2{
+    margin:8px 0 12px;
+}
+
+.practice-card p{
+    opacity:.85;
+    line-height:1.5;
+}
+
+.practice-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin:20px 0;
+
+    padding:12px;
+
+    background:rgba(0,0,0,.2);
+
+    border-radius:10px;
+}
+
+.practice-btn{
+
+    display:block;
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:#007bff;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    font-size:17px;
+
+    transition:.3s;
+}
+
+.practice-btn:hover{
+    background:#00c6ff;
+}
+
+.home-btn{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:10px 20px;
+
+    border:1px solid white;
+
+    border-radius:10px;
+
+    color:white;
+
+    text-decoration:none;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .practice-header{
+        padding:35px 15px 20px;
+    }
+
+    .practice-header h1{
+        font-size:29px;
+    }
+
+    .practice-header p{
+        font-size:15px;
+    }
+
+    .practice-grid{
+        width:94%;
+        grid-template-columns:1fr;
+    }
+
+    .practice-card{
+        padding:22px;
+    }
+
+    .practice-info{
+        font-size:14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<section class="practice-header">
+
+<h1>
+📝 Practice Test / Daily Quiz
+</h1>
+
+<p>
+Practice daily • Improve your speed • Prepare for your examination
+</p>
+
+<a href="index.html" class="home-btn">
+🏠 Back to Home
+</a>
+
+</section>
+
+
+<section class="practice-grid">
+
+
+<!-- O LEVEL -->
+
+<div class="practice-card">
+
+<div class="practice-icon">
+💻
+</div>
+
+<h2>
+O Level
+</h2>
+
+<p>
+M1-R5.1 • M2-R5.1 • M3-R5.1 • M4-R5.1
+</p>
+
+<div class="practice-info">
+
+<span>❓ Practice</span>
+
+<span>⏱ Daily Quiz</span>
+
+</div>
+
+<a
+href="practice-start.html?course=olevel"
+class="practice-btn">
+
+START PRACTICE →
+
+</a>
+
+</div>
+
+
+<!-- CCC -->
+
+<div class="practice-card">
+
+<div class="practice-icon">
+🖥️
+</div>
+
+<h2>
+CCC
+</h2>
+
+<p>
+CCC Computer Course Practice Test
+</p>
+
+<div class="practice-info">
+
+<span>❓ Practice</span>
+
+<span>⏱ Daily Quiz</span>
+
+</div>
+
+<a
+href="practice-start.html?course=ccc"
+class="practice-btn">
+
+START PRACTICE →
+
+</a>
+
+</div>
+
+
+<!-- TALLY -->
+
+<div class="practice-card">
+
+<div class="practice-icon">
+🧾
+</div>
+
+<h2>
+Tally Prime
+</h2>
+
+<p>
+Accounting • GST • Voucher • Ledger Practice
+</p>
+
+<div class="practice-info">
+
+<span>🧮 Practical</span>
+
+<span>⏱ Practice</span>
+
+</div>
+
+<a
+href="practice-start.html?course=tally"
+class="practice-btn">
+
+START PRACTICE →
+
+</a>
+
+</div>
+
+
+<!-- PYTHON -->
+
+<div class="practice-card">
+
+<div class="practice-icon">
+🐍
+</div>
+
+<h2>
+Python
+</h2>
+
+<p>
+Python Programming Practice Test
+</p>
+
+<div class="practice-info">
+
+<span>❓ Practice</span>
+
+<span>⏱ Daily Quiz</span>
+
+</div>
+
+<a
+href="practice-start.html?course=python"
+class="practice-btn">
+
+START PRACTICE →
+
+</a>
+
+</div>
+
+
+</section>
+
+
+</body>
+
+</html>
