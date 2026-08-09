@@ -1315,47 +1315,8 @@ window.startPracticeExam = function(){
         );
 
 
-        alert(
-
-            "🎉 Practice Test Completed!\n\n"
-
-            + "Student: "
-            + (
-                localStorage.getItem(
-                    "practiceStudentName"
-                ) || "Student"
-            )
-
-            + "\n\n"
-
-            + "Score: "
-            + score
-            + " / "
-            + questions.length
-
-            + "\n"
-
-            + "Attempted: "
-            + attempted
-
-            + "\n"
-
-            + "Wrong: "
-            + wrong
-
-            + "\n"
-
-            + "Unanswered: "
-            + unanswered
-
-            + "\n"
-
-            + "Percentage: "
-            + percentage
-            + "%"
-
-        );
-
+        window.location.href =
+    "practice-result.html";
 
         window.location.href =
             "practice-test.html";
