@@ -452,7 +452,221 @@ type="module"
 src="js/firebase.js">
 </script>
 
+<script>
 
+window.addEventListener(
+    "firebase-ready",
+    function () {
+
+        const course =
+            document.getElementById("course");
+
+        const examTime =
+            document.getElementById("examTime");
+
+        const passingMarks =
+            document.getElementById("passingMarks");
+
+        const saveSettings =
+            document.getElementById("saveSettings");
+
+
+        /* =========================
+           LOAD SAVED SETTINGS
+        ========================= */
+
+        async function loadSettings() {
+
+            try {
+
+                const docRef =
+                    window.doc(
+                        window.db,
+                        "exam_settings",
+                        course.value
+                    );
+
+                const snap =
+                    await window.getDoc(docRef);
+
+
+                if (snap.exists()) {
+
+                    const data =
+                        snap.data();
+
+                    examTime.value =
+                        data.examTime || 30;
+
+                    passingMarks.value =
+                        data.passingMarks || 40;
+
+                } else {
+
+                    examTime.value = 30;
+
+                    passingMarks.value = 40;
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Settings Load Error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           COURSE CHANGE
+        ========================= */
+
+        course.addEventListener(
+            "change",
+            function () {
+
+                loadSettings();
+
+            }
+        );
+
+
+        /* =========================
+           SAVE SETTINGS
+        ========================= */
+
+        saveSettings.onclick =
+        async function () {
+
+            const time =
+                Number(examTime.value);
+
+            const passing =
+                Number(passingMarks.value);
+
+
+            /* VALIDATION */
+
+            if (
+                !time ||
+                time < 1 ||
+                time > 300
+            ) {
+
+                alert(
+                    "Please enter Exam Time between 1 and 300 minutes."
+                );
+
+                examTime.focus();
+
+                return;
+
+            }
+
+
+            if (
+                !passing ||
+                passing < 1 ||
+                passing > 100
+            ) {
+
+                alert(
+                    "Please enter Passing Percentage between 1 and 100."
+                );
+
+                passingMarks.focus();
+
+                return;
+
+            }
+
+
+            try {
+
+                saveSettings.disabled =
+                    true;
+
+                saveSettings.innerText =
+                    "⏳ SAVING...";
+
+
+                await window.setDoc(
+
+                    window.doc(
+                        window.db,
+                        "exam_settings",
+                        course.value
+                    ),
+
+                    {
+
+                        course:
+                            course.value,
+
+                        examTime:
+                            time,
+
+                        passingMarks:
+                            passing,
+
+                        updatedAt:
+                            new Date().toISOString()
+
+                    }
+
+                );
+
+
+                alert(
+                    "✅ Exam Settings Saved Successfully!"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Settings Save Error:",
+                    error
+                );
+
+                alert(
+                    "❌ Settings Save Error:\n"
+                    + error.message
+                );
+
+            }
+
+            finally {
+
+                saveSettings.disabled =
+                    false;
+
+                saveSettings.innerText =
+                    "💾 SAVE SETTINGS";
+
+            }
+
+        };
+
+
+        /* =========================
+           FIRST LOAD
+        ========================= */
+
+        loadSettings();
+
+    }
+
+);
+
+</script>
 </body>
 
 </html>
