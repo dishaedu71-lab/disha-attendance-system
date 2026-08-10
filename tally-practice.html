@@ -594,18 +594,14 @@ body{
 
 <script>
 
-<script>
+function openModule(module) {
 
-function openModule(module){
-
-    if(module === "company"){
+    if (module === "company") {
 
         showCompanyCreation();
 
         return;
-
     }
-
 
     alert(
         "🚧 " +
@@ -613,7 +609,6 @@ function openModule(module){
         " PRACTICE\n\n" +
         "This module will be added in the next step."
     );
-
 }
 
 
@@ -621,27 +616,22 @@ function openModule(module){
    COMPANY CREATION
 ========================= */
 
-function showCompanyCreation(){
+function showCompanyCreation() {
 
     const panel =
         document.querySelector(".main-panel");
 
-
     panel.innerHTML = `
 
         <div class="panel-title">
-
             Company Creation
-
         </div>
-
 
         <div style="
             padding:25px;
             max-width:850px;
             margin:auto;
         ">
-
 
             <div style="
                 background:#173f59;
@@ -650,26 +640,18 @@ function showCompanyCreation(){
                 margin-bottom:20px;
                 font-weight:bold;
             ">
-
                 🏢 Create Company
-
             </div>
 
 
-            <!-- COMPANY NAME -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Company Name
-
                 </label>
 
                 <input
@@ -687,20 +669,14 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- MAILING NAME -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Mailing Name
-
                 </label>
 
                 <input
@@ -718,20 +694,14 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- ADDRESS -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Address
-
                 </label>
 
                 <textarea
@@ -750,20 +720,14 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- STATE -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     State
-
                 </label>
 
                 <select
@@ -776,45 +740,25 @@ function showCompanyCreation(){
                     "
                 >
 
-                    <option>
-                        Uttar Pradesh
-                    </option>
-
-                    <option>
-                        Delhi
-                    </option>
-
-                    <option>
-                        Maharashtra
-                    </option>
-
-                    <option>
-                        Bihar
-                    </option>
-
-                    <option>
-                        Rajasthan
-                    </option>
+                    <option>Uttar Pradesh</option>
+                    <option>Delhi</option>
+                    <option>Maharashtra</option>
+                    <option>Bihar</option>
+                    <option>Rajasthan</option>
 
                 </select>
 
             </div>
 
 
-            <!-- COUNTRY -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Country
-
                 </label>
 
                 <input
@@ -832,20 +776,14 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- FINANCIAL YEAR -->
-
-            <div style="
-                margin-bottom:15px;
-            ">
+            <div style="margin-bottom:15px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Financial Year From
-
                 </label>
 
                 <input
@@ -863,20 +801,14 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- BOOKS BEGINNING -->
-
-            <div style="
-                margin-bottom:20px;
-            ">
+            <div style="margin-bottom:20px;">
 
                 <label style="
                     display:block;
                     font-weight:bold;
                     margin-bottom:6px;
                 ">
-
                     Books Beginning From
-
                 </label>
 
                 <input
@@ -894,14 +826,11 @@ function showCompanyCreation(){
             </div>
 
 
-            <!-- BUTTONS -->
-
             <div style="
                 display:flex;
                 gap:10px;
                 flex-wrap:wrap;
             ">
-
 
                 <button
                     onclick="createPracticeCompany()"
@@ -917,9 +846,7 @@ function showCompanyCreation(){
                         border-radius:5px;
                     "
                 >
-
                     ✔ CREATE COMPANY
-
                 </button>
 
 
@@ -937,19 +864,14 @@ function showCompanyCreation(){
                         border-radius:5px;
                     "
                 >
-
                     ← BACK TO GATEWAY
-
                 </button>
 
-
             </div>
-
 
         </div>
 
     `;
-
 }
 
 
@@ -957,19 +879,17 @@ function showCompanyCreation(){
    CREATE COMPANY
 ========================= */
 
-function createPracticeCompany(){
+function createPracticeCompany() {
 
     const name =
         document.getElementById(
             "companyName"
         ).value.trim();
 
-
     const mailing =
         document.getElementById(
             "mailingName"
         ).value.trim();
-
 
     const address =
         document.getElementById(
@@ -977,53 +897,45 @@ function createPracticeCompany(){
         ).value.trim();
 
 
-    if(!name){
+    if (!name) {
 
         alert(
             "⚠️ Please enter Company Name."
         );
 
         return;
-
     }
 
 
-    if(!mailing){
+    if (!mailing) {
 
         alert(
             "⚠️ Please enter Mailing Name."
         );
 
         return;
-
     }
 
 
-    if(!address){
+    if (!address) {
 
         alert(
             "⚠️ Please enter Company Address."
         );
 
         return;
-
     }
 
 
     alert(
-        "✅ Company Created Successfully!\n\n"
-        +
-        "Company: "
-        +
-        name
-        +
-        "\nState: "
-        +
+        "✅ Company Created Successfully!\n\n" +
+        "Company: " +
+        name +
+        "\nState: " +
         document.getElementById(
             "companyState"
         ).value
     );
-
 }
 
 
@@ -1031,16 +943,13 @@ function createPracticeCompany(){
    BACK TO GATEWAY
 ========================= */
 
-function showGateway(){
+function showGateway() {
 
     location.reload();
 
 }
 
 </script>
-
-</script>
-
 
 </body>
 
