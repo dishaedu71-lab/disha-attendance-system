@@ -603,6 +603,13 @@ function openModule(module) {
         return;
     }
 
+  if (module === "accounting") {
+
+    showLedgerCreation();
+
+    return;
+}
+
     alert(
         "🚧 " +
         module.toUpperCase() +
@@ -1024,6 +1031,368 @@ function createPracticeCompany() {
 function showGateway() {
 
     location.reload();
+
+}
+  /* =========================
+   LEDGER CREATION
+========================= */
+
+function showLedgerCreation() {
+
+    const panel =
+        document.querySelector(".main-panel");
+
+
+    panel.innerHTML = `
+
+        <div class="panel-title">
+
+            Ledger Creation
+
+        </div>
+
+
+        <div style="
+            padding:25px;
+            max-width:850px;
+            margin:auto;
+        ">
+
+
+            <div style="
+                background:#173f59;
+                color:white;
+                padding:12px 16px;
+                margin-bottom:20px;
+                font-weight:bold;
+            ">
+
+                📒 Create Ledger
+
+            </div>
+
+
+            <!-- LEDGER NAME -->
+
+            <div style="margin-bottom:15px;">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Ledger Name
+
+                </label>
+
+
+                <input
+                    id="ledgerName"
+                    type="text"
+                    placeholder="Enter Ledger Name"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- GROUP -->
+
+            <div style="margin-bottom:15px;">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Under Group
+
+                </label>
+
+
+                <select
+                    id="ledgerGroup"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option>
+                        Sundry Debtors
+                    </option>
+
+                    <option>
+                        Sundry Creditors
+                    </option>
+
+                    <option>
+                        Bank Accounts
+                    </option>
+
+                    <option>
+                        Cash-in-Hand
+                    </option>
+
+                    <option>
+                        Direct Expenses
+                    </option>
+
+                    <option>
+                        Indirect Expenses
+                    </option>
+
+                    <option>
+                        Direct Incomes
+                    </option>
+
+                    <option>
+                        Indirect Incomes
+                    </option>
+
+                    <option>
+                        Fixed Assets
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- OPENING BALANCE -->
+
+            <div style="margin-bottom:15px;">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Opening Balance
+
+                </label>
+
+
+                <input
+                    id="openingBalance"
+                    type="number"
+                    min="0"
+                    placeholder="Enter Amount"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- BALANCE TYPE -->
+
+            <div style="margin-bottom:20px;">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Balance Type
+
+                </label>
+
+
+                <select
+                    id="balanceType"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="Dr">
+                        Dr
+                    </option>
+
+                    <option value="Cr">
+                        Cr
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+
+                <button
+                    onclick="savePracticeLedger()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#198754;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ✔ SAVE LEDGER
+
+                </button>
+
+
+                <button
+                    onclick="showGateway()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#555;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ← BACK TO GATEWAY
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   SAVE LEDGER
+========================= */
+
+function savePracticeLedger() {
+
+    const name =
+        document.getElementById(
+            "ledgerName"
+        ).value.trim();
+
+
+    const group =
+        document.getElementById(
+            "ledgerGroup"
+        ).value;
+
+
+    const balance =
+        document.getElementById(
+            "openingBalance"
+        ).value;
+
+
+    const type =
+        document.getElementById(
+            "balanceType"
+        ).value;
+
+
+    if (!name) {
+
+        alert(
+            "⚠️ Please enter Ledger Name."
+        );
+
+        return;
+    }
+
+
+    if (
+        balance === "" ||
+        Number(balance) < 0
+    ) {
+
+        alert(
+            "⚠️ Please enter Opening Balance."
+        );
+
+        return;
+    }
+
+
+    const ledger = {
+
+        name: name,
+
+        group: group,
+
+        openingBalance:
+            Number(balance),
+
+        balanceType: type
+
+    };
+
+
+    const oldLedgers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeLedgers"
+            ) || "[]"
+        );
+
+
+    oldLedgers.push(ledger);
+
+
+    localStorage.setItem(
+        "tallyPracticeLedgers",
+        JSON.stringify(
+            oldLedgers
+        )
+    );
+
+
+    alert(
+        "✅ Ledger Saved Successfully!\n\n" +
+        "Ledger: " + name +
+        "\nUnder: " + group +
+        "\nOpening Balance: ₹" +
+        Number(balance).toLocaleString("en-IN") +
+        " " + type
+    );
+
+
+    showGateway();
 
 }
 
