@@ -616,6 +616,19 @@ function openModule(module) {
     return;
 }
 
+  if (module === "inventory") {
+
+    showStockItemCreation();
+
+    return;
+}
+  if (module === "stocksummary") {
+
+    showStockSummary();
+
+    return;
+}
+
     alert(
         "🚧 " +
         module.toUpperCase() +
@@ -2293,13 +2306,25 @@ function changeVoucherType() {
     showVoucherHint(
         current.note
     );
-  if (type === "Sales") {
+ if (type === "Sales") {
 
     showSalesPractical();
 
-} else {
+    removePurchasePractical();
+
+}
+else if (type === "Purchase") {
+
+    showPurchasePractical();
 
     removeSalesPractical();
+
+}
+else {
+
+    removeSalesPractical();
+
+    removePurchasePractical();
 
 }
 
@@ -3369,6 +3394,1093 @@ function removeSalesPractical() {
         box.remove();
 
     }
+
+}
+  /* =========================
+   PURCHASE PRACTICAL
+========================= */
+
+function showPurchasePractical() {
+
+    if (
+        document.getElementById(
+            "purchasePractical"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const voucherType =
+        document.getElementById(
+            "voucherType"
+        );
+
+
+    if (!voucherType) {
+
+        return;
+
+    }
+
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+
+    box.id =
+        "purchasePractical";
+
+
+    box.style.cssText = `
+        border:1px solid #aaa;
+        background:white;
+        margin-top:15px;
+        margin-bottom:15px;
+    `;
+
+
+    box.innerHTML = `
+
+        <div style="
+            background:#173f59;
+            color:white;
+            padding:12px;
+            font-weight:bold;
+        ">
+
+            🧾 Purchase Invoice Details
+
+        </div>
+
+
+        <div style="
+            padding:15px;
+        ">
+
+
+            <!-- SUPPLIER -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Supplier / Party
+
+                </label>
+
+
+                <select
+                    id="purchaseParty"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="">
+                        Select Supplier / Party
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PURCHASE LEDGER -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Purchase Ledger
+
+                </label>
+
+
+                <select
+                    id="purchaseLedger"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="">
+                        Select Purchase Ledger
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- STOCK ITEM -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Stock Item
+
+                </label>
+
+
+                <input
+                    id="purchaseItem"
+                    type="text"
+                    placeholder="Enter Stock Item"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- QTY + RATE -->
+
+            <div style="
+                display:grid;
+                grid-template-columns:
+                1fr 1fr;
+                gap:12px;
+                margin-bottom:15px;
+            ">
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Quantity
+
+                    </label>
+
+
+                    <input
+                        id="purchaseQty"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter Quantity"
+                        oninput="calculatePurchaseAmount()"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Rate (₹)
+
+                    </label>
+
+
+                    <input
+                        id="purchaseRate"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter Rate"
+                        oninput="calculatePurchaseAmount()"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- GST -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    GST %
+
+                </label>
+
+
+                <select
+                    id="purchaseGST"
+                    onchange="calculatePurchaseAmount()"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="0">
+                        0%
+                    </option>
+
+                    <option value="5">
+                        5%
+                    </option>
+
+                    <option value="12">
+                        12%
+                    </option>
+
+                    <option value="18" selected>
+                        18%
+                    </option>
+
+                    <option value="28">
+                        28%
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CALCULATION -->
+
+            <div style="
+                background:#eef6fa;
+                border:1px solid #b7ccd8;
+                padding:15px;
+            ">
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:8px;
+                ">
+
+                    <strong>
+                        Taxable Amount
+                    </strong>
+
+                    <span id="purchaseTaxable">
+                        ₹0.00
+                    </span>
+
+                </div>
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:8px;
+                ">
+
+                    <strong>
+                        GST Amount
+                    </strong>
+
+                    <span id="purchaseGSTAmount">
+                        ₹0.00
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:18px;
+                    color:#198754;
+                ">
+
+                    <strong>
+                        GRAND TOTAL
+                    </strong>
+
+                    <strong id="purchaseGrandTotal">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    voucherType
+        .parentElement
+        .insertAdjacentElement(
+            "afterend",
+            box
+        );
+
+
+    loadPurchaseLedgers();
+
+}
+
+
+/* =========================
+   LOAD PURCHASE LEDGERS
+========================= */
+
+function loadPurchaseLedgers() {
+
+    const ledgers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeLedgers"
+            ) || "[]"
+        );
+
+
+    const party =
+        document.getElementById(
+            "purchaseParty"
+        );
+
+
+    const purchaseLedger =
+        document.getElementById(
+            "purchaseLedger"
+        );
+
+
+    if (!party || !purchaseLedger) {
+
+        return;
+
+    }
+
+
+    party.innerHTML = `
+        <option value="">
+            Select Supplier / Party
+        </option>
+    `;
+
+
+    purchaseLedger.innerHTML = `
+        <option value="">
+            Select Purchase Ledger
+        </option>
+    `;
+
+
+    ledgers.forEach(
+        function(ledger) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                ledger.name;
+
+
+            option.textContent =
+                ledger.name +
+                " — " +
+                ledger.group;
+
+
+            /*
+               Sundry Creditors =
+               Supplier
+            */
+
+            if (
+                ledger.group ===
+                "Sundry Creditors"
+            ) {
+
+                party.appendChild(
+                    option.cloneNode(true)
+                );
+
+            }
+
+
+            /*
+               Purchase Ledger
+            */
+
+            if (
+                ledger.group ===
+                    "Direct Expenses"
+                ||
+                ledger.group ===
+                    "Indirect Expenses"
+            ) {
+
+                purchaseLedger.appendChild(
+                    option
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================
+   PURCHASE CALCULATION
+========================= */
+
+function calculatePurchaseAmount() {
+
+    const qty =
+        Number(
+            document.getElementById(
+                "purchaseQty"
+            )?.value || 0
+        );
+
+
+    const rate =
+        Number(
+            document.getElementById(
+                "purchaseRate"
+            )?.value || 0
+        );
+
+
+    const gst =
+        Number(
+            document.getElementById(
+                "purchaseGST"
+            )?.value || 0
+        );
+
+
+    const taxable =
+        qty * rate;
+
+
+    const gstAmount =
+        taxable * gst / 100;
+
+
+    const grandTotal =
+        taxable + gstAmount;
+
+
+    const taxableBox =
+        document.getElementById(
+            "purchaseTaxable"
+        );
+
+
+    const gstBox =
+        document.getElementById(
+            "purchaseGSTAmount"
+        );
+
+
+    const totalBox =
+        document.getElementById(
+            "purchaseGrandTotal"
+        );
+
+
+    if (taxableBox) {
+
+        taxableBox.textContent =
+            "₹" +
+            taxable.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+
+    if (gstBox) {
+
+        gstBox.textContent =
+            "₹" +
+            gstAmount.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+
+    if (totalBox) {
+
+        totalBox.textContent =
+            "₹" +
+            grandTotal.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+}
+
+
+/* =========================
+   REMOVE PURCHASE PANEL
+========================= */
+
+function removePurchasePractical() {
+
+    const box =
+        document.getElementById(
+            "purchasePractical"
+        );
+
+
+    if (box) {
+
+        box.remove();
+
+    }
+
+}
+  /* =========================
+   STOCK ITEM CREATION
+========================= */
+
+function showStockItemCreation() {
+
+    const panel =
+        document.querySelector(".main-panel");
+
+
+    panel.innerHTML = `
+
+        <div class="panel-title">
+
+            Stock Item Creation
+
+        </div>
+
+
+        <div style="
+            padding:25px;
+            max-width:850px;
+            margin:auto;
+        ">
+
+
+            <div style="
+                background:#173f59;
+                color:white;
+                padding:12px 16px;
+                margin-bottom:20px;
+                font-weight:bold;
+            ">
+
+                📦 Create Stock Item
+
+            </div>
+
+
+            <!-- ITEM NAME -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Stock Item Name
+
+                </label>
+
+
+                <input
+                    id="stockItemName"
+                    type="text"
+                    placeholder="Enter Stock Item Name"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- UNIT -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Unit
+
+                </label>
+
+
+                <select
+                    id="stockUnit"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="">
+                        Select Unit
+                    </option>
+
+                    <option value="Nos">
+                        Nos
+                    </option>
+
+                    <option value="Kg">
+                        Kg
+                    </option>
+
+                    <option value="Box">
+                        Box
+                    </option>
+
+                    <option value="Ltr">
+                        Ltr
+                    </option>
+
+                    <option value="Mtr">
+                        Mtr
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- OPENING STOCK -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Opening Stock
+
+                </label>
+
+
+                <input
+                    id="openingStock"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    placeholder="Enter Opening Quantity"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- OPENING RATE -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Opening Rate (₹)
+
+                </label>
+
+
+                <input
+                    id="openingRate"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    placeholder="Enter Opening Rate"
+                    oninput="calculateOpeningValue()"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- OPENING VALUE -->
+
+            <div style="
+                background:#eef6fa;
+                border:1px solid #b7ccd8;
+                padding:15px;
+                margin-bottom:20px;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:18px;
+                ">
+
+                    <strong>
+                        Opening Stock Value
+                    </strong>
+
+                    <strong
+                        id="openingStockValue"
+                        style="color:#198754;"
+                    >
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+
+                <button
+                    onclick="saveStockItem()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#198754;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ✔ SAVE STOCK ITEM
+
+                </button>
+
+
+                <button
+                    onclick="showGateway()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#555;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ← BACK TO GATEWAY
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   OPENING VALUE
+========================= */
+
+function calculateOpeningValue() {
+
+    const qty =
+        Number(
+            document.getElementById(
+                "openingStock"
+            )?.value || 0
+        );
+
+
+    const rate =
+        Number(
+            document.getElementById(
+                "openingRate"
+            )?.value || 0
+        );
+
+
+    const value =
+        qty * rate;
+
+
+    const box =
+        document.getElementById(
+            "openingStockValue"
+        );
+
+
+    if (box) {
+
+        box.textContent =
+            "₹" +
+            value.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+}
+
+
+/* =========================
+   SAVE STOCK ITEM
+========================= */
+
+function saveStockItem() {
+
+    const name =
+        document.getElementById(
+            "stockItemName"
+        ).value.trim();
+
+
+    const unit =
+        document.getElementById(
+            "stockUnit"
+        ).value;
+
+
+    const openingStock =
+        Number(
+            document.getElementById(
+                "openingStock"
+            ).value || 0
+        );
+
+
+    const openingRate =
+        Number(
+            document.getElementById(
+                "openingRate"
+            ).value || 0
+        );
+
+
+    if (!name) {
+
+        alert(
+            "⚠️ Please enter Stock Item Name."
+        );
+
+        return;
+
+    }
+
+
+    if (!unit) {
+
+        alert(
+            "⚠️ Please select Unit."
+        );
+
+        return;
+
+    }
+
+
+    if (openingStock < 0) {
+
+        alert(
+            "⚠️ Opening Stock cannot be negative."
+        );
+
+        return;
+
+    }
+
+
+    if (openingRate < 0) {
+
+        alert(
+            "⚠️ Opening Rate cannot be negative."
+        );
+
+        return;
+
+    }
+
+
+    const stockItem = {
+
+        name: name,
+
+        unit: unit,
+
+        openingStock:
+            openingStock,
+
+        openingRate:
+            openingRate,
+
+        currentStock:
+            openingStock,
+
+        currentValue:
+            openingStock *
+            openingRate
+
+    };
+
+
+    const items =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeStockItems"
+            ) || "[]"
+        );
+
+
+    items.push(stockItem);
+
+
+    localStorage.setItem(
+        "tallyPracticeStockItems",
+        JSON.stringify(items)
+    );
+
+
+    alert(
+        "✅ Stock Item Saved Successfully!\n\n" +
+        "Item: " +
+        name +
+        "\nUnit: " +
+        unit +
+        "\nOpening Stock: " +
+        openingStock +
+        "\nOpening Value: ₹" +
+        (
+            openingStock *
+            openingRate
+        ).toLocaleString(
+            "en-IN"
+        )
+    );
+
+
+    showGateway();
 
 }
   
