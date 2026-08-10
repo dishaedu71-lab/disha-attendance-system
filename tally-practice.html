@@ -2952,17 +2952,19 @@ function showSalesPractical() {
                 </label>
 
 
-                <input
-                    id="salesItem"
-                    type="text"
-                    placeholder="Enter Stock Item"
-                    style="
-                        width:100%;
-                        padding:12px;
-                        border:1px solid #999;
-                        border-radius:5px;
-                    "
-                >
+                <select
+    id="salesItem"
+    style="
+        width:100%;
+        padding:12px;
+        border:1px solid #999;
+        border-radius:5px;
+    "
+>
+    <option value="">
+        Select Stock Item
+    </option>
+</select>
 
             </div>
 
@@ -3175,6 +3177,7 @@ function showSalesPractical() {
 
 
     loadSalesLedgers();
+  loadTallyStockItems();
 
 }
 
@@ -3790,6 +3793,7 @@ function showPurchasePractical() {
 
 
     loadPurchaseLedgers();
+  loadTallyStockItems();
 
 }
 
@@ -4982,6 +4986,116 @@ function showStockSummary() {
         </div>
 
     `;
+
+}
+  /* =========================
+   LOAD STOCK ITEMS
+========================= */
+
+function loadTallyStockItems() {
+
+    const items =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeStockItems"
+            ) || "[]"
+        );
+
+
+    const salesItem =
+        document.getElementById(
+            "salesItem"
+        );
+
+
+    const purchaseItem =
+        document.getElementById(
+            "purchaseItem"
+        );
+
+
+    if (!salesItem && !purchaseItem) {
+
+        return;
+
+    }
+
+
+    const optionHTML = `
+
+        <option value="">
+            Select Stock Item
+        </option>
+
+    `;
+
+
+    if (salesItem) {
+
+        salesItem.innerHTML =
+            optionHTML;
+
+    }
+
+
+    if (purchaseItem) {
+
+        purchaseItem.innerHTML =
+            optionHTML;
+
+    }
+
+
+    items.forEach(
+        function(item) {
+
+            const optionText =
+                item.name +
+                " — " +
+                item.unit;
+
+
+            if (salesItem) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    item.name;
+
+                option.textContent =
+                    optionText;
+
+                salesItem.appendChild(
+                    option
+                );
+
+            }
+
+
+            if (purchaseItem) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    item.name;
+
+                option.textContent =
+                    optionText;
+
+                purchaseItem.appendChild(
+                    option
+                );
+
+            }
+
+        }
+    );
 
 }
   
