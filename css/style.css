@@ -1879,6 +1879,7 @@ nav .login-btn {
 /* ---------- HERO ---------- */
 
 .hero {
+   position: relative !important;
 
     width: 100% !important;
 
@@ -2152,6 +2153,348 @@ nav .login-btn {
 
         border-radius: 18px;
 
+    }
+
+}
+/* =========================================
+   🇮🇳 INDEPENDENCE DAY ANIMATION
+========================================= */
+
+.independence-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,153,51,.16),
+            rgba(255,255,255,.05),
+            rgba(19,136,8,.16)
+        );
+}
+
+
+/* Main Content */
+
+.independence-content {
+    text-align: center;
+    color: white;
+    text-shadow:
+        0 3px 10px rgba(0,0,0,.8);
+
+    animation:
+        independenceGlow 3s ease-in-out infinite;
+}
+
+
+/* Ashoka Chakra */
+
+.chakra {
+    font-size: 65px;
+    color: #1388d8;
+
+    animation:
+        chakraRotate 8s linear infinite;
+
+    text-shadow:
+        0 0 15px #1388d8,
+        0 0 30px rgba(19,136,216,.7);
+}
+
+
+/* Heading */
+
+.independence-content h1 {
+    margin: 5px 0;
+
+    font-size: clamp(
+        28px,
+        5vw,
+        58px
+    );
+
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff9933,
+            #ffffff,
+            #138808
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        titlePulse 2s ease-in-out infinite;
+}
+
+
+/* 15 August */
+
+.august-date {
+    font-size: clamp(
+        22px,
+        4vw,
+        42px
+    );
+
+    font-weight: 900;
+
+    color: white;
+
+    letter-spacing: 5px;
+
+    margin: 8px 0;
+
+    animation:
+        datePulse 1.8s ease-in-out infinite;
+}
+
+
+/* Subtitle */
+
+.independence-content p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+
+/* Tricolor line */
+
+.tricolor-line {
+    display: flex;
+    width: 280px;
+    max-width: 70vw;
+    height: 6px;
+    margin: 15px auto;
+
+    border-radius: 10px;
+    overflow: hidden;
+
+    box-shadow:
+        0 0 15px rgba(255,255,255,.6);
+}
+
+.tricolor-line span:nth-child(1) {
+    flex: 1;
+    background: #ff9933;
+}
+
+.tricolor-line span:nth-child(2) {
+    flex: 1;
+    background: white;
+}
+
+.tricolor-line span:nth-child(3) {
+    flex: 1;
+    background: #138808;
+}
+
+
+/* Jai Hind */
+
+.jai-hind {
+    display: inline-block;
+
+    padding: 10px 25px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff9933,
+            #ffffff,
+            #138808
+        );
+
+    color: #06254d;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.7);
+
+    animation:
+        jaiPulse 2s ease-in-out infinite;
+}
+
+
+/* =========================================
+   FLOATING PARTICLES
+========================================= */
+
+.tricolor-particle {
+    position: absolute;
+
+    font-size: 25px;
+
+    opacity: .8;
+
+    animation:
+        particleFloat 7s linear infinite;
+}
+
+.p1 {
+    left: 8%;
+    top: 20%;
+    animation-delay: 0s;
+}
+
+.p2 {
+    left: 20%;
+    top: 70%;
+    animation-delay: 1s;
+}
+
+.p3 {
+    right: 15%;
+    top: 25%;
+    animation-delay: 2s;
+}
+
+.p4 {
+    right: 8%;
+    top: 70%;
+    animation-delay: 3s;
+}
+
+.p5 {
+    left: 50%;
+    top: 10%;
+    animation-delay: 4s;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes chakraRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+@keyframes independenceGlow {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+}
+
+
+@keyframes titlePulse {
+
+    0%,100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.4);
+    }
+
+}
+
+
+@keyframes datePulse {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+}
+
+
+@keyframes jaiPulse {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+}
+
+
+@keyframes particleFloat {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .9;
+    }
+
+    80% {
+        opacity: .9;
+    }
+
+    100% {
+        transform:
+            translateY(-180px)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px) {
+
+    .independence-overlay {
+        align-items: center;
+    }
+
+    .chakra {
+        font-size: 42px;
+    }
+
+    .independence-content p {
+        font-size: 13px;
+    }
+
+    .tricolor-line {
+        height: 4px;
+    }
+
+    .jai-hind {
+        padding: 8px 18px;
+        font-size: 13px;
     }
 
 }
