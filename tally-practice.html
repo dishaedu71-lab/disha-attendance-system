@@ -522,6 +522,21 @@ body{
 
                 </div>
 
+              <div
+    class="menu-item"
+    onclick="openModule('stocksummary')"
+>
+
+    <strong>
+        📊 Stock Summary
+    </strong>
+
+    <span>
+        Opening • Inward • Outward • Closing Stock
+    </span>
+
+</div>
+
 
                 <!-- REPORTS -->
 
@@ -4481,6 +4496,492 @@ function saveStockItem() {
 
 
     showGateway();
+
+}
+  /* =========================
+   STOCK SUMMARY
+========================= */
+
+function showStockSummary() {
+
+    const panel =
+        document.querySelector(".main-panel");
+
+
+    const items =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeStockItems"
+            ) || "[]"
+        );
+
+
+    const vouchers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeVouchers"
+            ) || "[]"
+        );
+
+
+    /* =========================
+       CALCULATE STOCK
+    ========================= */
+
+    const stockData =
+        items.map(function(item) {
+
+            let inward = 0;
+
+            let outward = 0;
+
+
+            /*
+               PURCHASE = INWARD
+            */
+
+            vouchers.forEach(
+                function(voucher) {
+
+                    if (
+                        voucher.type ===
+                        "Purchase"
+                    ) {
+
+                        if (
+                            voucher.stockItem &&
+                            voucher.stockItem
+                                .toLowerCase() ===
+                            item.name
+                                .toLowerCase()
+                        ) {
+
+                            inward +=
+                                Number(
+                                    voucher.quantity
+                                ) || 0;
+
+                        }
+
+                    }
+
+
+                    /*
+                       SALES = OUTWARD
+                    */
+
+                    if (
+                        voucher.type ===
+                        "Sales"
+                    ) {
+
+                        if (
+                            voucher.stockItem &&
+                            voucher.stockItem
+                                .toLowerCase() ===
+                            item.name
+                                .toLowerCase()
+                        ) {
+
+                            outward +=
+                                Number(
+                                    voucher.quantity
+                                ) || 0;
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            const closing =
+                Number(
+                    item.openingStock || 0
+                )
+                +
+                inward
+                -
+                outward;
+
+
+            const rate =
+                Number(
+                    item.openingRate || 0
+                );
+
+
+            const value =
+                closing * rate;
+
+
+            return {
+
+                name:
+                    item.name,
+
+                unit:
+                    item.unit,
+
+                opening:
+                    Number(
+                        item.openingStock || 0
+                    ),
+
+                inward:
+                    inward,
+
+                outward:
+                    outward,
+
+                closing:
+                    closing,
+
+                value:
+                    value
+
+            };
+
+        });
+
+
+    /* =========================
+       TOTALS
+    ========================= */
+
+    let totalOpening = 0;
+
+    let totalInward = 0;
+
+    let totalOutward = 0;
+
+    let totalClosing = 0;
+
+    let totalValue = 0;
+
+
+    stockData.forEach(
+        function(item) {
+
+            totalOpening +=
+                item.opening;
+
+            totalInward +=
+                item.inward;
+
+            totalOutward +=
+                item.outward;
+
+            totalClosing +=
+                item.closing;
+
+            totalValue +=
+                item.value;
+
+        }
+    );
+
+
+    /* =========================
+       TABLE ROWS
+    ========================= */
+
+    let rows = "";
+
+
+    if (
+        stockData.length === 0
+    ) {
+
+        rows = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        padding:30px;
+                        text-align:center;
+                        color:#777;
+                    "
+                >
+
+                    📦 No Stock Items Found
+
+                    <br><br>
+
+                    Create a Stock Item
+                    from Inventory first.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+    else {
+
+        stockData.forEach(
+            function(item) {
+
+                rows += `
+
+                    <tr>
+
+                        <td>
+                            ${item.name}
+                        </td>
+
+                        <td>
+                            ${item.unit}
+                        </td>
+
+                        <td>
+                            ${item.opening}
+                        </td>
+
+                        <td style="
+                            color:#198754;
+                            font-weight:bold;
+                        ">
+                            ${item.inward}
+                        </td>
+
+                        <td style="
+                            color:#dc3545;
+                            font-weight:bold;
+                        ">
+                            ${item.outward}
+                        </td>
+
+                        <td style="
+                            font-weight:bold;
+                        ">
+                            ${item.closing}
+                        </td>
+
+                        <td>
+                            ₹${item.value.toLocaleString(
+                                "en-IN",
+                                {
+                                    minimumFractionDigits:2
+                                }
+                            )}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       SCREEN
+    ========================= */
+
+    panel.innerHTML = `
+
+        <div class="panel-title">
+
+            Stock Summary
+
+        </div>
+
+
+        <div style="
+            padding:20px;
+            overflow-x:auto;
+        ">
+
+
+            <div style="
+                background:#173f59;
+                color:white;
+                padding:13px 16px;
+                margin-bottom:15px;
+                font-weight:bold;
+            ">
+
+                📊 Stock Summary
+
+            </div>
+
+
+            <table style="
+                width:100%;
+                border-collapse:collapse;
+                background:white;
+                color:#111;
+                min-width:750px;
+            ">
+
+
+                <thead>
+
+                    <tr style="
+                        background:#dcecf7;
+                    ">
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                            text-align:left;
+                        ">
+                            Item
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Unit
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Opening
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Inward
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Outward
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Closing
+                        </th>
+
+                        <th style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            Value
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${rows}
+
+                </tbody>
+
+
+                <tfoot>
+
+                    <tr style="
+                        background:#eef6fa;
+                        font-weight:bold;
+                    ">
+
+                        <td
+                            colspan="2"
+                            style="
+                                padding:12px;
+                                border:1px solid #aaa;
+                            "
+                        >
+                            TOTAL
+                        </td>
+
+                        <td style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            ${totalOpening}
+                        </td>
+
+                        <td style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                            color:#198754;
+                        ">
+                            ${totalInward}
+                        </td>
+
+                        <td style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                            color:#dc3545;
+                        ">
+                            ${totalOutward}
+                        </td>
+
+                        <td style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            ${totalClosing}
+                        </td>
+
+                        <td style="
+                            padding:12px;
+                            border:1px solid #aaa;
+                        ">
+                            ₹${totalValue.toLocaleString(
+                                "en-IN",
+                                {
+                                    minimumFractionDigits:2
+                                }
+                            )}
+                        </td>
+
+                    </tr>
+
+                </tfoot>
+
+
+            </table>
+
+
+            <!-- BACK BUTTON -->
+
+            <button
+                onclick="showGateway()"
+                style="
+                    margin-top:20px;
+                    width:100%;
+                    padding:14px;
+                    border:0;
+                    background:#555;
+                    color:white;
+                    font-weight:bold;
+                    cursor:pointer;
+                    border-radius:5px;
+                "
+            >
+
+                ← BACK TO GATEWAY
+
+            </button>
+
+
+        </div>
+
+    `;
 
 }
   
