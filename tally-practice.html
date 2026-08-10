@@ -559,18 +559,19 @@ body{
                 <!-- PRACTICAL TEST -->
 
                 <div
-                class="menu-item"
-                onclick="openModule('test')">
+    class="menu-item"
+    onclick="openTallyPracticeTest()"
+>
 
-                    <strong>
-                        📝 Practical Test
-                    </strong>
+    <strong>
+        📝 Practical Test
+    </strong>
 
-                    <span>
-                        Start Tally Practical Examination
-                    </span>
+    <span>
+        Tally Prime MCQ Practice Test
+    </span>
 
-                </div>
+</div>
 
 
             </div>
@@ -5096,6 +5097,16 @@ function loadTallyStockItems() {
 
         }
     );
+
+}
+  /* =========================
+   TALLY MCQ PRACTICE TEST
+========================= */
+
+function openTallyPracticeTest() {
+
+    window.location.href =
+        "practice-exam.html?course=tally";
 
 }
   
