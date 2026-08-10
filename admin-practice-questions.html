@@ -445,6 +445,34 @@ Python
 
 </select>
 
+    <div id="moduleBox" style="display:none;">
+
+    <label>
+        O Level Module
+    </label>
+
+    <select id="module">
+
+        <option value="m1">
+            M1-R5.1
+        </option>
+
+        <option value="m2">
+            M2-R5.1
+        </option>
+
+        <option value="m3">
+            M3-R5.1
+        </option>
+
+        <option value="m4">
+            M4-R5.1
+        </option>
+
+    </select>
+
+</div>
+
 
 <label>
 
@@ -850,6 +878,11 @@ window.addEventListener(
 
                         course:
                             courseValue,
+                        module:
+    courseValue === "olevel"
+        ? document.getElementById("module").value
+        : "",
+
 
                         question:
                             questionValue,
@@ -1242,6 +1275,22 @@ window.addEventListener(
 
     }
 );
+    document.getElementById("course").addEventListener("change", function () {
+
+    const moduleBox =
+        document.getElementById("moduleBox");
+
+    if (this.value === "olevel") {
+
+        moduleBox.style.display = "block";
+
+    } else {
+
+        moduleBox.style.display = "none";
+
+    }
+
+});
 
 </script>
 </body>
