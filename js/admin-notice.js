@@ -1,44 +1,78 @@
+/* =========================================
+   WEBSITE NOTICE ADMIN
+========================================= */
 
 window.addEventListener("firebase-ready", () => {
 
-    // ==========================
-    // SAVE NOTICE
-    // ==========================
+    const saveNotice =
+        document.getElementById("saveNotice");
 
-    document.getElementById("saveNotice").onclick = async () => {
+    const title =
+        document.getElementById("title");
 
-        const title =
-            document.getElementById("title").value.trim();
+    const message =
+        document.getElementById("message");
 
-        const message =
-            document.getElementById("message").value.trim();
+    const buttonText =
+        document.getElementById("buttonText");
 
-        const buttonText =
-            document.getElementById("buttonText").value.trim();
+    const buttonLink =
+        document.getElementById("buttonLink");
 
-        const buttonLink =
-            document.getElementById("buttonLink").value.trim();
+    const active =
+        document.getElementById("active");
 
-        const active =
-            document.getElementById("active").checked;
+    const noticeList =
+        document.getElementById("noticeList");
 
 
-        // ==========================
-        // VALIDATION
-        // ==========================
+    /* =========================================
+       SAVE NOTICE
+    ========================================= */
 
-        if (!title) {
+    saveNotice.onclick = async () => {
+
+        const titleValue =
+            title.value.trim();
+
+        const messageValue =
+            message.value.trim();
+
+        const buttonTextValue =
+            buttonText.value.trim();
+
+        const buttonLinkValue =
+            buttonLink.value.trim();
+
+        const activeValue =
+            active.checked;
+
+
+        if (!titleValue) {
+
             alert("⚠️ Please Enter Notice Title");
+
             return;
+
         }
 
-        if (!message) {
+
+        if (!messageValue) {
+
             alert("⚠️ Please Enter Notice Message");
+
             return;
+
         }
 
 
         try {
+
+            saveNotice.disabled = true;
+
+            saveNotice.innerText =
+                "⏳ SAVING...";
+
 
             await window.addDoc(
 
@@ -48,185 +82,205 @@ window.addEventListener("firebase-ready", () => {
                 ),
 
                 {
-                    title: title,
-                    message: message,
-                    buttonText: buttonText,
-                    buttonLink: buttonLink,
-                    active: active,
 
-                    // Exact creation time
-                    date: new Date().toISOString()
+                    title:
+                        titleValue,
+
+                    message:
+                        messageValue,
+
+                    buttonText:
+                        buttonTextValue,
+
+                    buttonLink:
+                        buttonLinkValue,
+
+                    active:
+                        activeValue,
+
+                    date:
+                        new Date().toISOString()
+
                 }
 
             );
 
 
             alert(
-                "✅ Notice Added Successfully"
+                "✅ Notice Added Successfully!"
             );
 
 
-            // Clear form
+            /* CLEAR FORM */
 
-            document.getElementById("title").value = "";
+            title.value = "";
 
-            document.getElementById("message").value = "";
+            message.value = "";
 
-            document.getElementById("buttonText").value = "";
+            buttonText.value = "";
 
-            document.getElementById("buttonLink").value = "";
+            buttonLink.value = "";
 
-            document.getElementById("active").checked = false;
+            active.checked = false;
+
+
+            loadSavedNotices();
 
         }
 
-        catch (error) {
+        catch(error) {
 
             console.error(error);
 
             alert(
-                "❌ " + error.message
+                "❌ Notice Save Error:\n"
+                + error.message
             );
+
+        }
+
+        finally {
+
+            saveNotice.disabled = false;
+
+            saveNotice.innerText =
+                "SAVE NOTICE";
 
         }
 
     };
 
-});
 
-// ==========================
-// LOAD SAVED NOTICES
-// ==========================
-// ==========================
-// NEW BADGE STYLE
-// ==========================
+    /* =========================================
+       LOAD SAVED NOTICES
+    ========================================= */
 
-const newBadgeStyle = document.createElement("style");
+    async function loadSavedNotices() {
 
-newBadgeStyle.innerHTML = `
+        try {
 
-.new-badge{
+            const snapshot =
+                await window.getDocs(
 
-    display:inline-block;
+                    window.collection(
+                        window.db,
+                        "website_notice"
+                    )
 
-    margin-left:8px;
+                );
 
-    padding:5px 10px;
-
-    background:red;
-
-    color:white;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    animation:newNoticeBlink 1s infinite;
-
-}
-
-@keyframes newNoticeBlink{
-
-    0%,100%{
-        opacity:1;
-        transform:scale(1);
-    }
-
-    50%{
-        opacity:.25;
-        transform:scale(.9);
-    }
-
-}
-
-`;
-
-document.head.appendChild(newBadgeStyle);
-
-window.addEventListener("firebase-ready", () => {
-
-    window.onSnapshot(
-
-        window.collection(
-            window.db,
-            "website_notice"
-        ),
-
-        (snapshot) => {
 
             let html = "";
 
-            snapshot.forEach((doc) => {
 
-                const data = doc.data();
+            if (snapshot.empty) {
 
-                if (!data.active) {
-                    return;
-                }
-
-
-                // ==========================
-                // NEW BADGE
-                // ==========================
-
-                const newBadge = `
-                    <span class="notice-new-badge">
-                        🔴 NEW
-                    </span>
+                noticeList.innerHTML = `
+                    <p style="
+                        text-align:center;
+                        padding:20px;
+                        color:#777;
+                    ">
+                        📭 No Saved Notices
+                    </p>
                 `;
 
+                return;
 
-                // ==========================
-                // BUTTON
-                // ==========================
-
-                let buttonHTML = "";
-
-                if (
-                    data.buttonText &&
-                    data.buttonLink
-                ) {
-
-                    buttonHTML = `
-                        <a
-                            href="${data.buttonLink}"
-                            class="notice-action-btn">
-
-                            ${data.buttonText}
-
-                        </a>
-                    `;
-
-                }
+            }
 
 
-                // ==========================
-                // NOTICE
-                // ==========================
+            snapshot.forEach((docSnap) => {
+
+                const data =
+                    docSnap.data();
+
+
+                const status =
+                    data.active
+                        ? "🟢 ACTIVE"
+                        : "🔴 INACTIVE";
+
 
                 html += `
 
-                    <div class="single-notice">
+                    <div
+                        style="
+                            background:#f5f5f5;
+                            padding:18px;
+                            margin:15px 0;
+                            border-radius:12px;
+                            border-left:5px solid #007bff;
+                        "
+                    >
 
-                        <h3 class="notice-heading">
+                        <h3 style="
+                            margin:0 0 8px;
+                            color:#123;
+                        ">
 
                             📢 ${data.title}
-
-                            ${newBadge}
 
                         </h3>
 
 
-                        <div class="notice-text">
+                        <p style="
+                            margin:8px 0;
+                            line-height:1.6;
+                        ">
 
                             ${data.message}
 
-                        </div>
+                        </p>
 
 
-                        ${buttonHTML}
+                        <p style="
+                            font-size:13px;
+                            font-weight:bold;
+                        ">
+
+                            ${status}
+
+                        </p>
+
+
+                        ${
+                            data.buttonText
+                            ?
+                            `
+                            <p style="
+                                font-size:13px;
+                                color:#555;
+                            ">
+                                🔗 Button:
+                                ${data.buttonText}
+                            </p>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        <button
+                            onclick="
+                                window.deleteNotice(
+                                    '${docSnap.id}'
+                                )
+                            "
+                            style="
+                                background:#dc3545;
+                                color:white;
+                                border:none;
+                                padding:9px 15px;
+                                border-radius:7px;
+                                cursor:pointer;
+                                font-weight:bold;
+                            "
+                        >
+
+                            🗑 DELETE
+
+                        </button>
 
                     </div>
 
@@ -235,97 +289,177 @@ window.addEventListener("firebase-ready", () => {
             });
 
 
-            // ==========================
-            // SHOW POPUP
-            // ==========================
-
-            if (html !== "") {
-
-                const popup =
-                    document.getElementById("noticePopup");
-
-                const title =
-                    document.getElementById("noticeTitle");
-
-                const message =
-                    document.getElementById("noticeMessage");
-
-
-                if (popup) {
-                    popup.style.display = "flex";
-                }
-
-                if (title) {
-                    title.innerHTML =
-                        "📢 IMPORTANT NOTICE";
-                }
-
-                if (message) {
-                    message.innerHTML = html;
-                }
-
-            }
+            noticeList.innerHTML =
+                html;
 
         }
 
-    );
+        catch(error) {
 
+            console.error(error);
 
-    // ==========================
-    // CLOSE POPUP
-    // ==========================
+            noticeList.innerHTML = `
 
-    const closeButton =
-        document.getElementById("noticeClose");
+                <p style="
+                    color:red;
+                    text-align:center;
+                ">
 
+                    ❌ Notices Load Error:
+                    ${error.message}
 
-    if (closeButton) {
+                </p>
 
-        closeButton.onclick = () => {
+            `;
 
-            const popup =
-                document.getElementById("noticePopup");
-
-            if (popup) {
-                popup.style.display = "none";
-            }
-
-        };
+        }
 
     }
 
-});
 
-// ==========================
-// DELETE NOTICE
-// ==========================
+    /* =========================================
+       DELETE SINGLE NOTICE
+    ========================================= */
 
-window.deleteNotice = async (id) => {
+    window.deleteNotice = async (id) => {
 
-    if (!confirm("🗑 Are you sure you want to delete this Notice?")) {
-        return;
-    }
+        const confirmDelete =
+            confirm(
+                "🗑 क्या आप इस Notice को Delete करना चाहते हैं?"
+            );
 
-    try {
 
-        await window.deleteDoc(
-            window.doc(
-                window.db,
-                "website_notice",
-                id
-            )
+        if (!confirmDelete) {
+
+            return;
+
+        }
+
+
+        try {
+
+            await window.deleteDoc(
+
+                window.doc(
+                    window.db,
+                    "website_notice",
+                    id
+                )
+
+            );
+
+
+            alert(
+                "✅ Notice Deleted Successfully!"
+            );
+
+
+            loadSavedNotices();
+
+        }
+
+        catch(error) {
+
+            console.error(error);
+
+            alert(
+                "❌ Delete Error:\n"
+                + error.message
+            );
+
+        }
+
+    };
+
+
+    /* =========================================
+       DELETE ALL NOTICES BUTTON
+    ========================================= */
+
+    const deleteAllButton =
+        document.getElementById(
+            "deleteNotice"
         );
 
-        alert("✅ Notice Deleted Successfully");
+
+    if (deleteAllButton) {
+
+        deleteAllButton.onclick =
+            async () => {
+
+                const confirmDelete =
+                    confirm(
+                        "⚠️ सभी Saved Notices Delete करना चाहते हैं?"
+                    );
+
+
+                if (!confirmDelete) {
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const snapshot =
+                        await window.getDocs(
+
+                            window.collection(
+                                window.db,
+                                "website_notice"
+                            )
+
+                        );
+
+
+                    for (
+                        const docSnap
+                        of snapshot.docs
+                    ) {
+
+                        await window.deleteDoc(
+
+                            window.doc(
+                                window.db,
+                                "website_notice",
+                                docSnap.id
+                            )
+
+                        );
+
+                    }
+
+
+                    alert(
+                        "✅ All Notices Deleted Successfully!"
+                    );
+
+
+                    loadSavedNotices();
+
+                }
+
+                catch(error) {
+
+                    console.error(error);
+
+                    alert(
+                        "❌ Delete Error:\n"
+                        + error.message
+                    );
+
+                }
+
+            };
 
     }
 
-    catch (error) {
 
-        console.error(error);
+    /* =========================================
+       INITIAL LOAD
+    ========================================= */
 
-        alert("❌ " + error.message);
+    loadSavedNotices();
 
-    }
-
-};
+});
