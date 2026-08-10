@@ -232,13 +232,41 @@ M1-R5.1 • M2-R5.1 • M3-R5.1 • M4-R5.1
 
 </div>
 
-<a
-href="practice-start.html?course=olevel"
-class="practice-btn">
+<div style="
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+">
 
-START PRACTICE →
+    <button
+        onclick="startOLevel('m1')"
+        class="practice-btn"
+    >
+        M1-R5.1
+    </button>
 
-</a>
+    <button
+        onclick="startOLevel('m2')"
+        class="practice-btn"
+    >
+        M2-R5.1
+    </button>
+
+    <button
+        onclick="startOLevel('m3')"
+        class="practice-btn"
+    >
+        M3-R5.1
+    </button>
+
+    <button
+        onclick="startOLevel('m4')"
+        class="practice-btn"
+    >
+        M4-R5.1
+    </button>
+
+</div>
 
 </div>
 
@@ -345,7 +373,17 @@ START PRACTICE →
 
 
 </section>
+<script>
 
+    function startOLevel(module) {
+
+        window.location.href =
+            "practice-exam.html?course=olevel&module="
+            + encodeURIComponent(module);
+
+    }
+
+</script>
 
 </body>
 
