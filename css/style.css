@@ -2868,3 +2868,87 @@ nav .login-btn {
     }
 
 }
+/* =========================================
+   ADMIN NOTICE - SAVED NOTICE FIX
+========================================= */
+
+#noticeList {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#noticeList > div {
+    background: #ffffff !important;
+    color: #222222 !important;
+
+    border-radius: 12px !important;
+
+    padding: 15px !important;
+    margin: 12px 0 !important;
+
+    border-left: 5px solid #1689dc !important;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.25) !important;
+}
+
+
+/* Notice Title */
+
+#noticeList h3 {
+    color: #123b5d !important;
+
+    font-size: 16px !important;
+
+    font-weight: 800 !important;
+
+    margin-bottom: 8px !important;
+}
+
+
+/* Notice Message */
+
+#noticeList p {
+    color: #333333 !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.6 !important;
+
+    opacity: 1 !important;
+}
+
+
+/* Status */
+
+#noticeList p[style*="font-size"] {
+    color: #1689dc !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* Delete Button */
+
+#noticeList button {
+    background: #dc3545 !important;
+
+    color: #ffffff !important;
+
+    border: none !important;
+
+    padding: 8px 15px !important;
+
+    border-radius: 7px !important;
+
+    cursor: pointer !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* Hover */
+
+#noticeList button:hover {
+    background: #b02a37 !important;
+}
