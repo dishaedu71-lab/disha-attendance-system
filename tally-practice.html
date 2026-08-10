@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Tally Prime Practice</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#111;
+    color:#fff;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+
+    height:55px;
+
+    background:#202020;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    border-bottom:1px solid #444;
+
+}
+
+.logo{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+.logo span{
+
+    color:#35a7ff;
+
+}
+
+.company{
+
+    font-size:15px;
+
+    color:#ddd;
+
+}
+
+
+/* =========================
+   MAIN TALLY AREA
+========================= */
+
+.tally-screen{
+
+    min-height:
+    calc(100vh - 55px);
+
+    background:
+    linear-gradient(
+        135deg,
+        #16476a,
+        #092b43
+    );
+
+    padding:20px;
+
+}
+
+
+/* =========================
+   COMPANY BAR
+========================= */
+
+.company-bar{
+
+    background:#0c3858;
+
+    border:1px solid #4d7895;
+
+    padding:12px 18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.company-name{
+
+    font-weight:bold;
+
+    color:#fff;
+
+}
+
+.date-time{
+
+    text-align:right;
+
+    font-size:13px;
+
+    color:#dcecff;
+
+}
+
+
+/* =========================
+   MAIN PANEL
+========================= */
+
+.main-panel{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    background:#e9f0f4;
+
+    color:#111;
+
+    min-height:550px;
+
+    border:2px solid #315a72;
+
+    box-shadow:
+    0 8px 30px
+    rgba(0,0,0,.4);
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.panel-title{
+
+    background:#173f59;
+
+    color:white;
+
+    padding:14px;
+
+    text-align:center;
+
+    font-size:21px;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menu{
+
+    padding:25px;
+
+}
+
+.menu-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:18px;
+
+    color:#173f59;
+
+}
+
+
+/* =========================
+   MENU GRID
+========================= */
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:12px;
+
+}
+
+
+.menu-item{
+
+    background:white;
+
+    border:1px solid #b7c7d1;
+
+    padding:18px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    min-height:90px;
+
+}
+
+
+.menu-item:hover{
+
+    background:#dcecf7;
+
+    border-color:#1976b5;
+
+    transform:
+    translateY(-2px);
+
+}
+
+
+.menu-item strong{
+
+    display:block;
+
+    color:#173f59;
+
+    font-size:17px;
+
+    margin-bottom:7px;
+
+}
+
+
+.menu-item span{
+
+    font-size:13px;
+
+    color:#555;
+
+}
+
+
+/* =========================
+   FOOTER BAR
+========================= */
+
+.bottom-bar{
+
+    margin-top:20px;
+
+    background:#173f59;
+
+    color:white;
+
+    padding:12px 18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:13px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+    .topbar{
+
+        padding:0 10px;
+
+    }
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
+    .company{
+
+        font-size:12px;
+
+    }
+
+    .menu-grid{
+
+        grid-template-columns:
+        1fr;
+
+    }
+
+    .tally-screen{
+
+        padding:10px;
+
+    }
+
+    .main-panel{
+
+        min-height:600px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<div class="topbar">
+
+    <div class="logo">
+
+        Tally <span>Prime</span>
+
+    </div>
+
+
+    <div class="company">
+
+        Disha Computer Education
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     TALLY SCREEN
+========================= -->
+
+<div class="tally-screen">
+
+
+    <!-- COMPANY BAR -->
+
+    <div class="company-bar">
+
+        <div class="company-name">
+
+            🏢 Disha Computer Education
+
+        </div>
+
+
+        <div class="date-time">
+
+            Practice Mode<br>
+
+            F12: Configuration
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MAIN PANEL -->
+
+    <div class="main-panel">
+
+
+        <div class="panel-title">
+
+            Gateway of Tally
+
+        </div>
+
+
+        <div class="menu">
+
+
+            <div class="menu-title">
+
+                📋 Tally Prime Practice
+
+            </div>
+
+
+            <div class="menu-grid">
+
+
+                <!-- COMPANY -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('company')">
+
+                    <strong>
+                        🏢 Company
+                    </strong>
+
+                    <span>
+                        Create • Alter • Select Company
+                    </span>
+
+                </div>
+
+
+                <!-- ACCOUNTING -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('accounting')">
+
+                    <strong>
+                        📒 Accounting Masters
+                    </strong>
+
+                    <span>
+                        Ledger • Groups • Voucher
+                    </span>
+
+                </div>
+
+
+                <!-- VOUCHER -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('voucher')">
+
+                    <strong>
+                        🧾 Voucher Entry
+                    </strong>
+
+                    <span>
+                        Payment • Receipt • Contra • Journal
+                    </span>
+
+                </div>
+
+
+                <!-- SALES -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('sales')">
+
+                    <strong>
+                        🛒 Sales & Purchase
+                    </strong>
+
+                    <span>
+                        Sales • Purchase • Invoice
+                    </span>
+
+                </div>
+
+
+                <!-- GST -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('gst')">
+
+                    <strong>
+                        🧮 GST Practice
+                    </strong>
+
+                    <span>
+                        GST • Tax • Invoice Practice
+                    </span>
+
+                </div>
+
+
+                <!-- INVENTORY -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('inventory')">
+
+                    <strong>
+                        📦 Inventory
+                    </strong>
+
+                    <span>
+                        Stock Item • Godown • Units
+                    </span>
+
+                </div>
+
+
+                <!-- REPORTS -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('reports')">
+
+                    <strong>
+                        📊 Reports
+
+                    </strong>
+
+                    <span>
+                        Day Book • Ledger • Trial Balance
+                    </span>
+
+                </div>
+
+
+                <!-- PRACTICAL TEST -->
+
+                <div
+                class="menu-item"
+                onclick="openModule('test')">
+
+                    <strong>
+                        📝 Practical Test
+                    </strong>
+
+                    <span>
+                        Start Tally Practical Examination
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM -->
+
+        <div class="bottom-bar">
+
+            <span>
+                F1: Help
+            </span>
+
+            <span>
+                F11: Features
+            </span>
+
+            <span>
+                F12: Configuration
+            </span>
+
+            <span>
+                ESC: Back
+            </span>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function openModule(module){
+
+    alert(
+        "🚧 " +
+        module.toUpperCase() +
+        " PRACTICE\n\n" +
+        "This module will be added in the next step."
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
