@@ -615,6 +615,12 @@ window.addEventListener("firebase-ready", async function(){
         .toLowerCase();
     window.practiceCourse = course;
 
+    const module =
+    (params.get("module") || "")
+    .toLowerCase();
+
+window.practiceModule = module;
+
 
     /* =========================
        STUDENT NAME
@@ -696,25 +702,63 @@ window.addEventListener("firebase-ready", async function(){
            COURSE FILTER
         ========================= */
 
-        const questionQuery =
-            query(
+        let questionQuery =
+    query(
 
-                questionsRef,
+        questionsRef,
 
-                where(
-                    "course",
-                    "==",
-                    course
-                ),
+        where(
+            "course",
+            "==",
+            course
+        ),
 
-                where(
-                    "active",
-                    "==",
-                    true
-                )
+        where(
+            "active",
+            "==",
+            true
+        )
 
-            );
+    );
 
+
+/* =========================
+   O LEVEL MODULE FILTER
+========================= */
+
+if (
+    course === "olevel" &&
+    ["m1", "m2", "m3", "m4"].includes(
+        module
+    )
+) {
+
+    questionQuery =
+        query(
+
+            questionsRef,
+
+            where(
+                "course",
+                "==",
+                "olevel"
+            ),
+
+            where(
+                "module",
+                "==",
+                module
+            ),
+
+            where(
+                "active",
+                "==",
+                true
+            )
+
+        );
+
+}
 
         /* =========================
            GET DATA
