@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+                                   <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -594,7 +594,18 @@ body{
 
 <script>
 
+<script>
+
 function openModule(module){
+
+    if(module === "company"){
+
+        showCompanyCreation();
+
+        return;
+
+    }
+
 
     alert(
         "🚧 " +
@@ -604,6 +615,429 @@ function openModule(module){
     );
 
 }
+
+
+/* =========================
+   COMPANY CREATION
+========================= */
+
+function showCompanyCreation(){
+
+    const panel =
+        document.querySelector(".main-panel");
+
+
+    panel.innerHTML = `
+
+        <div class="panel-title">
+
+            Company Creation
+
+        </div>
+
+
+        <div style="
+            padding:25px;
+            max-width:850px;
+            margin:auto;
+        ">
+
+
+            <div style="
+                background:#173f59;
+                color:white;
+                padding:12px 16px;
+                margin-bottom:20px;
+                font-weight:bold;
+            ">
+
+                🏢 Create Company
+
+            </div>
+
+
+            <!-- COMPANY NAME -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Company Name
+
+                </label>
+
+                <input
+                    id="companyName"
+                    type="text"
+                    placeholder="Enter Company Name"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- MAILING NAME -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Mailing Name
+
+                </label>
+
+                <input
+                    id="mailingName"
+                    type="text"
+                    placeholder="Enter Mailing Name"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Address
+
+                </label>
+
+                <textarea
+                    id="companyAddress"
+                    placeholder="Enter Company Address"
+                    style="
+                        width:100%;
+                        min-height:80px;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                        resize:vertical;
+                    "
+                ></textarea>
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    State
+
+                </label>
+
+                <select
+                    id="companyState"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option>
+                        Uttar Pradesh
+                    </option>
+
+                    <option>
+                        Delhi
+                    </option>
+
+                    <option>
+                        Maharashtra
+                    </option>
+
+                    <option>
+                        Bihar
+                    </option>
+
+                    <option>
+                        Rajasthan
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- COUNTRY -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Country
+
+                </label>
+
+                <input
+                    id="companyCountry"
+                    value="India"
+                    type="text"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- FINANCIAL YEAR -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Financial Year From
+
+                </label>
+
+                <input
+                    id="financialYear"
+                    type="date"
+                    value="2026-04-01"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- BOOKS BEGINNING -->
+
+            <div style="
+                margin-bottom:20px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Books Beginning From
+
+                </label>
+
+                <input
+                    id="booksBeginning"
+                    type="date"
+                    value="2026-04-01"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #aaa;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+
+                <button
+                    onclick="createPracticeCompany()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#198754;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ✔ CREATE COMPANY
+
+                </button>
+
+
+                <button
+                    onclick="showGateway()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#555;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ← BACK TO GATEWAY
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   CREATE COMPANY
+========================= */
+
+function createPracticeCompany(){
+
+    const name =
+        document.getElementById(
+            "companyName"
+        ).value.trim();
+
+
+    const mailing =
+        document.getElementById(
+            "mailingName"
+        ).value.trim();
+
+
+    const address =
+        document.getElementById(
+            "companyAddress"
+        ).value.trim();
+
+
+    if(!name){
+
+        alert(
+            "⚠️ Please enter Company Name."
+        );
+
+        return;
+
+    }
+
+
+    if(!mailing){
+
+        alert(
+            "⚠️ Please enter Mailing Name."
+        );
+
+        return;
+
+    }
+
+
+    if(!address){
+
+        alert(
+            "⚠️ Please enter Company Address."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "✅ Company Created Successfully!\n\n"
+        +
+        "Company: "
+        +
+        name
+        +
+        "\nState: "
+        +
+        document.getElementById(
+            "companyState"
+        ).value
+    );
+
+}
+
+
+/* =========================
+   BACK TO GATEWAY
+========================= */
+
+function showGateway(){
+
+    location.reload();
+
+}
+
+</script>
 
 </script>
 
