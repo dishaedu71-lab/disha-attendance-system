@@ -2293,6 +2293,15 @@ function changeVoucherType() {
     showVoucherHint(
         current.note
     );
+  if (type === "Sales") {
+
+    showSalesPractical();
+
+} else {
+
+    removeSalesPractical();
+
+}
 
 }
 
@@ -2747,6 +2756,622 @@ document.addEventListener(
 
     }
 );
+  /* =========================
+   SALES PRACTICAL
+========================= */
+
+function showSalesPractical() {
+
+    if (
+        document.getElementById(
+            "salesPractical"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const voucherType =
+        document.getElementById(
+            "voucherType"
+        );
+
+
+    if (!voucherType) {
+
+        return;
+
+    }
+
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+
+    box.id =
+        "salesPractical";
+
+
+    box.style.cssText = `
+        border:1px solid #aaa;
+        background:white;
+        margin-top:15px;
+        margin-bottom:15px;
+    `;
+
+
+    box.innerHTML = `
+
+        <div style="
+            background:#173f59;
+            color:white;
+            padding:12px;
+            font-weight:bold;
+        ">
+
+            🧾 Sales Invoice Details
+
+        </div>
+
+
+        <div style="
+            padding:15px;
+        ">
+
+
+            <!-- PARTY -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Customer / Party
+
+                </label>
+
+
+                <select
+                    id="salesParty"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="">
+                        Select Customer / Party
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SALES LEDGER -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Sales Ledger
+
+                </label>
+
+
+                <select
+                    id="salesLedger"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="">
+                        Select Sales Ledger
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ITEM -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    Stock Item
+
+                </label>
+
+
+                <input
+                    id="salesItem"
+                    type="text"
+                    placeholder="Enter Stock Item"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+            </div>
+
+
+            <!-- QTY + RATE -->
+
+            <div style="
+                display:grid;
+                grid-template-columns:
+                1fr 1fr;
+                gap:12px;
+                margin-bottom:15px;
+            ">
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Quantity
+
+                    </label>
+
+
+                    <input
+                        id="salesQty"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter Quantity"
+                        oninput="calculateSalesAmount()"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Rate (₹)
+
+                    </label>
+
+
+                    <input
+                        id="salesRate"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter Rate"
+                        oninput="calculateSalesAmount()"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- GST -->
+
+            <div style="
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+
+                    GST %
+
+                </label>
+
+
+                <select
+                    id="salesGST"
+                    onchange="calculateSalesAmount()"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                    "
+                >
+
+                    <option value="0">
+                        0%
+                    </option>
+
+                    <option value="5">
+                        5%
+                    </option>
+
+                    <option value="12">
+                        12%
+                    </option>
+
+                    <option value="18" selected>
+                        18%
+                    </option>
+
+                    <option value="28">
+                        28%
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CALCULATION -->
+
+            <div style="
+                background:#eef6fa;
+                border:1px solid #b7ccd8;
+                padding:15px;
+            ">
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:8px;
+                ">
+
+                    <strong>
+                        Taxable Amount
+                    </strong>
+
+                    <span id="salesTaxable">
+                        ₹0.00
+                    </span>
+
+                </div>
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:8px;
+                ">
+
+                    <strong>
+                        GST Amount
+                    </strong>
+
+                    <span id="salesGSTAmount">
+                        ₹0.00
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:18px;
+                    color:#198754;
+                ">
+
+                    <strong>
+                        GRAND TOTAL
+                    </strong>
+
+                    <strong id="salesGrandTotal">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    voucherType
+        .parentElement
+        .insertAdjacentElement(
+            "afterend",
+            box
+        );
+
+
+    loadSalesLedgers();
+
+}
+
+
+/* =========================
+   LOAD SALES LEDGERS
+========================= */
+
+function loadSalesLedgers() {
+
+    const ledgers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeLedgers"
+            ) || "[]"
+        );
+
+
+    const party =
+        document.getElementById(
+            "salesParty"
+        );
+
+
+    const salesLedger =
+        document.getElementById(
+            "salesLedger"
+        );
+
+
+    if (!party || !salesLedger) {
+
+        return;
+
+    }
+
+
+    party.innerHTML = `
+        <option value="">
+            Select Customer / Party
+        </option>
+    `;
+
+
+    salesLedger.innerHTML = `
+        <option value="">
+            Select Sales Ledger
+        </option>
+    `;
+
+
+    ledgers.forEach(
+        function(ledger) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                ledger.name;
+
+
+            option.textContent =
+                ledger.name +
+                " — " +
+                ledger.group;
+
+
+            /*
+               Sundry Debtors को
+               Customer/Party में दिखाएँ
+            */
+
+            if (
+                ledger.group ===
+                "Sundry Debtors"
+            ) {
+
+                party.appendChild(
+                    option.cloneNode(true)
+                );
+
+            }
+
+
+            /*
+               Income / Sales type
+               ledger को Sales Ledger
+               में दिखाएँ
+            */
+
+            if (
+                ledger.group ===
+                    "Direct Incomes"
+                ||
+                ledger.group ===
+                    "Indirect Incomes"
+            ) {
+
+                salesLedger.appendChild(
+                    option
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================
+   SALES CALCULATION
+========================= */
+
+function calculateSalesAmount() {
+
+    const qty =
+        Number(
+            document.getElementById(
+                "salesQty"
+            )?.value || 0
+        );
+
+
+    const rate =
+        Number(
+            document.getElementById(
+                "salesRate"
+            )?.value || 0
+        );
+
+
+    const gst =
+        Number(
+            document.getElementById(
+                "salesGST"
+            )?.value || 0
+        );
+
+
+    const taxable =
+        qty * rate;
+
+
+    const gstAmount =
+        taxable * gst / 100;
+
+
+    const grandTotal =
+        taxable + gstAmount;
+
+
+    const taxableBox =
+        document.getElementById(
+            "salesTaxable"
+        );
+
+
+    const gstBox =
+        document.getElementById(
+            "salesGSTAmount"
+        );
+
+
+    const totalBox =
+        document.getElementById(
+            "salesGrandTotal"
+        );
+
+
+    if (taxableBox) {
+
+        taxableBox.textContent =
+            "₹" +
+            taxable.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+
+    if (gstBox) {
+
+        gstBox.textContent =
+            "₹" +
+            gstAmount.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+
+    if (totalBox) {
+
+        totalBox.textContent =
+            "₹" +
+            grandTotal.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2
+                }
+            );
+
+    }
+
+}
+
+
+/* =========================
+   REMOVE SALES PANEL
+========================= */
+
+function removeSalesPractical() {
+
+    const box =
+        document.getElementById(
+            "salesPractical"
+        );
+
+
+    if (box) {
+
+        box.remove();
+
+    }
+
+}
+  
 </script>
 
 </body>
