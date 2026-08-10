@@ -2213,41 +2213,41 @@ nav .login-btn {
 
 /* ---------- CONTENT ---------- */
 
-.independence-content{
+.independence-content {
+    text-align: center;
 
-    text-align:center;
+    position: relative;
 
-    position:relative;
-
-    z-index:5;
+    z-index: 2;
 
     animation:
         independenceEntry 1.5s ease-out;
-
 }
 
 
 /* ---------- ASHOKA CHAKRA ---------- */
 
-.chakra{
+.chakra {
+    position: absolute;
 
-    font-size:34px;
+    left: 50%;
+    top: 50%;
 
-    color:#1689dc;
+    transform: translate(-50%, -50%);
 
-    line-height:1;
+    font-size: 105px;
 
-    margin-bottom:3px;
+    color: rgba(20, 115, 190, 0.20);
 
-    display:inline-block;
+    z-index: 0;
 
-    animation:
-        chakraSpin 7s linear infinite;
+    pointer-events: none;
+
+    animation: chakraSpin 14s linear infinite;
 
     text-shadow:
-        0 0 10px #1689dc,
-        0 0 20px rgba(22,137,220,.8);
-
+        0 0 20px rgba(20,115,190,.25),
+        0 0 40px rgba(20,115,190,.15);
 }
 
 
@@ -2487,18 +2487,18 @@ nav .login-btn {
 }
 
 
-@keyframes chakraSpin{
+@keyframes chakraSpin {
 
-    from{
-
-        transform:rotate(0deg);
-
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
     }
 
-    to{
-
-        transform:rotate(360deg);
-
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
     }
 
 }
