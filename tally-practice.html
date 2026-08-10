@@ -875,9 +875,7 @@ function showCompanyCreation() {
 }
 
 
-/* =========================
-   CREATE COMPANY
-========================= */
+<script>
 
 function createPracticeCompany() {
 
@@ -896,6 +894,30 @@ function createPracticeCompany() {
             "companyAddress"
         ).value.trim();
 
+    const state =
+        document.getElementById(
+            "companyState"
+        ).value;
+
+    const country =
+        document.getElementById(
+            "companyCountry"
+        ).value;
+
+    const financialYear =
+        document.getElementById(
+            "financialYear"
+        ).value;
+
+    const booksBeginning =
+        document.getElementById(
+            "booksBeginning"
+        ).value;
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
 
     if (!name) {
 
@@ -927,15 +949,74 @@ function createPracticeCompany() {
     }
 
 
+    if (!financialYear) {
+
+        alert(
+            "⚠️ Please select Financial Year."
+        );
+
+        return;
+    }
+
+
+    if (!booksBeginning) {
+
+        alert(
+            "⚠️ Please select Books Beginning From."
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       SAVE PRACTICE COMPANY
+    ========================= */
+
+    const company = {
+
+        name: name,
+
+        mailingName: mailing,
+
+        address: address,
+
+        state: state,
+
+        country: country,
+
+        financialYear: financialYear,
+
+        booksBeginning: booksBeginning
+
+    };
+
+
+    localStorage.setItem(
+        "tallyPracticeCompany",
+        JSON.stringify(company)
+    );
+
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
     alert(
         "✅ Company Created Successfully!\n\n" +
-        "Company: " +
-        name +
-        "\nState: " +
-        document.getElementById(
-            "companyState"
-        ).value
+        "Company: " + name +
+        "\nState: " + state +
+        "\nFinancial Year: " +
+        financialYear
     );
+
+
+    /* =========================
+       RETURN TO GATEWAY
+    ========================= */
+
+    showGateway();
+
 }
 
 
