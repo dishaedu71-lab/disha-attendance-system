@@ -2023,9 +2023,8 @@ function showVoucherEntry() {
 
 }
 
-
 /* =========================
-   VOUCHER TYPE CHANGE
+   VOUCHER TYPE PRACTICAL MODE
 ========================= */
 
 function changeVoucherType() {
@@ -2036,81 +2035,264 @@ function changeVoucherType() {
         ).value;
 
 
+    const debitLabel =
+        document.querySelector(
+            'label[for="debitLedger"]'
+        );
+
+    const creditLabel =
+        document.querySelector(
+            'label[for="creditLedger"]'
+        );
+
+
     const narration =
         document.getElementById(
             "voucherNarration"
         );
 
 
-    if (!narration) {
+    /*
+       Voucher के अनुसार
+       Debit / Credit की
+       basic direction
+    */
+
+    const instructions = {
+
+        "Contra": {
+            debit:
+                "Debit Ledger",
+            credit:
+                "Credit Ledger",
+            note:
+                "Cash ↔ Bank / Bank ↔ Bank transfer"
+        },
+
+
+        "Payment": {
+            debit:
+                "Expense / Party Ledger",
+            credit:
+                "Cash / Bank Ledger",
+            note:
+                "Payment made to party or expense"
+        },
+
+
+        "Receipt": {
+            debit:
+                "Cash / Bank Ledger",
+            credit:
+                "Party / Income Ledger",
+            note:
+                "Money received from party or income"
+        },
+
+
+        "Journal": {
+            debit:
+                "Debit Ledger",
+            credit:
+                "Credit Ledger",
+            note:
+                "Adjustment / Journal Entry"
+        },
+
+
+        "Sales": {
+            debit:
+                "Customer / Party Ledger",
+            credit:
+                "Sales Ledger",
+            note:
+                "Sales Invoice Entry"
+        },
+
+
+        "Purchase": {
+            debit:
+                "Purchase Ledger",
+            credit:
+                "Supplier / Party Ledger",
+            note:
+                "Purchase Invoice Entry"
+        },
+
+
+        "Debit Note": {
+            debit:
+                "Supplier / Party Ledger",
+            credit:
+                "Purchase / Adjustment Ledger",
+            note:
+                "Debit Note Entry"
+        },
+
+
+        "Credit Note": {
+            debit:
+                "Sales / Adjustment Ledger",
+            credit:
+                "Customer / Party Ledger",
+            note:
+                "Credit Note Entry"
+        },
+
+
+        "Sales Order": {
+            debit:
+                "Customer / Party Ledger",
+            credit:
+                "Sales Order Ledger",
+            note:
+                "Sales Order Practice"
+        },
+
+
+        "Purchase Order": {
+            debit:
+                "Purchase Order Ledger",
+            credit:
+                "Supplier / Party Ledger",
+            note:
+                "Purchase Order Practice"
+        },
+
+
+        "Delivery Note": {
+            debit:
+                "Customer / Party Ledger",
+            credit:
+                "Stock / Delivery Ledger",
+            note:
+                "Goods delivered to customer"
+        },
+
+
+        "Receipt Note": {
+            debit:
+                "Stock / Receipt Ledger",
+            credit:
+                "Supplier / Party Ledger",
+            note:
+                "Goods received from supplier"
+        },
+
+
+        "Rejection In": {
+            debit:
+                "Stock / Rejection Ledger",
+            credit:
+                "Customer / Party Ledger",
+            note:
+                "Rejected goods received back"
+        },
+
+
+        "Rejection Out": {
+            debit:
+                "Supplier / Party Ledger",
+            credit:
+                "Stock / Rejection Ledger",
+            note:
+                "Rejected goods returned"
+        },
+
+
+        "Stock Journal": {
+            debit:
+                "Destination Stock",
+            credit:
+                "Source Stock",
+            note:
+                "Stock transfer / adjustment"
+        },
+
+
+        "Physical Stock": {
+            debit:
+                "Physical Stock",
+            credit:
+                "Stock Ledger",
+            note:
+                "Physical stock verification"
+        },
+
+
+        "Memorandum": {
+            debit:
+                "Debit Ledger",
+            credit:
+                "Credit Ledger",
+            note:
+                "Memorandum voucher"
+        },
+
+
+        "Reversing Journal": {
+            debit:
+                "Debit Ledger",
+            credit:
+                "Credit Ledger",
+            note:
+                "Temporary reversing journal"
+        }
+
+    };
+
+
+    const current =
+        instructions[type];
+
+
+    if (!current) {
 
         return;
 
     }
 
 
-    const messages = {
+    /*
+       Labels update
+    */
 
-        "Contra":
-            "Cash deposited into bank / cash transferred between accounts.",
+    if (debitLabel) {
 
-        "Payment":
-            "Enter payment details.",
+        debitLabel.textContent =
+            current.debit;
 
-        "Receipt":
-            "Enter receipt details.",
-
-        "Journal":
-            "Enter journal adjustment details.",
-
-        "Sales":
-            "Enter sales invoice details.",
-
-        "Purchase":
-            "Enter purchase invoice details.",
-
-        "Debit Note":
-            "Enter debit note details.",
-
-        "Credit Note":
-            "Enter credit note details.",
-
-        "Sales Order":
-            "Enter sales order details.",
-
-        "Purchase Order":
-            "Enter purchase order details.",
-
-        "Delivery Note":
-            "Enter delivery details.",
-
-        "Receipt Note":
-            "Enter receipt note details.",
-
-        "Rejection In":
-            "Enter rejected goods received details.",
-
-        "Rejection Out":
-            "Enter rejected goods sent details.",
-
-        "Stock Journal":
-            "Enter stock transfer / adjustment details.",
-
-        "Physical Stock":
-            "Enter physical stock details.",
-
-        "Memorandum":
-            "Enter memorandum voucher details.",
-
-        "Reversing Journal":
-            "Enter reversing journal details."
-
-    };
+    }
 
 
-    narration.placeholder =
-        messages[type] ||
-        "Enter narration...";
+    if (creditLabel) {
+
+        creditLabel.textContent =
+            current.credit;
+
+    }
+
+
+    /*
+       Narration placeholder
+    */
+
+    if (narration) {
+
+        narration.placeholder =
+            current.note +
+            " — Enter narration...";
+
+    }
+
+
+    /*
+       Screen hint
+    */
+
+    showVoucherHint(
+        current.note
+    );
 
 }
 
@@ -2435,7 +2617,136 @@ function loadTallyLedgers() {
     );
 
 }
+/* =========================
+   VOUCHER HINT
+========================= */
 
+function showVoucherHint(message) {
+
+    let box =
+        document.getElementById(
+            "voucherHint"
+        );
+
+
+    if (!box) {
+
+        const voucherSelect =
+            document.getElementById(
+                "voucherType"
+            );
+
+
+        if (!voucherSelect) {
+
+            return;
+
+        }
+
+
+        box =
+            document.createElement(
+                "div"
+            );
+
+
+        box.id =
+            "voucherHint";
+
+
+        box.style.marginTop =
+            "10px";
+
+        box.style.padding =
+            "10px";
+
+        box.style.background =
+            "#fff3cd";
+
+        box.style.border =
+            "1px solid #ffe69c";
+
+        box.style.borderRadius =
+            "5px";
+
+        box.style.color =
+            "#664d03";
+
+        box.style.fontWeight =
+            "bold";
+
+
+        voucherSelect
+            .parentElement
+            .appendChild(box);
+
+    }
+
+
+    box.innerHTML =
+        "💡 Practical: " +
+        message;
+
+}
+  /* =========================
+   TALLY KEYBOARD SHORTCUTS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const voucher =
+            document.getElementById(
+                "voucherType"
+            );
+
+
+        if (!voucher) {
+
+            return;
+
+        }
+
+
+        const map = {
+
+            "F4":
+                "Contra",
+
+            "F5":
+                "Payment",
+
+            "F6":
+                "Receipt",
+
+            "F7":
+                "Journal",
+
+            "F8":
+                "Sales",
+
+            "F9":
+                "Purchase"
+
+        };
+
+
+        if (map[event.key]) {
+
+            event.preventDefault();
+
+
+            voucher.value =
+                map[event.key];
+
+
+            changeVoucherType();
+
+        }
+
+    }
+);
 </script>
 
 </body>
