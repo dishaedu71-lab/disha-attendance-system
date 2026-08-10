@@ -1679,17 +1679,21 @@ function showVoucherEntry() {
 
                             </label>
 
-                            <input
-                                id="debitLedger"
-                                type="text"
-                                placeholder="Enter Debit Ledger"
-                                style="
-                                    width:100%;
-                                    padding:12px;
-                                    border:1px solid #999;
-                                    border-radius:5px;
-                                "
-                            >
+                            <select
+    id="debitLedger"
+    style="
+        width:100%;
+        padding:12px;
+        border:1px solid #999;
+        border-radius:5px;
+    "
+>
+
+    <option value="">
+        Select Debit / Party Ledger
+    </option>
+
+</select>
 
                         </div>
 
@@ -1706,17 +1710,21 @@ function showVoucherEntry() {
 
                             </label>
 
-                            <input
-                                id="creditLedger"
-                                type="text"
-                                placeholder="Enter Credit Ledger"
-                                style="
-                                    width:100%;
-                                    padding:12px;
-                                    border:1px solid #999;
-                                    border-radius:5px;
-                                "
-                            >
+                            <<select
+    id="creditLedger"
+    style="
+        width:100%;
+        padding:12px;
+        border:1px solid #999;
+        border-radius:5px;
+    "
+>
+
+    <option value="">
+        Select Credit / Account Ledger
+    </option>
+
+</select>
 
                         </div>
 
@@ -2011,6 +2019,7 @@ function showVoucherEntry() {
         </div>
 
     `;
+  loadTallyLedgers();
 
 }
 
@@ -2316,6 +2325,111 @@ function clearVoucherForm() {
                 element.value = "";
 
             }
+
+        }
+    );
+
+}
+
+  /* =========================
+   LOAD TALLY LEDGERS
+========================= */
+
+function loadTallyLedgers() {
+
+    const ledgers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeLedgers"
+            ) || "[]"
+        );
+
+
+    const debitSelect =
+        document.getElementById(
+            "debitLedger"
+        );
+
+    const creditSelect =
+        document.getElementById(
+            "creditLedger"
+        );
+
+
+    if (!debitSelect || !creditSelect) {
+
+        return;
+
+    }
+
+
+    /* =========================
+       KEEP DEFAULT OPTION
+    ========================= */
+
+    debitSelect.innerHTML = `
+
+        <option value="">
+            Select Debit / Party Ledger
+        </option>
+
+    `;
+
+
+    creditSelect.innerHTML = `
+
+        <option value="">
+            Select Credit / Account Ledger
+        </option>
+
+    `;
+
+
+    /* =========================
+       ADD LEDGERS
+    ========================= */
+
+    ledgers.forEach(
+        function(ledger, index) {
+
+            const text =
+                ledger.name +
+                " — " +
+                ledger.group;
+
+
+            const debitOption =
+                document.createElement(
+                    "option"
+                );
+
+            debitOption.value =
+                ledger.name;
+
+            debitOption.textContent =
+                text;
+
+
+            debitSelect.appendChild(
+                debitOption
+            );
+
+
+            const creditOption =
+                document.createElement(
+                    "option"
+                );
+
+            creditOption.value =
+                ledger.name;
+
+            creditOption.textContent =
+                text;
+
+
+            creditSelect.appendChild(
+                creditOption
+            );
 
         }
     );
