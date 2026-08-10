@@ -609,6 +609,12 @@ function openModule(module) {
 
     return;
 }
+  if (module === "voucher") {
+
+    showVoucherEntry();
+
+    return;
+}
 
     alert(
         "🚧 " +
@@ -1393,6 +1399,926 @@ function savePracticeLedger() {
 
 
     showGateway();
+
+}
+
+  /* =========================
+   TALLY VOUCHER ENTRY
+========================= */
+
+function showVoucherEntry() {
+
+    const panel =
+        document.querySelector(".main-panel");
+
+
+    panel.innerHTML = `
+
+        <div class="panel-title">
+
+            Voucher Entry
+
+        </div>
+
+
+        <div style="
+            padding:20px;
+            max-width:1000px;
+            margin:auto;
+        ">
+
+
+            <!-- VOUCHER HEADER -->
+
+            <div style="
+                background:#173f59;
+                color:white;
+                padding:12px 16px;
+                margin-bottom:15px;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                flex-wrap:wrap;
+                gap:10px;
+            ">
+
+                <strong>
+                    🧾 Tally Prime Voucher Entry
+                </strong>
+
+                <span>
+                    Practice Mode
+                </span>
+
+            </div>
+
+
+            <!-- VOUCHER TYPE -->
+
+            <div style="
+                background:#dcecf7;
+                border:1px solid #9fb8c8;
+                padding:15px;
+                margin-bottom:15px;
+            ">
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:7px;
+                ">
+
+                    Voucher Type
+
+                </label>
+
+
+                <select
+                    id="voucherType"
+                    onchange="changeVoucherType()"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #999;
+                        border-radius:5px;
+                        font-size:15px;
+                    "
+                >
+
+                    <option value="Contra">
+                        F4 - Contra
+                    </option>
+
+                    <option value="Payment">
+                        F5 - Payment
+                    </option>
+
+                    <option value="Receipt">
+                        F6 - Receipt
+                    </option>
+
+                    <option value="Journal">
+                        F7 - Journal
+                    </option>
+
+                    <option value="Sales">
+                        F8 - Sales
+                    </option>
+
+                    <option value="Purchase">
+                        F9 - Purchase
+                    </option>
+
+                    <option value="Debit Note">
+                        Debit Note
+                    </option>
+
+                    <option value="Credit Note">
+                        Credit Note
+                    </option>
+
+                    <option value="Sales Order">
+                        Sales Order
+                    </option>
+
+                    <option value="Purchase Order">
+                        Purchase Order
+                    </option>
+
+                    <option value="Delivery Note">
+                        Delivery Note
+                    </option>
+
+                    <option value="Receipt Note">
+                        Receipt Note
+                    </option>
+
+                    <option value="Rejection In">
+                        Rejection In
+                    </option>
+
+                    <option value="Rejection Out">
+                        Rejection Out
+                    </option>
+
+                    <option value="Stock Journal">
+                        Stock Journal
+                    </option>
+
+                    <option value="Physical Stock">
+                        Physical Stock
+                    </option>
+
+                    <option value="Memorandum">
+                        Memorandum
+                    </option>
+
+                    <option value="Reversing Journal">
+                        Reversing Journal
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE + NUMBER -->
+
+            <div style="
+                display:grid;
+                grid-template-columns:
+                repeat(2,1fr);
+                gap:12px;
+                margin-bottom:15px;
+            ">
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Date
+
+                    </label>
+
+                    <input
+                        id="voucherDate"
+                        type="date"
+                        value="${new Date()
+                            .toISOString()
+                            .split('T')[0]}"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label style="
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:6px;
+                    ">
+
+                        Voucher No.
+
+                    </label>
+
+                    <input
+                        id="voucherNumber"
+                        type="text"
+                        value="1"
+                        placeholder="Voucher Number"
+                        style="
+                            width:100%;
+                            padding:12px;
+                            border:1px solid #999;
+                            border-radius:5px;
+                        "
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACCOUNTING ENTRY -->
+
+            <div style="
+                border:1px solid #aaa;
+                background:white;
+                margin-bottom:15px;
+            ">
+
+
+                <div style="
+                    background:#173f59;
+                    color:white;
+                    padding:10px;
+                    font-weight:bold;
+                ">
+
+                    Accounting Details
+
+                </div>
+
+
+                <div style="
+                    padding:15px;
+                ">
+
+
+                    <div style="
+                        display:grid;
+                        grid-template-columns:
+                        1fr 1fr;
+                        gap:12px;
+                    ">
+
+
+                        <div>
+
+                            <label style="
+                                display:block;
+                                font-weight:bold;
+                                margin-bottom:6px;
+                            ">
+
+                                Debit / Party Ledger
+
+                            </label>
+
+                            <input
+                                id="debitLedger"
+                                type="text"
+                                placeholder="Enter Debit Ledger"
+                                style="
+                                    width:100%;
+                                    padding:12px;
+                                    border:1px solid #999;
+                                    border-radius:5px;
+                                "
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label style="
+                                display:block;
+                                font-weight:bold;
+                                margin-bottom:6px;
+                            ">
+
+                                Credit / Account Ledger
+
+                            </label>
+
+                            <input
+                                id="creditLedger"
+                                type="text"
+                                placeholder="Enter Credit Ledger"
+                                style="
+                                    width:100%;
+                                    padding:12px;
+                                    border:1px solid #999;
+                                    border-radius:5px;
+                                "
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div style="
+                        margin-top:15px;
+                    ">
+
+                        <label style="
+                            display:block;
+                            font-weight:bold;
+                            margin-bottom:6px;
+                        ">
+
+                            Amount (₹)
+
+                        </label>
+
+                        <input
+                            id="voucherAmount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter Amount"
+                            style="
+                                width:100%;
+                                padding:12px;
+                                border:1px solid #999;
+                                border-radius:5px;
+                            "
+                        >
+
+                    </div>
+
+
+                    <div style="
+                        margin-top:15px;
+                    ">
+
+                        <label style="
+                            display:block;
+                            font-weight:bold;
+                            margin-bottom:6px;
+                        ">
+
+                            Narration
+
+                        </label>
+
+                        <textarea
+                            id="voucherNarration"
+                            placeholder="Enter narration..."
+                            style="
+                                width:100%;
+                                min-height:80px;
+                                padding:12px;
+                                border:1px solid #999;
+                                border-radius:5px;
+                                resize:vertical;
+                            "
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- INVENTORY DETAILS -->
+
+            <div style="
+                border:1px solid #aaa;
+                background:white;
+                margin-bottom:15px;
+            ">
+
+
+                <div style="
+                    background:#315a72;
+                    color:white;
+                    padding:10px;
+                    font-weight:bold;
+                ">
+
+                    📦 Inventory Details
+
+                </div>
+
+
+                <div style="
+                    padding:15px;
+                ">
+
+
+                    <div style="
+                        display:grid;
+                        grid-template-columns:
+                        2fr 1fr 1fr;
+                        gap:12px;
+                    ">
+
+
+                        <div>
+
+                            <label style="
+                                display:block;
+                                font-weight:bold;
+                                margin-bottom:6px;
+                            ">
+
+                                Stock Item
+
+                            </label>
+
+                            <input
+                                id="stockItem"
+                                type="text"
+                                placeholder="Stock Item"
+                                style="
+                                    width:100%;
+                                    padding:12px;
+                                    border:1px solid #999;
+                                    border-radius:5px;
+                                "
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label style="
+                                display:block;
+                                font-weight:bold;
+                                margin-bottom:6px;
+                            ">
+
+                                Quantity
+
+                            </label>
+
+                            <input
+                                id="stockQty"
+                                type="number"
+                                min="0"
+                                placeholder="Qty"
+                                style="
+                                    width:100%;
+                                    padding:12px;
+                                    border:1px solid #999;
+                                    border-radius:5px;
+                                "
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label style="
+                                display:block;
+                                font-weight:bold;
+                                margin-bottom:6px;
+                            ">
+
+                                Rate
+
+                            </label>
+
+                            <input
+                                id="stockRate"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="Rate"
+                                style="
+                                    width:100%;
+                                    padding:12px;
+                                    border:1px solid #999;
+                                    border-radius:5px;
+                                "
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+
+                <button
+                    onclick="savePracticeVoucher()"
+                    style="
+                        flex:1;
+                        min-width:200px;
+                        padding:14px;
+                        border:0;
+                        background:#198754;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ✔ ACCEPT VOUCHER
+
+                </button>
+
+
+                <button
+                    onclick="clearVoucherForm()"
+                    style="
+                        flex:1;
+                        min-width:160px;
+                        padding:14px;
+                        border:0;
+                        background:#d39e00;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    🧹 CLEAR
+
+                </button>
+
+
+                <button
+                    onclick="showGateway()"
+                    style="
+                        flex:1;
+                        min-width:160px;
+                        padding:14px;
+                        border:0;
+                        background:#555;
+                        color:white;
+                        font-weight:bold;
+                        cursor:pointer;
+                        border-radius:5px;
+                    "
+                >
+
+                    ← GATEWAY
+
+                </button>
+
+
+            </div>
+
+
+            <!-- KEYBOARD SHORTCUTS -->
+
+            <div style="
+                margin-top:18px;
+                background:#173f59;
+                color:white;
+                padding:12px;
+                font-size:13px;
+                text-align:center;
+            ">
+
+                F4 Contra &nbsp; | &nbsp;
+                F5 Payment &nbsp; | &nbsp;
+                F6 Receipt &nbsp; | &nbsp;
+                F7 Journal &nbsp; | &nbsp;
+                F8 Sales &nbsp; | &nbsp;
+                F9 Purchase
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   VOUCHER TYPE CHANGE
+========================= */
+
+function changeVoucherType() {
+
+    const type =
+        document.getElementById(
+            "voucherType"
+        ).value;
+
+
+    const narration =
+        document.getElementById(
+            "voucherNarration"
+        );
+
+
+    if (!narration) {
+
+        return;
+
+    }
+
+
+    const messages = {
+
+        "Contra":
+            "Cash deposited into bank / cash transferred between accounts.",
+
+        "Payment":
+            "Enter payment details.",
+
+        "Receipt":
+            "Enter receipt details.",
+
+        "Journal":
+            "Enter journal adjustment details.",
+
+        "Sales":
+            "Enter sales invoice details.",
+
+        "Purchase":
+            "Enter purchase invoice details.",
+
+        "Debit Note":
+            "Enter debit note details.",
+
+        "Credit Note":
+            "Enter credit note details.",
+
+        "Sales Order":
+            "Enter sales order details.",
+
+        "Purchase Order":
+            "Enter purchase order details.",
+
+        "Delivery Note":
+            "Enter delivery details.",
+
+        "Receipt Note":
+            "Enter receipt note details.",
+
+        "Rejection In":
+            "Enter rejected goods received details.",
+
+        "Rejection Out":
+            "Enter rejected goods sent details.",
+
+        "Stock Journal":
+            "Enter stock transfer / adjustment details.",
+
+        "Physical Stock":
+            "Enter physical stock details.",
+
+        "Memorandum":
+            "Enter memorandum voucher details.",
+
+        "Reversing Journal":
+            "Enter reversing journal details."
+
+    };
+
+
+    narration.placeholder =
+        messages[type] ||
+        "Enter narration...";
+
+}
+
+
+/* =========================
+   SAVE VOUCHER
+========================= */
+
+function savePracticeVoucher() {
+
+    const type =
+        document.getElementById(
+            "voucherType"
+        ).value;
+
+
+    const date =
+        document.getElementById(
+            "voucherDate"
+        ).value;
+
+
+    const number =
+        document.getElementById(
+            "voucherNumber"
+        ).value.trim();
+
+
+    const debit =
+        document.getElementById(
+            "debitLedger"
+        ).value.trim();
+
+
+    const credit =
+        document.getElementById(
+            "creditLedger"
+        ).value.trim();
+
+
+    const amount =
+        document.getElementById(
+            "voucherAmount"
+        ).value;
+
+
+    const narration =
+        document.getElementById(
+            "voucherNarration"
+        ).value.trim();
+
+
+    if (!date) {
+
+        alert(
+            "⚠️ Please select Voucher Date."
+        );
+
+        return;
+
+    }
+
+
+    if (!number) {
+
+        alert(
+            "⚠️ Please enter Voucher Number."
+        );
+
+        return;
+
+    }
+
+
+    if (!debit) {
+
+        alert(
+            "⚠️ Please enter Debit / Party Ledger."
+        );
+
+        return;
+
+    }
+
+
+    if (!credit) {
+
+        alert(
+            "⚠️ Please enter Credit / Account Ledger."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        amount === "" ||
+        Number(amount) <= 0
+    ) {
+
+        alert(
+            "⚠️ Please enter valid Amount."
+        );
+
+        return;
+
+    }
+
+
+    const voucher = {
+
+        type: type,
+
+        date: date,
+
+        number: number,
+
+        debitLedger: debit,
+
+        creditLedger: credit,
+
+        amount:
+            Number(amount),
+
+        narration: narration,
+
+        stockItem:
+            document.getElementById(
+                "stockItem"
+            ).value.trim(),
+
+        quantity:
+            Number(
+                document.getElementById(
+                    "stockQty"
+                ).value || 0
+            ),
+
+        rate:
+            Number(
+                document.getElementById(
+                    "stockRate"
+                ).value || 0
+            )
+
+    };
+
+
+    const vouchers =
+        JSON.parse(
+            localStorage.getItem(
+                "tallyPracticeVouchers"
+            ) || "[]"
+        );
+
+
+    vouchers.push(voucher);
+
+
+    localStorage.setItem(
+        "tallyPracticeVouchers",
+        JSON.stringify(
+            vouchers
+        )
+    );
+
+
+    alert(
+        "✅ Voucher Accepted!\n\n" +
+        "Type: " + type +
+        "\nVoucher No.: " + number +
+        "\nAmount: ₹" +
+        Number(amount)
+            .toLocaleString("en-IN")
+    );
+
+
+    clearVoucherForm();
+
+}
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
+function clearVoucherForm() {
+
+    const fields = [
+
+        "debitLedger",
+        "creditLedger",
+        "voucherAmount",
+        "voucherNarration",
+        "stockItem",
+        "stockQty",
+        "stockRate"
+
+    ];
+
+
+    fields.forEach(
+        function(id) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.value = "";
+
+            }
+
+        }
+    );
 
 }
 
