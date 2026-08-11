@@ -5,14 +5,19 @@
     font-family:Segoe UI,Arial,sans-serif;
 }
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#4f46e5,#7c3aed,#06b6d4);
-}
+body {
+    background:
+        linear-gradient(
+            rgba(5, 15, 40, 0.72),
+            rgba(5, 15, 40, 0.72)
+        ),
+        url("https://img.freepik.com/premium-photo/orange-green-color-powder-splash-indian-flag-independence-day-indian-republic-day_851674-61629.jpg");
 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 .login-box{
 
     width:420px;
