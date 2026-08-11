@@ -6,6 +6,15 @@
 }
 
 body {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
     background:
         linear-gradient(
             rgba(5, 15, 40, 0.72),
@@ -14,28 +23,36 @@ body {
         url("https://img.freepik.com/premium-photo/orange-green-color-powder-splash-indian-flag-independence-day-indian-republic-day_851674-61629.jpg");
 
     background-size: cover;
+
     background-position: center;
+
     background-repeat: no-repeat;
+
     background-attachment: fixed;
+
 }
-.login-box{
+.login-box {
 
-    width:420px;
+    width: 420px;
 
-    padding:40px;
+    max-width: 90%;
 
-    background:rgba(255,255,255,.15);
+    padding: 40px;
 
-    backdrop-filter:blur(20px);
+    background: rgba(255,255,255,.15);
 
-    border-radius:25px;
+    backdrop-filter: blur(20px);
 
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
+    border-radius: 25px;
 
-    text-align:center;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
 
-    color:white;
+    text-align: center;
 
+    color: white;
+
+}
 }
 
 .login-box h1{
