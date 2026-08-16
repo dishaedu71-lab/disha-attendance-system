@@ -3062,3 +3062,82 @@ nav .login-btn {
         transform: translateX(-15px) rotate(-8deg);
     }
 }
+/* =================================
+   NAG PANCHAMI — FINAL FIX
+   ================================= */
+
+.independence-content {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 22px 20px 18px;
+}
+
+/* Snake properly inside */
+.independence-content .chakra {
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 5px;
+    animation: snakeMove 2.5s ease-in-out infinite;
+}
+
+/* Heading */
+.independence-content h1 {
+    margin: 5px 0 8px !important;
+    font-size: clamp(28px, 4vw, 48px) !important;
+    line-height: 1.1 !important;
+    white-space: nowrap;
+}
+
+/* Date */
+.independence-content .august-date {
+    font-size: 22px !important;
+    margin: 5px 0 !important;
+}
+
+/* Hindi message */
+.independence-content p {
+    margin: 5px 0 10px !important;
+    font-size: 18px !important;
+}
+
+/* Tricolor line */
+.independence-content .tricolor-line {
+    width: 150px;
+    height: 5px;
+    margin: 8px auto 12px;
+}
+
+/* Button */
+.independence-content button {
+    display: inline-block;
+    padding: 9px 22px !important;
+    font-size: 13px !important;
+    border-radius: 25px;
+    margin: 0 auto !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .independence-content {
+        padding: 15px 10px;
+    }
+
+    .independence-content .chakra {
+        font-size: 30px;
+    }
+
+    .independence-content h1 {
+        font-size: 25px !important;
+        white-space: normal;
+    }
+
+    .independence-content .august-date {
+        font-size: 18px !important;
+    }
+
+    .independence-content p {
+        font-size: 15px !important;
+    }
+}
