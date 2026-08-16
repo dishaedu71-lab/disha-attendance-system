@@ -2952,3 +2952,113 @@ nav .login-btn {
 #noticeList button:hover {
     background: #b02a37 !important;
 }
+/* =========================================
+   🐍 NAG PANCHAMI THEME
+   ========================================= */
+
+.independence-overlay {
+    background:
+        linear-gradient(
+            rgba(0, 20, 10, 0.45),
+            rgba(0, 20, 10, 0.45)
+        );
+}
+
+/* Main Nag Panchami heading */
+.independence-content h1 {
+    color: #ffffff;
+    text-shadow:
+        0 0 8px #00ff66,
+        0 0 18px #00ff66;
+    animation: nagGlow 2s infinite alternate;
+}
+
+/* Date */
+.independence-content .august-date {
+    color: #ffe082;
+    text-shadow: 0 0 10px #ff9800;
+}
+
+/* Message */
+.independence-content p {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 8px #00ff66;
+}
+
+/* Green-golden line */
+.tricolor-line {
+    background: transparent !important;
+}
+
+.tricolor-line span:nth-child(1) {
+    background: #ff9800;
+}
+
+.tricolor-line span:nth-child(2) {
+    background: #ffffff;
+}
+
+.tricolor-line span:nth-child(3) {
+    background: #00c853;
+}
+
+/* Snake/emoji animation */
+.chakra {
+    font-size: 55px;
+    animation: snakeMove 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px #00ff66);
+}
+
+/* Button */
+.independence-content button {
+    background: linear-gradient(
+        90deg,
+        #ff9800,
+        #ffd54f,
+        #00c853
+    );
+
+    color: #111;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 0 15px rgba(0,255,100,.6);
+    transition: .3s;
+}
+
+.independence-content button:hover {
+    transform: scale(1.08);
+}
+
+/* Glow */
+@keyframes nagGlow {
+
+    from {
+        transform: scale(1);
+        text-shadow:
+            0 0 8px #00ff66;
+    }
+
+    to {
+        transform: scale(1.04);
+        text-shadow:
+            0 0 12px #00ff66,
+            0 0 25px #00ff66;
+    }
+}
+
+/* Snake movement */
+@keyframes snakeMove {
+
+    0% {
+        transform: translateX(-15px) rotate(-8deg);
+    }
+
+    50% {
+        transform: translateX(15px) rotate(8deg);
+    }
+
+    100% {
+        transform: translateX(-15px) rotate(-8deg);
+    }
+}
