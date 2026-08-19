@@ -2953,61 +2953,80 @@ nav .login-btn {
     background: #b02a37 !important;
 }
 /* =========================================
-   🐍 NAG PANCHAMI THEME
+   🎀 RAKSHA BANDHAN — PREMIUM THEME
    ========================================= */
 
 .independence-overlay {
-    background:
-        linear-gradient(
-            rgba(0, 20, 10, 0.45),
-            rgba(0, 20, 10, 0.45)
-        );
+    background: rgba(0, 0, 0, 0.20) !important;
 }
 
-/* Main Nag Panchami heading */
+/* Main Heading */
 .independence-content h1 {
-    color: #ffffff;
+    color: #ffffff !important;
+    font-size: clamp(28px, 4vw, 46px) !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px;
+    line-height: 1.1 !important;
+    margin: 5px 0 8px !important;
+    white-space: nowrap;
+
     text-shadow:
-        0 0 8px #00ff66,
-        0 0 18px #00ff66;
-    animation: nagGlow 2s infinite alternate;
+        0 2px 3px #000,
+        0 0 8px rgba(255, 255, 255, .7);
+
+    animation: rakshaTitle 3s ease-in-out infinite;
 }
 
-/* Date */
-.independence-content .august-date {
-    color: #ffe082;
-    text-shadow: 0 0 10px #ff9800;
-}
-
-/* Message */
+/* Hindi Message */
 .independence-content p {
-    color: #ffffff;
-    font-weight: bold;
-    text-shadow: 0 0 8px #00ff66;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    margin: 5px 0 8px !important;
+
+    text-shadow:
+        0 2px 4px #000,
+        0 0 8px rgba(255, 193, 7, .8);
+
+    animation: rakshaText 2.5s ease-in-out infinite;
 }
 
-/* Green-golden line */
-.tricolor-line {
+/* BROTHER • SISTER • LOVE • BOND */
+.independence-content .tricolor-line {
+    width: auto !important;
+    height: auto !important;
+    margin: 5px auto 10px !important;
+
     background: transparent !important;
+
+    color: #ffd54f !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 2px 3px #000,
+        0 0 8px rgba(255, 193, 7, .8);
+
+    animation: rakshaBond 2s ease-in-out infinite;
 }
 
-.tricolor-line span:nth-child(1) {
-    background: #ff9800;
+/* Agar purane 3 spans hain to hide */
+.independence-content .tricolor-line span {
+    display: none !important;
 }
 
-.tricolor-line span:nth-child(2) {
-    background: #ffffff;
-}
+/* Top icon */
+.independence-content .chakra {
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 5px;
 
-.tricolor-line span:nth-child(3) {
-    background: #00c853;
-}
+    animation: rakshaIcon 3s linear infinite;
 
-/* Snake/emoji animation */
-.chakra {
-    font-size: 55px;
-    animation: snakeMove 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 10px #00ff66);
+    filter:
+        drop-shadow(0 0 5px #ffd54f)
+        drop-shadow(0 0 10px #ff9800);
 }
 
 /* Button */
@@ -3016,13 +3035,21 @@ nav .login-btn {
         90deg,
         #ff9800,
         #ffd54f,
-        #00c853
-    );
+        #ff9800
+    ) !important;
 
-    color: #111;
-    font-weight: bold;
-    border: none;
-    box-shadow: 0 0 15px rgba(0,255,100,.6);
+    color: #111 !important;
+    font-weight: 900 !important;
+    border: none !important;
+    border-radius: 25px;
+
+    padding: 9px 22px !important;
+    font-size: 13px !important;
+
+    box-shadow:
+        0 0 10px rgba(255, 193, 7, .7),
+        0 3px 8px rgba(0,0,0,.5);
+
     transition: .3s;
 }
 
@@ -3030,147 +3057,96 @@ nav .login-btn {
     transform: scale(1.08);
 }
 
-/* Glow */
-@keyframes nagGlow {
-
-    from {
-        transform: scale(1);
-        text-shadow:
-            0 0 8px #00ff66;
-    }
-
-    to {
-        transform: scale(1.04);
-        text-shadow:
-            0 0 12px #00ff66,
-            0 0 25px #00ff66;
-    }
-}
-
-/* Snake movement */
-@keyframes snakeMove {
+/* Heading colour animation */
+@keyframes rakshaTitle {
 
     0% {
-        transform: translateX(-15px) rotate(-8deg);
+        color: #ffffff;
+        text-shadow:
+            0 2px 3px #000,
+            0 0 8px #ffffff;
     }
 
     50% {
-        transform: translateX(15px) rotate(8deg);
+        color: #ffd54f;
+        text-shadow:
+            0 2px 3px #000,
+            0 0 12px #ff9800;
     }
 
     100% {
-        transform: translateX(-15px) rotate(-8deg);
+        color: #ffffff;
+        text-shadow:
+            0 2px 3px #000,
+            0 0 8px #ffffff;
     }
 }
-/* =================================
-   NAG PANCHAMI — FINAL FIX
-   ================================= */
 
-.independence-content {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-    padding: 22px 20px 18px;
+/* Hindi text animation */
+@keyframes rakshaText {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
 }
 
-/* Snake properly inside */
-.independence-content .chakra {
-    font-size: 38px;
-    line-height: 1;
-    margin-bottom: 5px;
-    animation: snakeMove 2.5s ease-in-out infinite;
+/* Bond animation */
+@keyframes rakshaBond {
+
+    0% {
+        color: #ffd54f;
+    }
+
+    50% {
+        color: #ffffff;
+    }
+
+    100% {
+        color: #ffd54f;
+    }
 }
 
-/* Heading */
-.independence-content h1 {
-    margin: 5px 0 8px !important;
-    font-size: clamp(28px, 4vw, 48px) !important;
-    line-height: 1.1 !important;
-    white-space: nowrap;
-}
+/* Icon rotation */
+@keyframes rakshaIcon {
 
-/* Date */
-.independence-content .august-date {
-    font-size: 22px !important;
-    margin: 5px 0 !important;
-}
+    0% {
+        transform: rotate(-8deg) scale(1);
+    }
 
-/* Hindi message */
-.independence-content p {
-    margin: 5px 0 10px !important;
-    font-size: 18px !important;
-}
+    50% {
+        transform: rotate(8deg) scale(1.08);
+    }
 
-/* Tricolor line */
-.independence-content .tricolor-line {
-    width: 150px;
-    height: 5px;
-    margin: 8px auto 12px;
-}
-
-/* Button */
-.independence-content button {
-    display: inline-block;
-    padding: 9px 22px !important;
-    font-size: 13px !important;
-    border-radius: 25px;
-    margin: 0 auto !important;
+    100% {
+        transform: rotate(-8deg) scale(1);
+    }
 }
 
 /* Mobile */
 @media (max-width: 600px) {
 
     .independence-content {
-        padding: 15px 10px;
-    }
-
-    .independence-content .chakra {
-        font-size: 30px;
+        padding: 15px 10px !important;
     }
 
     .independence-content h1 {
         font-size: 25px !important;
-        white-space: normal;
-    }
-
-    .independence-content .august-date {
-        font-size: 18px !important;
+        white-space: normal !important;
     }
 
     .independence-content p {
         font-size: 15px !important;
     }
-}
-/* ===== NAG PANCHAMI CLEAN LOOK ===== */
 
-.independence-content h1 {
-    color: #ffffff !important;
-    text-shadow: 2px 2px 4px #000 !important;
-    animation: none !important;
-}
+    .independence-content .tricolor-line {
+        font-size: 12px !important;
+    }
 
-.independence-content .august-date {
-    color: #ffffff !important;
-    text-shadow: 2px 2px 3px #000 !important;
-}
-
-.independence-content p {
-    color: #ffffff !important;
-    text-shadow: 1px 1px 3px #000 !important;
-}
-
-/* Snake */
-.independence-content .chakra {
-    filter: none !important;
-    text-shadow: 0 2px 3px #000;
-}
-
-/* Button */
-.independence-content button {
-    box-shadow: 0 2px 8px rgba(0,0,0,.5) !important;
-}
-
-/* Box ko clean rakho */
-.independence-overlay {
-    background: rgba(0,0,0,.25) !important;
+    .independence-content .chakra {
+        font-size: 30px;
+    }
 }
