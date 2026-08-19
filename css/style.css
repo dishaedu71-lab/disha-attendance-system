@@ -3066,13 +3066,21 @@ nav .login-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 10px;
+    flex-wrap: nowrap;
+
+    width: 100%;
+    margin: 10px 0 12px !important;
+    padding: 0 5px;
+
+    position: relative;
+    z-index: 10;
 }
 
 .raksha-title span {
     display: inline-block;
     color: #ffffff !important;
+    line-height: 1.15;
 
     text-shadow:
         0 2px 3px #000,
