@@ -5,11 +5,13 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
+
 /* =========================
-   PAGE
+   BODY
 ========================= */
 
 body {
+
     min-height: 100vh;
 
     display: flex;
@@ -41,12 +43,12 @@ body {
     width: 420px;
     max-width: 90%;
 
-    padding: 42px 38px;
+    padding: 35px 38px;
 
-    background: rgba(10, 20, 40, 0.78);
+    background: rgba(8, 18, 38, 0.82);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
     border: 1px solid rgba(0, 234, 255, 0.45);
 
@@ -57,8 +59,8 @@ body {
     color: white;
 
     box-shadow:
-        0 0 15px rgba(0, 234, 255, 0.18),
-        0 20px 60px rgba(0, 0, 0, 0.55);
+        0 0 18px rgba(0, 234, 255, 0.20),
+        0 20px 60px rgba(0, 0, 0, 0.60);
 
     position: relative;
 
@@ -68,27 +70,34 @@ body {
 }
 
 
-/* Moving light inside card */
+/* =========================
+   ICON
+========================= */
 
-.login-box::before {
+.login-icon {
 
-    content: "";
+    width: 65px;
+    height: 65px;
 
-    position: absolute;
+    margin: 0 auto 15px;
 
-    width: 180px;
-    height: 180px;
-
-    top: -100px;
-    left: -100px;
-
-    background: rgba(0, 234, 255, 0.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     border-radius: 50%;
 
-    filter: blur(10px);
+    color: #00eaff;
 
-    animation: floatingLight 5s infinite alternate ease-in-out;
+    font-size: 28px;
+
+    border: 1px solid #00eaff;
+
+    box-shadow:
+        0 0 10px rgba(0, 234, 255, 0.6),
+        inset 0 0 12px rgba(0, 234, 255, 0.15);
+
+    animation: iconGlow 2s infinite alternate;
 }
 
 
@@ -98,21 +107,15 @@ body {
 
 .login-box h1 {
 
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 
-    font-size: 32px;
+    font-size: 31px;
 
-    font-weight: 700;
-
-    color: #ffffff;
+    color: white;
 
     text-shadow:
-        0 0 8px rgba(0, 234, 255, 0.7),
+        0 0 8px rgba(0, 234, 255, 0.8),
         0 0 20px rgba(0, 234, 255, 0.25);
-
-    position: relative;
-
-    z-index: 2;
 }
 
 
@@ -124,27 +127,23 @@ body {
 
     width: 100%;
 
-    padding: 14px 18px;
+    padding: 14px 17px;
 
-    margin: 10px 0;
-
-    border: 1px solid rgba(0, 234, 255, 0.25);
-
-    outline: none;
+    margin: 9px 0;
 
     border-radius: 10px;
 
-    background: rgba(2, 10, 22, 0.85);
+    border: 1px solid rgba(0, 234, 255, 0.28);
+
+    outline: none;
+
+    background: rgba(1, 9, 20, 0.90);
 
     color: white;
 
     font-size: 15px;
 
     transition: 0.3s;
-
-    position: relative;
-
-    z-index: 2;
 }
 
 
@@ -159,8 +158,8 @@ body {
     border-color: #00eaff;
 
     box-shadow:
-        0 0 8px rgba(0, 234, 255, 0.45),
-        0 0 20px rgba(0, 234, 255, 0.12);
+        0 0 8px rgba(0, 234, 255, 0.55),
+        0 0 20px rgba(0, 234, 255, 0.15);
 
     transform: translateY(-1px);
 }
@@ -176,49 +175,44 @@ body {
 
     padding: 14px;
 
-    margin-top: 22px;
+    margin-top: 20px;
 
     border: none;
 
     border-radius: 10px;
 
-    background: linear-gradient(
-        90deg,
-        #087cff,
-        #00d9ff,
-        #087cff
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #087cff,
+            #00d9ff,
+            #087cff
+        );
 
     background-size: 200% auto;
 
     color: #001018;
 
-    font-size: 16px;
-
-    cursor: pointer;
+    font-size: 15px;
 
     font-weight: 800;
 
     letter-spacing: 1px;
 
+    cursor: pointer;
+
     position: relative;
 
     overflow: hidden;
 
-    z-index: 2;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background-position 0.5s ease;
+    transition: 0.3s;
 
     box-shadow:
-        0 0 10px rgba(0, 217, 255, 0.45),
-        0 0 25px rgba(0, 125, 255, 0.18);
+        0 0 12px rgba(0, 217, 255, 0.45);
 }
 
 
-/* Moving shine */
+/* Button shine */
 
 .login-box button::before {
 
@@ -227,25 +221,24 @@ body {
     position: absolute;
 
     top: 0;
-    left: -100%;
+    left: -120%;
 
-    width: 55%;
+    width: 60%;
     height: 100%;
 
-    background: linear-gradient(
-        110deg,
-        transparent,
-        rgba(255,255,255,0.75),
-        transparent
-    );
+    background:
+        linear-gradient(
+            110deg,
+            transparent,
+            rgba(255,255,255,0.8),
+            transparent
+        );
 
     transform: skewX(-20deg);
 
     transition: 0.6s;
 }
 
-
-/* Hover */
 
 .login-box button:hover {
 
@@ -266,34 +259,231 @@ body {
 }
 
 
-/* Click */
-
 .login-box button:active {
 
-    transform: scale(0.96);
+    transform: scale(0.95);
 
     box-shadow:
         0 0 8px #00eaff,
-        0 0 18px rgba(0, 234, 255, 0.7);
+        0 0 20px #00eaff;
 }
 
 
 /* =========================
-   MESSAGE
+   ERROR MESSAGE
 ========================= */
 
 #msg {
 
-    margin-top: 18px;
+    margin-top: 16px;
 
-    color: #00eaff;
+    color: #ff405c;
+
+    font-size: 13px;
 
     font-weight: bold;
 
-    font-size: 14px;
+    text-shadow:
+        0 0 8px rgba(255, 64, 92, 0.5);
+}
+
+
+/* =================================================
+   CUSTOM POPUP
+================================================= */
+
+.popup-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.72);
+
+    backdrop-filter: blur(8px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: 0.35s;
+
+    z-index: 9999;
+}
+
+
+.popup-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =========================
+   POPUP CARD
+========================= */
+
+.login-popup {
+
+    width: 360px;
+
+    max-width: 88%;
+
+    padding: 32px 25px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 25, 48, 0.98),
+            rgba(4, 12, 27, 0.98)
+        );
+
+    border: 1px solid #00eaff;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 15px rgba(0, 234, 255, 0.45),
+        0 0 50px rgba(0, 234, 255, 0.20);
+
+    transform: scale(0.75) translateY(30px);
+
+    transition: 0.4s cubic-bezier(.17,.67,.32,1.3);
+
+    color: white;
+}
+
+
+.popup-overlay.active .login-popup {
+
+    transform: scale(1) translateY(0);
+}
+
+
+/* =========================
+   POPUP ICON
+========================= */
+
+.popup-icon {
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    border: 2px solid #00ff9d;
+
+    color: #00ff9d;
+
+    font-size: 32px;
+
+    box-shadow:
+        0 0 12px #00ff9d,
+        0 0 30px rgba(0, 255, 157, 0.35);
+
+    animation: popupIcon 0.7s ease;
+}
+
+
+.popup-icon.error {
+
+    border-color: #ff3158;
+
+    color: #ff3158;
+
+    box-shadow:
+        0 0 12px #ff3158,
+        0 0 30px rgba(255, 49, 88, 0.35);
+}
+
+
+/* =========================
+   POPUP TEXT
+========================= */
+
+.login-popup h2 {
+
+    font-size: 21px;
+
+    margin-bottom: 10px;
+
+    color: #00eaff;
 
     text-shadow:
-        0 0 8px rgba(0, 234, 255, 0.5);
+        0 0 10px rgba(0, 234, 255, 0.55);
+}
+
+
+.login-popup p {
+
+    font-size: 15px;
+
+    color: #dbeaff;
+
+    margin-bottom: 18px;
+}
+
+
+.login-popup small {
+
+    color: #8fa9c5;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   LOADER
+========================= */
+
+.popup-loader {
+
+    width: 100%;
+
+    height: 3px;
+
+    margin: 15px 0;
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+
+.popup-loader span {
+
+    display: block;
+
+    width: 0%;
+
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #087cff,
+        #00eaff
+    );
+
+    box-shadow: 0 0 10px #00eaff;
+
+    animation: loading 1.7s linear forwards;
 }
 
 
@@ -305,7 +495,7 @@ body {
 
     from {
         opacity: 0;
-        transform: translateY(25px) scale(0.96);
+        transform: translateY(30px) scale(0.95);
     }
 
     to {
@@ -315,14 +505,44 @@ body {
 }
 
 
-@keyframes floatingLight {
+@keyframes iconGlow {
 
     from {
-        transform: translate(0, 0);
+        box-shadow:
+            0 0 8px rgba(0, 234, 255, 0.4);
     }
 
     to {
-        transform: translate(420px, 330px);
+        box-shadow:
+            0 0 22px rgba(0, 234, 255, 0.8);
+    }
+}
+
+
+@keyframes popupIcon {
+
+    0% {
+        transform: scale(0) rotate(-45deg);
+    }
+
+    70% {
+        transform: scale(1.15) rotate(8deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+
+@keyframes loading {
+
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
     }
 }
 
@@ -341,29 +561,18 @@ body {
 
         width: 100%;
 
-        padding: 32px 25px;
-
-        border-radius: 18px;
+        padding: 30px 23px;
     }
 
     .login-box h1 {
 
         font-size: 27px;
-
-        margin-bottom: 22px;
     }
 
-    .login-box input {
+    .login-popup {
 
-        padding: 13px 15px;
+        width: 340px;
 
-        font-size: 14px;
-    }
-
-    .login-box button {
-
-        padding: 13px;
-
-        font-size: 15px;
+        padding: 28px 20px;
     }
 }
