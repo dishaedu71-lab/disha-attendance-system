@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Student Login | Disha Computer Education</title>
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/student-login.css">
+
 </head>
 
 <body>
@@ -19,78 +23,107 @@ DISHA COMPUTER EDUCATION
 </div>
 
 <ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="study.html">Study Portal</a></li>
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="study.html">Study Portal</a>
+</li>
+
 </ul>
 
-<a href="login.html" class="login-btn">
+<a href="login.html" class="teacher-login-btn">
 Teacher Login
 </a>
 
 </nav>
 
-<section class="hero">
 
-<div class="glass">
+<!-- =========================
+     STUDENT LOGIN
+========================= -->
+
+<section class="login-container">
+
+<div class="login-box">
 
 <h1>Student Login</h1>
 
-<p>Login to view your Profile, Attendance, Fees and Study Material</p>
+<p>
+Login to view your Profile, Attendance, Fees and Study Material
+</p>
 
-<form id="loginForm">
+
+<form id="loginForm" class="login-form">
+
+
+<div class="input-group">
+
+<label>Student ID</label>
 
 <input
 type="text"
 id="studentId"
-placeholder="Student ID"
+placeholder="Enter Student ID"
 required>
 
-<br><br>
+</div>
+
+
+<div class="input-group">
+
+<label>Password</label>
 
 <input
 id="password"
 type="password"
-placeholder="Password">
-
-<div style="text-align:center;margin-top:12px;">
-
-    <a href="forgot-password.html"
-       style="
-       color:#00eaff;
-       text-decoration:none;
-       font-weight:bold;">
-
-       🔐 Forgot Password?
-
-    </a>
+placeholder="Enter Password"
+required>
 
 </div>
 
-<button id="loginBtn">
+
+<a
+href="forgot-password.html"
+class="forgot-password">
+
+🔐 Forgot Password?
+
+</a>
+
+
+<button
+type="submit"
+id="loginBtn"
+class="login-btn">
+
 LOGIN
+
 </button>
+
 
 </form>
 
-<br>
 
-<p>
+<p class="register-text">
 
 Don't have an account?
 
 <a href="student-register.html">
-
 Register Now
-
 </a>
 
 </p>
+
 
 </div>
 
 </section>
 
-  <script type="module" src="js/student-login.js"></script>
+
+<script type="module" src="js/student-login.js"></script>
 
 </body>
 
