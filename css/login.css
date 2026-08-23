@@ -1,126 +1,369 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-body {
+/* =========================
+   PAGE
+========================= */
 
+body {
     min-height: 100vh;
 
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     background:
         linear-gradient(
-            rgba(5, 15, 40, 0.72),
-            rgba(5, 15, 40, 0.72)
+            rgba(3, 10, 30, 0.72),
+            rgba(3, 10, 30, 0.82)
         ),
         url("https://www.indiangiftsadda.com/media/images/blog/202108161629113387.jpg");
 
     background-size: cover;
-
     background-position: center;
-
     background-repeat: no-repeat;
-
     background-attachment: fixed;
 
+    overflow-x: hidden;
 }
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
 .login-box {
 
     width: 420px;
-
     max-width: 90%;
 
-    padding: 40px;
+    padding: 42px 38px;
 
-    background: rgba(255,255,255,.15);
+    background: rgba(10, 20, 40, 0.78);
 
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-    border-radius: 25px;
+    border: 1px solid rgba(0, 234, 255, 0.45);
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,.35);
+    border-radius: 22px;
 
     text-align: center;
 
     color: white;
 
-}
-}
+    box-shadow:
+        0 0 15px rgba(0, 234, 255, 0.18),
+        0 20px 60px rgba(0, 0, 0, 0.55);
 
-.login-box h1{
+    position: relative;
 
-    margin-bottom:30px;
+    overflow: hidden;
 
-    font-size:35px;
-
-}
-
-.login-box input{
-
-    width:100%;
-
-    padding:15px;
-
-    margin:15px 0;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:50px;
-
-    font-size:17px;
-
+    animation: cardAppear 0.7s ease;
 }
 
-.login-box button{
 
-    width:100%;
+/* Moving light inside card */
 
-    padding:15px;
+.login-box::before {
 
-    margin-top:20px;
+    content: "";
 
-    border:none;
+    position: absolute;
 
-    border-radius:50px;
+    width: 180px;
+    height: 180px;
 
-    background:#00c853;
+    top: -100px;
+    left: -100px;
 
-    color:white;
+    background: rgba(0, 234, 255, 0.12);
 
-    font-size:18px;
+    border-radius: 50%;
 
-    cursor:pointer;
+    filter: blur(10px);
 
-    font-weight:bold;
-
-    transition:.3s;
-
+    animation: floatingLight 5s infinite alternate ease-in-out;
 }
 
-.login-box button:hover{
 
-    background:#00a844;
+/* =========================
+   HEADING
+========================= */
 
-    transform:scale(1.05);
+.login-box h1 {
 
+    margin-bottom: 28px;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px rgba(0, 234, 255, 0.7),
+        0 0 20px rgba(0, 234, 255, 0.25);
+
+    position: relative;
+
+    z-index: 2;
 }
 
-#msg{
 
-    margin-top:20px;
+/* =========================
+   INPUT
+========================= */
 
-    color:#ffd54f;
+.login-box input {
 
-    font-weight:bold;
+    width: 100%;
 
+    padding: 14px 18px;
+
+    margin: 10px 0;
+
+    border: 1px solid rgba(0, 234, 255, 0.25);
+
+    outline: none;
+
+    border-radius: 10px;
+
+    background: rgba(2, 10, 22, 0.85);
+
+    color: white;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.login-box input::placeholder {
+
+    color: #8fa3b8;
+}
+
+
+.login-box input:focus {
+
+    border-color: #00eaff;
+
+    box-shadow:
+        0 0 8px rgba(0, 234, 255, 0.45),
+        0 0 20px rgba(0, 234, 255, 0.12);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-box button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 22px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #087cff,
+        #00d9ff,
+        #087cff
+    );
+
+    background-size: 200% auto;
+
+    color: #001018;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    z-index: 2;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-position 0.5s ease;
+
+    box-shadow:
+        0 0 10px rgba(0, 217, 255, 0.45),
+        0 0 25px rgba(0, 125, 255, 0.18);
+}
+
+
+/* Moving shine */
+
+.login-box button::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 55%;
+    height: 100%;
+
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255,255,255,0.75),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: 0.6s;
+}
+
+
+/* Hover */
+
+.login-box button:hover {
+
+    transform: translateY(-3px) scale(1.02);
+
+    background-position: 100% center;
+
+    box-shadow:
+        0 0 12px #00eaff,
+        0 0 30px rgba(0, 217, 255, 0.55),
+        0 0 55px rgba(0, 125, 255, 0.25);
+}
+
+
+.login-box button:hover::before {
+
+    left: 130%;
+}
+
+
+/* Click */
+
+.login-box button:active {
+
+    transform: scale(0.96);
+
+    box-shadow:
+        0 0 8px #00eaff,
+        0 0 18px rgba(0, 234, 255, 0.7);
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+#msg {
+
+    margin-top: 18px;
+
+    color: #00eaff;
+
+    font-weight: bold;
+
+    font-size: 14px;
+
+    text-shadow:
+        0 0 8px rgba(0, 234, 255, 0.5);
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes cardAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+@keyframes floatingLight {
+
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(420px, 330px);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .login-box {
+
+        width: 100%;
+
+        padding: 32px 25px;
+
+        border-radius: 18px;
+    }
+
+    .login-box h1 {
+
+        font-size: 27px;
+
+        margin-bottom: 22px;
+    }
+
+    .login-box input {
+
+        padding: 13px 15px;
+
+        font-size: 14px;
+    }
+
+    .login-box button {
+
+        padding: 13px;
+
+        font-size: 15px;
+    }
 }
