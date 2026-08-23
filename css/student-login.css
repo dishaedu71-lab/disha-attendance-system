@@ -565,3 +565,112 @@ nav a:hover {
         padding:25px 16px;
     }
 }
+/* ================================
+   LOGIN BUTTON - HACKER EFFECT
+================================ */
+
+#loginBtn {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 52px;
+    margin-top: 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #0066ff,
+        #00d9ff,
+        #0066ff
+    );
+
+    background-size: 200% 100%;
+
+    color: #001018;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px #00d9ff,
+        0 0 25px rgba(0, 217, 255, 0.5);
+
+    transition: all 0.25s ease;
+}
+
+/* Moving light */
+#loginBtn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.7),
+        transparent
+    );
+
+    transform: skewX(-25deg);
+}
+
+/* Hover */
+#loginBtn:hover {
+    transform: translateY(-3px) scale(1.02);
+
+    background-position: 100% 0;
+
+    box-shadow:
+        0 0 12px #00eaff,
+        0 0 30px #00eaff,
+        0 0 60px rgba(0, 234, 255, 0.6);
+
+    color: #ffffff;
+}
+
+/* Light scanning effect */
+#loginBtn:hover::before {
+    animation: loginScan 0.7s linear;
+}
+
+/* Click / Press */
+#loginBtn:active {
+    transform: scale(0.96);
+
+    box-shadow:
+        0 0 8px #00eaff,
+        0 0 20px #00eaff;
+}
+
+/* Moving gradient continuously */
+#loginBtn:hover {
+    animation: loginPulse 1.2s infinite alternate;
+}
+
+@keyframes loginScan {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes loginPulse {
+    from {
+        filter: brightness(1);
+    }
+
+    to {
+        filter: brightness(1.35);
+    }
+}
