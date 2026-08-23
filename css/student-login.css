@@ -1,0 +1,474 @@
+/* =========================================
+   DISHA COMPUTER EDUCATION
+   STUDENT LOGIN - CYBER LOGIN UI
+========================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+    color:white;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0,255,255,.12), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(160,0,255,.14), transparent 35%),
+        linear-gradient(135deg,#02050b,#08111d,#02050b);
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================
+   ANIMATED BACKGROUND
+========================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            rgba(0,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+    animation:gridMove 12s linear infinite;
+
+    z-index:0;
+}
+
+@keyframes gridMove{
+
+    from{
+        background-position:0 0,0 0;
+    }
+
+    to{
+        background-position:45px 45px,45px 45px;
+    }
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+    position:relative;
+    z-index:5;
+
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 35px;
+
+    background:rgba(2,7,15,.88);
+
+    border-bottom:1px solid rgba(0,255,255,.25);
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.08);
+}
+
+.logo{
+    color:#00f7ff;
+
+    font-size:21px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    text-shadow:
+        0 0 5px #00f7ff,
+        0 0 15px #00f7ff,
+        0 0 30px rgba(0,247,255,.6);
+
+    animation:logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow{
+
+    from{
+        text-shadow:
+        0 0 5px #00f7ff;
+    }
+
+    to{
+        text-shadow:
+        0 0 8px #00f7ff,
+        0 0 20px #00f7ff,
+        0 0 35px #00f7ff;
+    }
+}
+
+
+/* NAV LINKS */
+
+nav a{
+    color:#d9faff;
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#00ff9d;
+
+    text-shadow:
+        0 0 8px #00ff9d,
+        0 0 18px #00ff9d;
+}
+
+
+/* =========================================
+   LOGIN AREA
+========================================= */
+
+body:has(form){
+    position:relative;
+}
+
+form{
+    position:relative;
+    z-index:2;
+
+    width:min(440px,92%);
+
+    margin:75px auto 30px;
+
+    padding:40px 38px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,30,45,.92),
+            rgba(5,12,22,.94)
+        );
+
+    border:1px solid rgba(0,255,255,.35);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 0 15px rgba(0,255,255,.15),
+        0 0 45px rgba(0,100,255,.12),
+        inset 0 0 30px rgba(0,255,255,.025);
+
+    backdrop-filter:blur(15px);
+
+    animation:loginAppear .8s ease;
+}
+
+@keyframes loginAppear{
+
+    from{
+        opacity:0;
+        transform:translateY(35px) scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================
+   LOGIN TITLE
+========================================= */
+
+form h1,
+form h2{
+
+    color:white;
+
+    font-size:36px;
+
+    margin:0 0 12px;
+
+    text-shadow:
+        0 0 5px #00f7ff,
+        0 0 15px #00f7ff,
+        0 0 30px rgba(0,247,255,.5);
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+form p{
+
+    color:#a9c4cf;
+
+    line-height:1.5;
+
+    margin-bottom:25px;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+form input{
+
+    display:block;
+
+    width:100%;
+
+    height:50px;
+
+    margin:12px 0;
+
+    padding:0 16px;
+
+    border-radius:10px;
+
+    border:1px solid #294550;
+
+    outline:none;
+
+    background:rgba(0,0,0,.55);
+
+    color:white;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+form input::placeholder{
+    color:#76909b;
+}
+
+form input:focus{
+
+    border-color:#00f7ff;
+
+    background:rgba(0,20,30,.8);
+
+    box-shadow:
+        0 0 8px rgba(0,247,255,.6),
+        0 0 20px rgba(0,247,255,.18);
+
+    transform:translateY(-1px);
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+form button{
+
+    position:relative;
+
+    width:100%;
+
+    height:52px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0066ff,
+            #00d9ff,
+            #0066ff
+        );
+
+    background-size:200% 100%;
+
+    color:#00131c;
+
+    font-size:16px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 0 10px rgba(0,217,255,.45);
+
+    transition:.3s;
+}
+
+
+/* BUTTON LIGHT ANIMATION */
+
+form button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:60%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.5),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    transition:.6s;
+}
+
+form button:hover::before{
+    left:140%;
+}
+
+
+/* BUTTON HOVER */
+
+form button:hover{
+
+    background-position:100% 0;
+
+    background:#00ff9d;
+
+    color:#00130b;
+
+    transform:translateY(-3px);
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 0 8px #00ff9d,
+        0 0 20px #00ff9d,
+        0 0 45px rgba(0,255,157,.7);
+}
+
+
+/* CLICK */
+
+form button:active{
+
+    transform:scale(.96);
+
+    box-shadow:
+        0 0 8px #00f7ff;
+}
+
+
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
+
+form a{
+
+    color:#00f7ff;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.25s;
+}
+
+form a:hover{
+
+    color:#00ff9d;
+
+    text-shadow:
+        0 0 5px #00ff9d,
+        0 0 15px #00ff9d;
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+form a:last-child{
+
+    color:#a855f7;
+}
+
+form a:last-child:hover{
+
+    color:#00f7ff;
+
+    text-shadow:
+        0 0 8px #00f7ff;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px){
+
+    nav{
+        height:65px;
+        padding:0 16px;
+    }
+
+    .logo{
+        font-size:15px;
+    }
+
+    form{
+
+        width:92%;
+
+        margin:45px auto;
+
+        padding:30px 22px;
+
+        border-radius:20px;
+    }
+
+    form h1,
+    form h2{
+        font-size:29px;
+    }
+
+    form button{
+        height:50px;
+    }
+}
