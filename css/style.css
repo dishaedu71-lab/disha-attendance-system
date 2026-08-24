@@ -4414,3 +4414,116 @@ nav .login-btn {
     }
 
 }
+/* ============================= */
+/* GOOGLE MAP BUTTON */
+/* ============================= */
+
+.map-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 48px;
+
+    margin-top: 22px;
+    padding: 14px 20px;
+
+    background: linear-gradient(
+        90deg,
+        #008cff,
+        #00d9ff
+    );
+
+    color: #ffffff !important;
+
+    text-decoration: none !important;
+
+    border: 1px solid #00eaff;
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .4px;
+
+    box-shadow:
+        0 0 10px rgba(0, 220, 255, .35),
+        0 0 25px rgba(0, 150, 255, .15);
+
+    cursor: pointer;
+
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+/* Moving shine effect */
+
+.map-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255,255,255,.45),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left .6s ease;
+}
+
+
+/* Hover */
+
+.map-btn:hover {
+
+    transform: translateY(-3px) scale(1.02);
+
+    background: linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    box-shadow:
+        0 0 15px #00eaff,
+        0 0 35px rgba(0, 200, 255, .55);
+
+}
+
+
+/* Shine moves */
+
+.map-btn:hover::before {
+
+    left: 130%;
+
+}
+
+
+/* Click effect */
+
+.map-btn:active {
+
+    transform: scale(.96);
+
+    box-shadow:
+        0 0 8px #00eaff;
+
+}
