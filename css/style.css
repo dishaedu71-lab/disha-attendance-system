@@ -3205,3 +3205,538 @@ nav .login-btn {
         font-size: 30px;
     }
 }
+/* =====================================================
+   DCE PROFESSIONAL ANIMATED FOOTER
+===================================================== */
+
+.dce-footer {
+    position: relative;
+    width: 100%;
+    margin-top: 80px;
+    padding-top: 65px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(3, 8, 25, 0.98),
+            rgba(10, 4, 35, 0.98)
+        );
+    color: #ffffff;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 238, 255, 0.35);
+}
+
+
+/* Animated glowing line */
+
+.dce-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30%;
+    width: 60%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00eaff,
+        #8a2be2,
+        #ff00cc,
+        transparent
+    );
+
+    box-shadow:
+        0 0 10px #00eaff,
+        0 0 25px #8a2be2;
+
+    animation: footerLight 5s linear infinite;
+}
+
+
+@keyframes footerLight {
+
+    0% {
+        left: -60%;
+    }
+
+    100% {
+        left: 100%;
+    }
+
+}
+
+
+/* Background glow */
+
+.dce-footer::after {
+    content: "";
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    right: -180px;
+    bottom: -220px;
+
+    background: #7b00ff;
+
+    filter: blur(150px);
+    opacity: 0.18;
+
+    pointer-events: none;
+}
+
+
+/* Main container */
+
+.footer-container {
+
+    width: min(1200px, 92%);
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr
+        1.3fr;
+
+    gap: 35px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Footer boxes */
+
+.footer-box {
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid rgba(0, 234, 255, 0.12);
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Card hover */
+
+.footer-box:hover {
+
+    transform: translateY(-8px);
+
+    border-color: rgba(0, 234, 255, 0.65);
+
+    box-shadow:
+        0 0 15px rgba(0, 234, 255, 0.18),
+        0 15px 35px rgba(0,0,0,0.35);
+
+}
+
+
+/* About heading */
+
+.footer-about h2 {
+
+    color: #00eaff;
+
+    font-size: 21px;
+
+    margin-bottom: 18px;
+
+    text-shadow:
+        0 0 8px rgba(0,234,255,0.7);
+
+}
+
+
+/* Normal headings */
+
+.footer-box h3 {
+
+    color: #00eaff;
+
+    font-size: 19px;
+
+    margin-bottom: 20px;
+
+    position: relative;
+
+}
+
+
+/* Heading underline */
+
+.footer-box h3::after {
+
+    content: "";
+
+    display: block;
+
+    width: 45px;
+    height: 2px;
+
+    margin-top: 8px;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #8a2be2
+    );
+
+    box-shadow:
+        0 0 8px #00eaff;
+
+}
+
+
+/* Paragraph */
+
+.footer-box p {
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+}
+
+
+/* Footer badge */
+
+.footer-badge {
+
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    color: #00eaff;
+
+    border: 1px solid rgba(0,234,255,0.4);
+
+    background: rgba(0,234,255,0.06);
+
+    font-size: 13px;
+
+    box-shadow:
+        0 0 12px rgba(0,234,255,0.08);
+
+    animation: badgePulse 2.5s ease-in-out infinite;
+
+}
+
+
+@keyframes badgePulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 5px rgba(0,234,255,0.05);
+    }
+
+    50% {
+        box-shadow:
+            0 0 18px rgba(0,234,255,0.3);
+    }
+
+}
+
+
+/* Lists */
+
+.footer-box ul {
+
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+
+}
+
+
+.footer-box ul li {
+
+    margin: 11px 0;
+
+}
+
+
+/* Links */
+
+.footer-box a {
+
+    color: #cbd5e1;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition:
+        color 0.25s ease,
+        padding-left 0.25s ease,
+        text-shadow 0.25s ease;
+
+}
+
+
+/* Link hover */
+
+.footer-box a:hover {
+
+    color: #00eaff;
+
+    padding-left: 7px;
+
+    text-shadow:
+        0 0 8px rgba(0,234,255,0.7);
+
+}
+
+
+/* Contact */
+
+.footer-contact p {
+
+    margin-bottom: 10px;
+
+}
+
+
+.footer-contact a {
+
+    color: #00eaff;
+
+}
+
+
+/* Social icons */
+
+.footer-social {
+
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 45px;
+
+    padding: 25px 0;
+
+}
+
+
+.footer-social a {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background: rgba(255,255,255,0.07);
+
+    border: 1px solid rgba(0,234,255,0.3);
+
+    text-decoration: none;
+
+    font-size: 18px;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+/* Social hover */
+
+.footer-social a:hover {
+
+    transform:
+        translateY(-7px)
+        scale(1.12);
+
+    background: #00cfff;
+
+    color: #050816;
+
+    box-shadow:
+        0 0 10px #00eaff,
+        0 0 25px rgba(0,234,255,0.7);
+
+}
+
+
+/* Bottom */
+
+.footer-bottom {
+
+    position: relative;
+    z-index: 2;
+
+    margin-top: 10px;
+
+    padding:
+        20px 5%;
+
+    border-top:
+        1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background:
+        rgba(0,0,0,0.25);
+
+}
+
+
+.footer-bottom p {
+
+    margin: 0;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+}
+
+
+.footer-bottom strong {
+
+    color: #00eaff;
+
+}
+
+
+/* =====================================================
+   MOBILE RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .footer-container {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dce-footer {
+
+        margin-top: 50px;
+
+        padding-top: 45px;
+
+    }
+
+
+    .footer-container {
+
+        width: 90%;
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+
+    }
+
+
+    .footer-box {
+
+        padding: 22px;
+
+    }
+
+
+    .footer-about h2 {
+
+        font-size: 19px;
+
+    }
+
+
+    .footer-bottom {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 18px;
+
+    }
+
+
+    .footer-social {
+
+        margin-top: 25px;
+
+    }
+
+}
+
+
+/* Extra small screens */
+
+@media (max-width: 400px) {
+
+    .footer-social {
+
+        gap: 10px;
+
+    }
+
+
+    .footer-social a {
+
+        width: 40px;
+        height: 40px;
+
+        font-size: 16px;
+
+    }
+
+}
