@@ -4908,3 +4908,682 @@ nav .login-btn {
 
     }
 }
+/* =========================================================
+   ENQUIRY SECTION - PROFESSIONAL DESIGN
+   ========================================================= */
+
+.enquiry-section {
+    width: 100%;
+    padding: 90px 6%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Heading */
+
+.enquiry-heading {
+    text-align: center;
+    margin-bottom: 45px;
+    position: relative;
+    z-index: 2;
+}
+
+.enquiry-heading span {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 1px solid #00eaff;
+    border-radius: 30px;
+    color: #00eaff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(0,234,255,.25);
+    animation: enquiryPulse 2s infinite;
+}
+
+.enquiry-heading h2 {
+    margin: 18px 0 10px;
+    color: #fff;
+    font-size: 38px;
+    font-weight: 800;
+    text-shadow: 0 0 20px rgba(0,234,255,.25);
+}
+
+.enquiry-heading h2 strong {
+    color: #00eaff;
+}
+
+.enquiry-heading p {
+    color: rgba(255,255,255,.75);
+    font-size: 15px;
+}
+
+
+/* Main Layout */
+
+.enquiry-wrapper {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   LEFT INFORMATION CARD
+   ========================================================= */
+
+.enquiry-info {
+    position: relative;
+    overflow: hidden;
+
+    padding: 42px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(9,20,55,.95),
+            rgba(15,10,50,.88)
+        );
+
+    border: 1px solid rgba(0,234,255,.45);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 0 40px rgba(0,234,255,.04);
+
+    color: #fff;
+
+    transition: .4s ease;
+}
+
+.enquiry-info:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 35px rgba(0,234,255,.18);
+}
+
+
+/* Glow */
+
+.enquiry-glow {
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: #00eaff;
+
+    filter: blur(100px);
+
+    opacity: .12;
+
+    right: -80px;
+    top: -80px;
+
+    animation: enquiryGlow 5s ease-in-out infinite;
+}
+
+
+/* Badge */
+
+.info-badge {
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    background: rgba(0,234,255,.08);
+
+    border: 1px solid rgba(0,234,255,.35);
+
+    color: #00eaff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .7px;
+
+    box-shadow: 0 0 18px rgba(0,234,255,.15);
+}
+
+
+.enquiry-info h3 {
+    position: relative;
+
+    margin: 25px 0 12px;
+
+    font-size: 34px;
+
+    line-height: 1.15;
+}
+
+.enquiry-info h3 span {
+    color: #00eaff;
+
+    text-shadow:
+        0 0 12px rgba(0,234,255,.4);
+}
+
+
+.enquiry-info > p {
+    color: rgba(255,255,255,.72);
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+    max-width: 450px;
+}
+
+
+/* Points */
+
+.enquiry-points {
+    margin-top: 28px;
+
+    display: grid;
+
+    gap: 13px;
+}
+
+
+.enquiry-point {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 13px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.045);
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    transition: .35s ease;
+}
+
+
+.enquiry-point:hover {
+    transform: translateX(8px);
+
+    background: rgba(0,234,255,.07);
+
+    border-color: rgba(0,234,255,.35);
+
+    box-shadow: 0 0 20px rgba(0,234,255,.08);
+}
+
+
+.point-icon {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: rgba(0,234,255,.1);
+
+    border: 1px solid rgba(0,234,255,.25);
+
+    font-size: 20px;
+}
+
+
+.enquiry-point b {
+    display: block;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+
+.enquiry-point small {
+    color: rgba(255,255,255,.55);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RIGHT FORM CARD
+   ========================================================= */
+
+.enquiry-form-card {
+    position: relative;
+
+    padding: 35px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,22,48,.96),
+            rgba(8,15,35,.94)
+        );
+
+    border: 1px solid rgba(0,234,255,.5);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5),
+        inset 0 0 40px rgba(0,234,255,.035);
+
+    color: #fff;
+
+    transition: .4s ease;
+}
+
+.enquiry-form-card:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 40px rgba(0,234,255,.15);
+}
+
+
+/* Form top */
+
+.form-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 28px;
+}
+
+
+.form-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #007bff,
+            #00d9ff
+        );
+
+    font-size: 23px;
+
+    box-shadow:
+        0 0 25px rgba(0,200,255,.3);
+
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+
+.form-top h3 {
+    margin: 0;
+
+    font-size: 25px;
+
+    color: #fff;
+}
+
+
+.form-top p {
+    margin-top: 4px;
+
+    color: rgba(255,255,255,.6);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+
+.input-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #dcecff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid rgba(0,234,255,.22);
+
+    outline: none;
+
+    border-radius: 12px;
+
+    background: rgba(2,10,25,.85);
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition: .3s ease;
+
+}
+
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: rgba(255,255,255,.38);
+}
+
+
+.input-group select {
+    cursor: pointer;
+}
+
+
+.input-group select option {
+    background: #0b1428;
+
+    color: #fff;
+}
+
+
+.input-group textarea {
+    resize: vertical;
+
+    min-height: 105px;
+}
+
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+
+    border-color: #00eaff;
+
+    background: rgba(0,234,255,.045);
+
+    box-shadow:
+        0 0 0 3px rgba(0,234,255,.08),
+        0 0 22px rgba(0,234,255,.12);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+
+.enquiry-submit-btn {
+
+    position: relative;
+
+    width: 100%;
+
+    padding: 15px 20px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #007bff,
+            #00d9ff
+        );
+
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    box-shadow:
+        0 8px 25px rgba(0,170,255,.28);
+
+    transition: .3s ease;
+}
+
+
+/* Moving shine */
+
+.enquiry-submit-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: .6s;
+}
+
+
+.enquiry-submit-btn:hover::before {
+    left: 140%;
+}
+
+
+.enquiry-submit-btn:hover {
+
+    transform: translateY(-3px) scale(1.01);
+
+    box-shadow:
+        0 12px 35px rgba(0,200,255,.42),
+        0 0 25px rgba(0,234,255,.18);
+}
+
+
+.enquiry-submit-btn:active {
+
+    transform: scale(.97);
+
+    box-shadow:
+        0 3px 12px rgba(0,200,255,.3);
+}
+
+
+.btn-arrow {
+
+    font-size: 20px;
+
+    transition: .3s ease;
+}
+
+
+.enquiry-submit-btn:hover .btn-arrow {
+
+    transform: translateX(7px);
+
+}
+
+
+/* Status */
+
+.enquiry-status {
+
+    min-height: 20px;
+
+    margin-top: 13px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes enquiryPulse {
+
+    0%,100% {
+        box-shadow:
+            0 0 15px rgba(0,234,255,.15);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(0,234,255,.4);
+    }
+}
+
+
+@keyframes enquiryGlow {
+
+    0%,100% {
+        transform: translate(0,0) scale(1);
+    }
+
+    50% {
+        transform: translate(-30px,30px) scale(1.2);
+    }
+}
+
+
+@keyframes iconFloat {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .enquiry-section {
+        padding: 65px 5%;
+    }
+
+    .enquiry-heading h2 {
+        font-size: 28px;
+    }
+
+    .enquiry-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .enquiry-info,
+    .enquiry-form-card {
+        padding: 28px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .enquiry-heading h2 {
+        font-size: 24px;
+    }
+
+    .input-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .enquiry-info h3 {
+        font-size: 28px;
+    }
+
+    .enquiry-form-card {
+        padding: 22px;
+    }
+
+}
