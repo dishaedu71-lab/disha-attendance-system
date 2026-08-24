@@ -5587,3 +5587,23 @@ nav .login-btn {
     }
 
 }
+/* Enquiry Success Animation */
+
+.enquiry-status {
+    transition: all .4s ease;
+    animation: enquiryStatusIn .4s ease;
+}
+
+@keyframes enquiryStatusIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
