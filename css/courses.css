@@ -1,0 +1,315 @@
+/* =========================================================
+   🔥 PREMIUM COURSE CARDS – RED IT THEME
+   ========================================================= */
+
+.course-card,
+.course-item,
+.course-box,
+.dropdown-course,
+.course-menu-item {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35, 5, 8, 0.98),
+            rgba(12, 8, 12, 0.96)
+        ) !important;
+
+    border: 1px solid rgba(255, 45, 60, 0.45) !important;
+
+    border-radius: 18px !important;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        inset 0 0 25px rgba(255,0,30,.04);
+
+    color: #fff !important;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+
+    animation: courseCardIn .7s ease both;
+}
+
+
+/* RED LIGHT SWEEP */
+
+.course-card::before,
+.course-item::before,
+.course-box::before,
+.dropdown-course::before,
+.course-menu-item::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,40,60,.16),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left .7s ease;
+
+    pointer-events: none;
+}
+
+
+.course-card:hover::before,
+.course-item:hover::before,
+.course-box:hover::before,
+.dropdown-course:hover::before,
+.course-menu-item:hover::before {
+    left: 140%;
+}
+
+
+/* HOVER */
+
+.course-card:hover,
+.course-item:hover,
+.course-box:hover,
+.dropdown-course:hover,
+.course-menu-item:hover {
+
+    transform: translateY(-8px) scale(1.015);
+
+    border-color: #ff2638 !important;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.65),
+        0 0 18px rgba(255,25,45,.35),
+        inset 0 0 25px rgba(255,0,30,.08);
+}
+
+
+/* COURSE ICON */
+
+.course-card i,
+.course-item i,
+.course-box i,
+.dropdown-course i,
+.course-menu-item i {
+
+    color: #ff3045 !important;
+
+    text-shadow:
+        0 0 10px rgba(255,30,50,.7);
+
+    transition: .35s ease;
+}
+
+
+.course-card:hover i,
+.course-item:hover i,
+.course-box:hover i,
+.dropdown-course:hover i,
+.course-menu-item:hover i {
+
+    transform: scale(1.18) rotate(-5deg);
+
+    color: #ff5363 !important;
+
+    text-shadow:
+        0 0 18px rgba(255,30,50,.95);
+}
+
+
+/* COURSE TITLE */
+
+.course-card h2,
+.course-card h3,
+.course-card h4,
+.course-item h2,
+.course-item h3,
+.course-item h4,
+.course-box h2,
+.course-box h3,
+.course-box h4,
+.dropdown-course h2,
+.dropdown-course h3,
+.dropdown-course h4,
+.course-menu-item h2,
+.course-menu-item h3,
+.course-menu-item h4 {
+
+    color: #fff !important;
+
+    transition: .3s ease;
+}
+
+
+.course-card:hover h2,
+.course-card:hover h3,
+.course-card:hover h4,
+.course-item:hover h2,
+.course-item:hover h3,
+.course-item:hover h4,
+.course-box:hover h2,
+.course-box:hover h3,
+.course-box:hover h4,
+.dropdown-course:hover h2,
+.dropdown-course:hover h3,
+.dropdown-course:hover h4,
+.course-menu-item:hover h2,
+.course-menu-item:hover h3,
+.course-menu-item:hover h4 {
+
+    color: #ff4355 !important;
+
+    text-shadow:
+        0 0 12px rgba(255,30,50,.45);
+}
+
+
+/* DESCRIPTION */
+
+.course-card p,
+.course-item p,
+.course-box p,
+.dropdown-course p,
+.course-menu-item p {
+
+    color: rgba(255,255,255,.72) !important;
+}
+
+
+/* APPLY ONLINE BUTTON */
+
+.course-card a,
+.course-item a,
+.course-box a,
+.dropdown-course a,
+.course-menu-item a {
+
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+    padding: 9px 17px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff1730,
+            #b30018
+        ) !important;
+
+    color: #fff !important;
+
+    border: 1px solid rgba(255,100,110,.45);
+
+    text-decoration: none !important;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 18px rgba(255,0,30,.25);
+
+    transition: .3s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* BUTTON SHINE */
+
+.course-card a::before,
+.course-item a::before,
+.course-box a::before,
+.dropdown-course a::before,
+.course-menu-item a::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -120%;
+
+    top: 0;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: .55s ease;
+}
+
+
+.course-card a:hover::before,
+.course-item a:hover::before,
+.course-box a:hover::before,
+.dropdown-course a:hover::before,
+.course-menu-item a:hover::before {
+
+    left: 140%;
+}
+
+
+.course-card a:hover,
+.course-item a:hover,
+.course-box a:hover,
+.dropdown-course a:hover,
+.course-menu-item a:hover {
+
+    transform: translateY(-3px) scale(1.05);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3048,
+            #e00020
+        ) !important;
+
+    box-shadow:
+        0 0 10px rgba(255,30,50,.55),
+        0 0 25px rgba(255,30,50,.35);
+}
+
+
+/* CARD ENTRY ANIMATION */
+
+@keyframes courseCardIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
