@@ -19,10 +19,13 @@ content="width=device-width, initial-scale=1.0">
 <body>
 
 
-<!-- ================= BACKGROUND PARTICLES ================= -->
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
 
 <div class="apply-bg">
 
+    <span></span>
     <span></span>
     <span></span>
     <span></span>
@@ -35,7 +38,9 @@ content="width=device-width, initial-scale=1.0">
 
 
 
-<!-- ================= TOP NAV ================= -->
+<!-- =====================================================
+     TOP NAVBAR
+===================================================== -->
 
 <nav class="apply-navbar">
 
@@ -43,9 +48,11 @@ content="width=device-width, initial-scale=1.0">
         ← Courses
     </a>
 
+
     <div class="apply-logo">
         💻 DISHA COMPUTER EDUCATION
     </div>
+
 
     <div class="admission-status">
         🔴 ADMISSION OPEN
@@ -55,62 +62,118 @@ content="width=device-width, initial-scale=1.0">
 
 
 
-<!-- ================= MAIN ================= -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <main class="apply-main">
 
 
-    <!-- LEFT CONTENT -->
+    <!-- =================================================
+         LEFT INTRO
+    ================================================== -->
 
     <section class="apply-intro">
+
 
         <div class="intro-badge">
             ✦ ONLINE ADMISSION PORTAL
         </div>
 
+
         <h1>
+
             Start Your
-            <span>Digital Journey</span>
+
+            <span>
+                Digital Journey
+            </span>
+
         </h1>
 
+
         <p>
+
             Disha Computer Education में अपने पसंदीदा
-            computer course के लिए online application submit करें।
+            computer course के लिए online application
+            submit करें।
+
         </p>
 
 
+
+        <!-- FEATURES -->
+
         <div class="intro-features">
 
+
             <div>
+
                 <span>⚡</span>
-                <b>Quick Application</b>
-                <small>Simple & fast admission process</small>
+
+                <b>
+                    Quick Application
+                </b>
+
+                <small>
+                    Simple & fast admission process
+                </small>
+
             </div>
 
+
+
             <div>
+
                 <span>🎓</span>
-                <b>Professional Courses</b>
-                <small>Career focused computer training</small>
+
+                <b>
+                    Professional Courses
+                </b>
+
+                <small>
+                    Career focused computer training
+                </small>
+
             </div>
 
+
+
             <div>
+
                 <span>📲</span>
-                <b>Direct WhatsApp</b>
-                <small>Application directly भेजें</small>
+
+                <b>
+                    Direct WhatsApp
+                </b>
+
+                <small>
+                    Application directly भेजें
+                </small>
+
             </div>
+
 
         </div>
+
 
 
         <div class="secure-note">
-            🔒 Your information is used only for admission enquiry.
+
+            🔒 Your information is used only
+            for admission enquiry.
+
         </div>
+
 
     </section>
 
 
 
-    <!-- ================= FORM ================= -->
+
+    <!-- =================================================
+         APPLICATION FORM
+    ================================================== -->
 
     <section class="application-card">
 
@@ -118,11 +181,16 @@ content="width=device-width, initial-scale=1.0">
         <div class="form-glow"></div>
 
 
+
+        <!-- FORM HEADER -->
+
         <div class="application-header">
+
 
             <div class="application-icon">
                 🎓
             </div>
+
 
             <div>
 
@@ -140,9 +208,14 @@ content="width=device-width, initial-scale=1.0">
 
             </div>
 
+
         </div>
 
 
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
 
         <form id="applicationForm">
 
@@ -159,6 +232,7 @@ content="width=device-width, initial-scale=1.0">
                     type="text"
                     id="studentName"
                     placeholder="Enter your full name"
+                    autocomplete="name"
                     required>
 
             </div>
@@ -179,6 +253,8 @@ content="width=device-width, initial-scale=1.0">
                     placeholder="Enter 10 digit mobile number"
                     maxlength="10"
                     pattern="[0-9]{10}"
+                    inputmode="numeric"
+                    autocomplete="tel"
                     required>
 
             </div>
@@ -197,6 +273,7 @@ content="width=device-width, initial-scale=1.0">
                     type="text"
                     id="fatherName"
                     placeholder="Enter father's / guardian's name"
+                    autocomplete="name"
                     required>
 
             </div>
@@ -211,7 +288,9 @@ content="width=device-width, initial-scale=1.0">
                     🎓 Selected Course
                 </label>
 
-                <select id="selectedCourse" required>
+                <select
+                    id="selectedCourse"
+                    required>
 
                     <option value="">
                         Select Course
@@ -285,6 +364,7 @@ content="width=device-width, initial-scale=1.0">
                     type="text"
                     id="studentCity"
                     placeholder="Enter your city / area"
+                    autocomplete="address-level2"
                     required>
 
             </div>
@@ -329,63 +409,111 @@ content="width=device-width, initial-scale=1.0">
             </button>
 
 
-            <div id="applicationStatus"></div>
+
+            <!-- STATUS -->
+
+            <div
+                id="applicationStatus">
+            </div>
+
 
 
             <p class="whatsapp-hint">
-                💚 Application WhatsApp के माध्यम से भेजी जाएगी
+
+                💚 Application WhatsApp के माध्यम
+                से भेजी जाएगी
+
             </p>
+
 
         </form>
 
+
     </section>
+
 
 </main>
 
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer class="apply-footer">
 
     © 2026 Disha Computer Education
-    <span>•</span>
+
+    <span>
+        •
+    </span>
+
     Online Admission Portal
 
 </footer>
 
 
 
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
 <script>
+
 
 /* =====================================================
    GET COURSE FROM URL
+
    Example:
    apply.html?course=ADCA
-   ===================================================== */
+===================================================== */
 
-const urlParams = new URLSearchParams(window.location.search);
 
-const courseFromURL = urlParams.get("course");
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const courseFromURL =
+    urlParams.get("course");
+
 
 const courseSelect =
-    document.getElementById("selectedCourse");
+    document.getElementById(
+        "selectedCourse"
+    );
+
+
+
+/* =====================================================
+   AUTO SELECT COURSE
+===================================================== */
 
 
 if (courseFromURL) {
 
+
     const decodedCourse =
-        decodeURIComponent(courseFromURL);
+        decodeURIComponent(
+            courseFromURL
+        );
+
 
     const options =
-        Array.from(courseSelect.options);
+        Array.from(
+            courseSelect.options
+        );
+
 
     const matchingOption =
         options.find(
             option =>
-            option.value.toLowerCase() ===
-            decodedCourse.toLowerCase()
+                option.value.toLowerCase() ===
+                decodedCourse.toLowerCase()
         );
+
 
     if (matchingOption) {
 
@@ -400,138 +528,232 @@ if (courseFromURL) {
 
 /* =====================================================
    APPLICATION SUBMIT
-   ===================================================== */
+===================================================== */
+
 
 document
-.getElementById("applicationForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-
-    const name =
-        document.getElementById("studentName")
-        .value.trim();
+    .getElementById("applicationForm")
+    .addEventListener(
+        "submit",
+        function(event) {
 
 
-    const mobile =
-        document.getElementById("studentMobile")
-        .value.trim();
-
-
-    const father =
-        document.getElementById("fatherName")
-        .value.trim();
-
-
-    const course =
-        document.getElementById("selectedCourse")
-        .value;
-
-
-    const qualification =
-        document.getElementById("qualification")
-        .value.trim();
-
-
-    const city =
-        document.getElementById("studentCity")
-        .value.trim();
-
-
-    const message =
-        document.getElementById("studentMessage")
-        .value.trim();
+            event.preventDefault();
 
 
 
-    /* MOBILE VALIDATION */
-
-    if (!/^[0-9]{10}$/.test(mobile)) {
-
-        alert(
-            "कृपया सही 10 digit mobile number दर्ज करें।"
-        );
-
-        return;
-
-    }
+            /* -----------------------------------------
+               GET FORM DATA
+            ----------------------------------------- */
 
 
+            const name =
+                document
+                    .getElementById("studentName")
+                    .value
+                    .trim();
 
-    /* WHATSAPP MESSAGE */
 
-    const whatsappMessage =
+            const mobile =
+                document
+                    .getElementById("studentMobile")
+                    .value
+                    .trim();
+
+
+            const father =
+                document
+                    .getElementById("fatherName")
+                    .value
+                    .trim();
+
+
+            const course =
+                document
+                    .getElementById("selectedCourse")
+                    .value;
+
+
+            const qualification =
+                document
+                    .getElementById("qualification")
+                    .value
+                    .trim();
+
+
+            const city =
+                document
+                    .getElementById("studentCity")
+                    .value
+                    .trim();
+
+
+            const message =
+                document
+                    .getElementById("studentMessage")
+                    .value
+                    .trim();
+
+
+
+            /* -----------------------------------------
+               MOBILE VALIDATION
+            ----------------------------------------- */
+
+
+            if (
+                !/^[0-9]{10}$/.test(
+                    mobile
+                )
+            ) {
+
+                alert(
+                    "कृपया सही 10 digit mobile number दर्ज करें।"
+                );
+
+                return;
+
+            }
+
+
+
+            /* -----------------------------------------
+               WHATSAPP MESSAGE
+            ----------------------------------------- */
+
+
+            const whatsappMessage =
 
 `🎓 *DISHA COMPUTER EDUCATION*
+
 ━━━━━━━━━━━━━━━━━━━━
 
 📋 *NEW ONLINE ADMISSION APPLICATION*
 
-👤 *Student Name:* ${name}
+👤 *Student Name:*
+${name}
 
-📱 *Mobile Number:* ${mobile}
+📱 *Mobile Number:*
+${mobile}
 
-👨‍👦 *Father / Guardian:* ${father}
+👨‍👦 *Father / Guardian:*
+${father}
 
-🎓 *Selected Course:* ${course}
+🎓 *Selected Course:*
+${course}
 
-📚 *Qualification:* ${qualification}
+📚 *Qualification:*
+${qualification}
 
-📍 *City / Area:* ${city}
+📍 *City / Area:*
+${city}
 
-💬 *Message:* ${message || "No message"}
+💬 *Message:*
+${message || "No message"}
 
 ━━━━━━━━━━━━━━━━━━━━
-📲 Application received via Online Admission Portal
-🌐 Disha Computer Education`;
+
+📲 *Application received via Online Admission Portal*
+
+🌐 *Disha Computer Education*
+
+━━━━━━━━━━━━━━━━━━━━`;
 
 
 
-    /* WHATSAPP NUMBER */
+            /* -----------------------------------------
+               YOUR WHATSAPP NUMBER
+            ----------------------------------------- */
 
-    const whatsappNumber =
-        "919250332217";
 
-
-    const whatsappURL =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        encodeURIComponent(whatsappMessage);
+            const whatsappNumber =
+                "919250332217";
 
 
 
-    /* BUTTON ANIMATION */
-
-    const button =
-        document.querySelector(".submit-application");
-
-    const status =
-        document.getElementById("applicationStatus");
+            /* -----------------------------------------
+               CREATE WHATSAPP URL
+            ----------------------------------------- */
 
 
-    button.classList.add("sending");
+            const whatsappURL =
 
-    button.innerHTML =
-        "⏳ PREPARING APPLICATION...";
+                "https://wa.me/" +
+
+                whatsappNumber +
+
+                "?text=" +
+
+                encodeURIComponent(
+                    whatsappMessage
+                );
 
 
-    status.innerHTML =
-        "✨ आपकी application WhatsApp के लिए तैयार की जा रही है...";
+
+            /* -----------------------------------------
+               BUTTON + STATUS
+            ----------------------------------------- */
 
 
-    setTimeout(function() {
+            const button =
+                document.querySelector(
+                    ".submit-application"
+                );
 
-        window.location.href =
-            whatsappURL;
 
-    }, 900);
+            const status =
+                document.getElementById(
+                    "applicationStatus"
+                );
 
-});
+
+
+            button.classList.add(
+                "sending"
+            );
+
+
+            button.innerHTML =
+                "⏳ PREPARING APPLICATION...";
+
+
+            button.disabled =
+                true;
+
+
+
+            status.innerHTML =
+
+                "✨ आपकी application WhatsApp के लिए तैयार की जा रही है...";
+
+
+
+            /* -----------------------------------------
+               OPEN WHATSAPP
+            ----------------------------------------- */
+
+
+            setTimeout(
+                function() {
+
+
+                    window.location.href =
+                        whatsappURL;
+
+
+                },
+                900
+            );
+
+
+        }
+    );
+
 
 </script>
 
 
+
 </body>
+
 </html>
