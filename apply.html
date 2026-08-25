@@ -388,7 +388,7 @@ content="width=device-width, initial-scale=1.0">
 
           <!-- ================= AI PAYMENT SECTION ================= -->
 
-<div id="aiPaymentSection" class="ai-payment-section">
+<div id="aiPaymentSection" class="ai-payment-section" style="display:none;">
 
     <div class="payment-heading">
         <span class="payment-icon">💳</span>
@@ -980,90 +980,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function checkCourse() {
 
-        if (!courseSelect || !aiPaymentSection) return;
+    if (!courseSelect || !aiPaymentSection) return;
 
-        const selected =
-            courseSelect.value.trim().toLowerCase();
+    const selected =
+        courseSelect.value.trim().toLowerCase();
 
-        if (selected === "artificial intelligence" ||
-            selected === "ai") {
+    if (
+        selected === "artificial intelligence" ||
+        selected === "ai"
+    ) {
 
-            aiPaymentSection.style.display = "block";
+        aiPaymentSection.classList.add("show");
 
-        } else {
+    } else {
 
-            aiPaymentSection.style.display = "none";
+        aiPaymentSection.classList.remove("show");
 
+        // Screenshot भी reset
+        if (screenshotInput) {
+            screenshotInput.value = "";
         }
 
+        if (screenshotPreview) {
+            screenshotPreview.innerHTML = "";
+        }
     }
-
-
-    if (courseSelect) {
-
-        courseSelect.addEventListener(
-            "change",
-            checkCourse
-        );
-
-        checkCourse();
-
-    }
-
-
-    /* ================= SCREENSHOT PREVIEW ================= */
-
-    if (screenshotInput) {
-
-        screenshotInput.addEventListener(
-            "change",
-            function () {
-
-                screenshotPreview.innerHTML = "";
-
-                const file = this.files[0];
-
-                if (!file) return;
-
-                if (!file.type.startsWith("image/")) {
-
-                    alert("कृपया केवल image screenshot upload करें।");
-
-                    this.value = "";
-
-                    return;
-
-                }
-
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-
-                    screenshotPreview.innerHTML = `
-                        <div class="preview-card">
-
-                            <img
-                                src="${e.target.result}"
-                                alt="Payment Screenshot">
-
-                            <span>
-                                ✅ Screenshot Selected
-                            </span>
-
-                        </div>
-                    `;
-
-                };
-
-                reader.readAsDataURL(file);
-
-            }
-        );
-
-    }
-
-});
-
+}
 </script>
 
 </body>
