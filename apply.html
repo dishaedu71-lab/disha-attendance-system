@@ -921,11 +921,10 @@ ${message || "No message"}
 </script>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const courseSelect =
-        document.getElementById("course");
+        document.getElementById("selectedCourse");
 
     const aiPaymentSection =
         document.getElementById("aiPaymentSection");
@@ -943,7 +942,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("screenshotPreview");
 
 
-    /* ================= AI PAYMENT ================= */
+    /* =========================================
+       AI PAYMENT DETAILS
+    ========================================= */
 
     const upiID = "9151430100@nyes";
     const amount = "1150";
@@ -957,7 +958,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "&tn=" + encodeURIComponent("AI Course Registration Fee");
 
 
-    /* QR CODE */
+    /* =========================================
+       CREATE AI QR
+    ========================================= */
 
     if (qr) {
 
@@ -969,43 +972,157 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* DIRECT UPI PAYMENT BUTTON */
+    /* =========================================
+       DIRECT UPI BUTTON
+    ========================================= */
 
     if (upiButton) {
         upiButton.href = upiURL;
     }
 
 
-    /* ================= SHOW AI PAYMENT ONLY FOR AI ================= */
+    /* =========================================
+       SHOW / HIDE AI PAYMENT
+    ========================================= */
 
     function checkCourse() {
 
-    if (!courseSelect || !aiPaymentSection) return;
-
-    const selected =
-        courseSelect.value.trim().toLowerCase();
-
-    if (
-        selected === "artificial intelligence" ||
-        selected === "ai"
-    ) {
-
-        aiPaymentSection.classList.add("show");
-
-    } else {
-
-        aiPaymentSection.classList.remove("show");
-
-        // Screenshot भी reset
-        if (screenshotInput) {
-            screenshotInput.value = "";
+        if (!courseSelect || !aiPaymentSection) {
+            return;
         }
 
-        if (screenshotPreview) {
-            screenshotPreview.innerHTML = "";
+        const selected =
+            courseSelect.value
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            selected === "artificial intelligence" ||
+            selected === "ai"
+        ) {
+
+            /* SHOW AI PAYMENT */
+
+            aiPaymentSection.style.display = "block";
+
+            setTimeout(function () {
+
+                aiPaymentSection.classList.add("show");
+
+            }, 20);
+
+        } else {
+
+            /* HIDE PAYMENT FOR ALL OTHER COURSES */
+
+            aiPaymentSection.classList.remove("show");
+
+            aiPaymentSection.style.display = "none";
+
+
+            /* RESET SCREENSHOT */
+
+            if (screenshotInput) {
+                screenshotInput.value = "";
+            }
+
+            if (screenshotPreview) {
+                screenshotPreview.innerHTML = "";
+            }
+
         }
+
     }
-}
+
+
+    /* =========================================
+       COURSE CHANGE
+    ========================================= */
+
+    if (courseSelect) {
+
+        courseSelect.addEventListener(
+            "change",
+            checkCourse
+        );
+
+    }
+
+
+    /* =========================================
+       PAGE LOAD
+       AI URL SE SELECT HO TO QR TURANT DIKHE
+    ========================================= */
+
+    checkCourse();
+
+
+    /* =========================================
+       PAYMENT SCREENSHOT PREVIEW
+    ========================================= */
+
+    if (screenshotInput) {
+
+        screenshotInput.addEventListener(
+            "change",
+            function () {
+
+                screenshotPreview.innerHTML = "";
+
+                const file = this.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert(
+                        "कृपया केवल JPG, PNG या WEBP image upload करें।"
+                    );
+
+                    this.value = "";
+
+                    return;
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (event) {
+
+                        screenshotPreview.innerHTML = `
+
+                            <div class="preview-card">
+
+                                <span>
+                                    ✅ Payment Screenshot Selected
+                                </span>
+
+                                <img
+                                    src="${event.target.result}"
+                                    alt="Payment Screenshot Preview">
+
+                            </div>
+
+                        `;
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+    }
+
+});
 </script>
 
 </body>
