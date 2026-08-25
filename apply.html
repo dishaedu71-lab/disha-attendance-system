@@ -386,69 +386,101 @@ content="width=device-width, initial-scale=1.0">
 
             </div>
 
-             <!-- ================= AI PAYMENT SECTION ================= -->
+          <!-- ================= AI PAYMENT SECTION ================= -->
 
 <div id="aiPaymentSection" class="ai-payment-section">
 
-    <div class="payment-badge">
-        💳 AI REGISTRATION PAYMENT
+    <div class="payment-heading">
+        <span class="payment-icon">💳</span>
+
+        <div>
+            <h3>AI Course Registration Fee</h3>
+            <p>Application submit करने से पहले registration fee जमा करें</p>
+        </div>
     </div>
 
-    <h3>AI Course Registration Fee</h3>
+    <div class="payment-box">
 
-    <p class="payment-amount">
-        ₹1,150
-    </p>
+        <div class="fee-display">
+            <span>Registration Fee</span>
+            <strong>₹1,150</strong>
+        </div>
 
-    <p class="payment-note">
-        कृपया नीचे दिए QR को scan करके
-        <strong>₹1,150</strong> registration fee जमा करें।
-    </p>
+        <div class="upi-info">
+            <span>UPI ID</span>
+            <b>9151430100@nyes</b>
+        </div>
 
-    <div class="qr-box">
+        <div class="qr-area">
 
-        <img
-            id="aiPaymentQR"
-            alt="AI Registration Payment QR">
+            <div class="qr-title">
+                📱 Scan & Pay ₹1,150
+            </div>
+
+            <div class="qr-frame">
+                <img
+                    id="aiPaymentQR"
+                    alt="AI Course Payment QR">
+            </div>
+
+            <p class="qr-note">
+                किसी भी UPI App से QR Scan करके
+                <b>₹1,150</b> का payment करें।
+            </p>
+
+        </div>
+
+        <a
+            id="upiPayButton"
+            class="upi-pay-button"
+            href="#"
+        >
+            💳 PAY ₹1,150 NOW
+            <span>→</span>
+        </a>
 
     </div>
 
-    <div class="payment-upi">
-        UPI ID:
-        <strong>9151430100@nyes</strong>
-    </div>
 
-    <div class="payment-warning">
-        ⚠️ Payment करने के बाद नीचे अपना
-        payment screenshot जरूर upload करें।
+    <!-- PAYMENT SCREENSHOT -->
+
+    <div class="payment-proof">
+
+        <div class="proof-title">
+            📸 Payment Screenshot
+        </div>
+
+        <p>
+            Payment करने के बाद उसका screenshot यहाँ upload करें।
+        </p>
+
+        <label class="upload-box">
+
+            <input
+                type="file"
+                id="paymentScreenshot"
+                accept="image/*">
+
+            <span class="upload-icon">📤</span>
+
+            <strong>
+                Upload Payment Screenshot
+            </strong>
+
+            <small>
+                JPG / PNG / WEBP
+            </small>
+
+        </label>
+
+        <div
+            id="screenshotPreview"
+            class="screenshot-preview">
+        </div>
+
     </div>
 
 </div>
-
-
-<!-- ================= PAYMENT SCREENSHOT ================= -->
-
-<div id="paymentScreenshotBox"
-     class="payment-screenshot-box">
-
-    <label for="paymentScreenshot">
-        📸 Payment Screenshot
-    </label>
-
-    <p>
-        Payment successful होने के बाद screenshot upload करें।
-    </p>
-
-    <input
-        type="file"
-        id="paymentScreenshot"
-        accept="image/*"
-        required>
-
-    <div id="paymentPreview"></div>
-
-</div>
-
 
 
             <!-- SUBMIT -->
@@ -888,7 +920,151 @@ ${message || "No message"}
 
 </script>
 
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const courseSelect =
+        document.getElementById("course");
+
+    const aiPaymentSection =
+        document.getElementById("aiPaymentSection");
+
+    const qr =
+        document.getElementById("aiPaymentQR");
+
+    const upiButton =
+        document.getElementById("upiPayButton");
+
+    const screenshotInput =
+        document.getElementById("paymentScreenshot");
+
+    const screenshotPreview =
+        document.getElementById("screenshotPreview");
+
+
+    /* ================= AI PAYMENT ================= */
+
+    const upiID = "9151430100@nyes";
+    const amount = "1150";
+
+    const upiURL =
+        "upi://pay?" +
+        "pa=" + encodeURIComponent(upiID) +
+        "&pn=" + encodeURIComponent("Disha Computer Education") +
+        "&am=" + amount +
+        "&cu=INR" +
+        "&tn=" + encodeURIComponent("AI Course Registration Fee");
+
+
+    /* QR CODE */
+
+    if (qr) {
+
+        qr.src =
+            "https://api.qrserver.com/v1/create-qr-code/?" +
+            "size=300x300&data=" +
+            encodeURIComponent(upiURL);
+
+    }
+
+
+    /* DIRECT UPI PAYMENT BUTTON */
+
+    if (upiButton) {
+        upiButton.href = upiURL;
+    }
+
+
+    /* ================= SHOW AI PAYMENT ONLY FOR AI ================= */
+
+    function checkCourse() {
+
+        if (!courseSelect || !aiPaymentSection) return;
+
+        const selected =
+            courseSelect.value.trim().toLowerCase();
+
+        if (selected === "artificial intelligence" ||
+            selected === "ai") {
+
+            aiPaymentSection.style.display = "block";
+
+        } else {
+
+            aiPaymentSection.style.display = "none";
+
+        }
+
+    }
+
+
+    if (courseSelect) {
+
+        courseSelect.addEventListener(
+            "change",
+            checkCourse
+        );
+
+        checkCourse();
+
+    }
+
+
+    /* ================= SCREENSHOT PREVIEW ================= */
+
+    if (screenshotInput) {
+
+        screenshotInput.addEventListener(
+            "change",
+            function () {
+
+                screenshotPreview.innerHTML = "";
+
+                const file = this.files[0];
+
+                if (!file) return;
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert("कृपया केवल image screenshot upload करें।");
+
+                    this.value = "";
+
+                    return;
+
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+
+                    screenshotPreview.innerHTML = `
+                        <div class="preview-card">
+
+                            <img
+                                src="${e.target.result}"
+                                alt="Payment Screenshot">
+
+                            <span>
+                                ✅ Screenshot Selected
+                            </span>
+
+                        </div>
+                    `;
+
+                };
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+    }
+
+});
+
+</script>
 
 </body>
 
