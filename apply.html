@@ -733,18 +733,91 @@ ${message || "No message"}
             ----------------------------------------- */
 
 
-            setTimeout(
-                function() {
+           setTimeout(
+    function() {
+
+        document.body.classList.add("application-success");
+
+        const successBox = document.createElement("div");
+
+        successBox.className = "success-overlay";
+
+        successBox.innerHTML = `
+
+            <div class="success-card">
+
+                <div class="success-ring">
+
+                    <div class="success-check">
+                        ✓
+                    </div>
+
+                </div>
+
+                <div class="success-badge">
+                    APPLICATION READY
+                </div>
+
+                <h2>
+                    Application Prepared!
+                </h2>
+
+                <p>
+                    आपकी admission application
+                    successfully तैयार हो गई है।
+                </p>
+
+                <div class="success-whatsapp">
+
+                    <span>📲</span>
+
+                    <div>
+
+                        <b>
+                            WhatsApp Ready
+                        </b>
+
+                        <small>
+                            Application WhatsApp पर भेजी जा रही है...
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="success-loader">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <p class="success-small">
+                    Please wait...
+                </p>
+
+            </div>
+
+        `;
+
+        document.body.appendChild(successBox);
 
 
-                    window.location.href =
-                        whatsappURL;
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    whatsappURL;
+
+            },
+            1800
+        );
 
 
-                },
-                900
-            );
-
+    },
+    900
+);
 
         }
     );
