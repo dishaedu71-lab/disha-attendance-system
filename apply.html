@@ -442,43 +442,26 @@ content="width=device-width, initial-scale=1.0">
     </div>
 
 
-    <!-- PAYMENT SCREENSHOT -->
+   <!-- TRANSACTION ID / UTR -->
+<div class="transaction-box">
 
-    <div class="payment-proof">
+    <label for="transactionId">
+        🧾 Transaction ID / UTR Number
+        <span>* REQUIRED</span>
+    </label>
 
-        <div class="proof-title">
-            📸 Payment Screenshot
-        </div>
+    <input
+        type="text"
+        id="transactionId"
+        name="transactionId"
+        placeholder="Enter Transaction ID / UTR Number"
+        maxlength="40"
+        autocomplete="off">
 
-        <p>
-            Payment करने के बाद उसका screenshot यहाँ upload करें।
-        </p>
-
-        <label class="upload-box">
-
-            <input
-                type="file"
-                id="paymentScreenshot"
-                accept="image/*">
-
-            <span class="upload-icon">📤</span>
-
-            <strong>
-                Upload Payment Screenshot
-            </strong>
-
-            <small>
-                JPG / PNG / WEBP
-            </small>
-
-        </label>
-
-        <div
-            id="screenshotPreview"
-            class="screenshot-preview">
-        </div>
-
-    </div>
+    <small>
+        ₹1,150 payment करने के बाद अपने UPI App में
+        दिखाई गई Transaction ID / UTR Number यहाँ दर्ज करें।
+    </small>
 
 </div>
 
@@ -689,6 +672,42 @@ document
                     .value
                     .trim();
 
+             /* -----------------------------------------
+   AI PAYMENT / TRANSACTION ID VALIDATION
+----------------------------------------- */
+
+const transactionInput =
+    document.getElementById("transactionId");
+
+const transactionId =
+    transactionInput
+        ? transactionInput.value.trim()
+        : "";
+
+
+/* केवल AI course के लिए mandatory */
+
+if (
+    course.trim().toLowerCase() === "ai" ||
+    course.trim().toLowerCase() === "artificial intelligence"
+) {
+
+    if (!transactionId) {
+
+        alert(
+            "⚠️ AI Course के लिए ₹1,150 payment करने के बाद Transaction ID / UTR Number दर्ज करना अनिवार्य है।"
+        );
+
+        if (transactionInput) {
+            transactionInput.focus();
+        }
+
+        return;
+
+    }
+
+}
+
 
 
             /* -----------------------------------------
@@ -736,6 +755,9 @@ ${father}
 
 🎓 *Selected Course:*
 ${course}
+
+🧾 *Transaction ID / UTR:*
+${transactionId || "Not Required"}
 
 📚 *Qualification:*
 ${qualification}
@@ -935,11 +957,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const upiButton =
         document.getElementById("upiPayButton");
 
-    const screenshotInput =
-        document.getElementById("paymentScreenshot");
-
-    const screenshotPreview =
-        document.getElementById("screenshotPreview");
+    const transactionInput =
+        document.getElementById("transactionId");
 
 
     /* =========================================
@@ -973,11 +992,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       DIRECT UPI BUTTON
+       DIRECT UPI PAYMENT BUTTON
     ========================================= */
 
     if (upiButton) {
+
         upiButton.href = upiURL;
+
     }
 
 
@@ -1002,7 +1023,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selected === "ai"
         ) {
 
-            /* SHOW AI PAYMENT */
+            /* AI → PAYMENT SHOW */
 
             aiPaymentSection.style.display = "block";
 
@@ -1014,21 +1035,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } else {
 
-            /* HIDE PAYMENT FOR ALL OTHER COURSES */
+            /* OTHER COURSES → PAYMENT HIDE */
 
             aiPaymentSection.classList.remove("show");
 
             aiPaymentSection.style.display = "none";
 
 
-            /* RESET SCREENSHOT */
+            /* TRANSACTION ID CLEAR */
 
-            if (screenshotInput) {
-                screenshotInput.value = "";
-            }
+            if (transactionInput) {
 
-            if (screenshotPreview) {
-                screenshotPreview.innerHTML = "";
+                transactionInput.value = "";
+
             }
 
         }
@@ -1052,70 +1071,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
        PAGE LOAD
-       AI URL SE SELECT HO TO QR TURANT DIKHE
     ========================================= */
 
     checkCourse();
 
 
     /* =========================================
-       PAYMENT SCREENSHOT PREVIEW
+       TRANSACTION ID VALIDATION
     ========================================= */
 
-    if (screenshotInput) {
+    if (transactionInput) {
 
-        screenshotInput.addEventListener(
-            "change",
+        transactionInput.addEventListener(
+            "input",
             function () {
 
-                screenshotPreview.innerHTML = "";
-
-                const file = this.files[0];
-
-                if (!file) {
-                    return;
-                }
-
-
-                if (!file.type.startsWith("image/")) {
-
-                    alert(
-                        "कृपया केवल JPG, PNG या WEBP image upload करें।"
-                    );
-
-                    this.value = "";
-
-                    return;
-                }
-
-
-                const reader =
-                    new FileReader();
-
-
-                reader.onload =
-                    function (event) {
-
-                        screenshotPreview.innerHTML = `
-
-                            <div class="preview-card">
-
-                                <span>
-                                    ✅ Payment Screenshot Selected
-                                </span>
-
-                                <img
-                                    src="${event.target.result}"
-                                    alt="Payment Screenshot Preview">
-
-                            </div>
-
-                        `;
-
-                    };
-
-
-                reader.readAsDataURL(file);
+                this.value =
+                    this.value
+                        .replace(/\s/g, "");
 
             }
         );
