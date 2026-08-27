@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /* WhatsApp Number */
 
-        const whatsappNumber = "919451455479";
+        const whatsappNumber = "919250332217";
 
 
         /* WhatsApp Message */
