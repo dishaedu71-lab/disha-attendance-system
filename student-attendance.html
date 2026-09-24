@@ -521,6 +521,33 @@
     }
 
 }
+      .mark-attendance-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: grayscale(0.4);
+}
+
+.mark-attendance-btn.location-verified {
+    animation: verifiedPulse 1.5s infinite;
+}
+
+@keyframes verifiedPulse {
+
+    0% {
+        box-shadow: 0 0 10px rgba(0,229,255,.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 25px rgba(0,229,255,.8),
+            0 0 45px rgba(0,229,255,.3);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(0,229,255,.3);
+    }
+
+}
 
 </style>
 
@@ -660,42 +687,181 @@
 
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
 
-/* =====================================================
-   PART 1 - BASIC STUDENT ATTENDANCE FOUNDATION
-===================================================== */
+    /* =========================================
+       DISHA COMPUTER EDUCATION
+       CENTER GPS SECURITY
+    ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+    const CENTER_LATITUDE = 26.7558402;
+    const CENTER_LONGITUDE = 82.1374394;
 
-        console.log(
-            "Student Attendance System Ready"
+    // Attendance allowed within 50 meters
+    const CENTER_RADIUS = 50;
+
+    const button = document.getElementById("markAttendanceBtn");
+    const status = document.getElementById("locationStatus");
+    const message = document.getElementById("locationMessage");
+
+    // Distance calculate करने का function
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+
+        const R = 6371000; // Earth radius in meters
+
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) *
+            Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
         );
 
+        return R * c;
+    }
 
-        const button =
-            document.getElementById(
-                "markAttendanceBtn"
-            );
+    // GPS verification
+    function checkCenterLocation() {
 
+        status.textContent = "📡 Checking your location...";
+        message.textContent = "कृपया GPS location allow करें...";
+        button.disabled = true;
 
-        button.addEventListener(
-            "click",
-            function(){
+        if (!navigator.geolocation) {
 
-                alert(
-                    "🔐 Secure attendance verification will be started in the next step."
+            status.textContent = "❌ GPS Not Supported";
+            message.textContent =
+                "आपके device/browser में location service उपलब्ध नहीं है।";
+
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                const studentLatitude =
+                    position.coords.latitude;
+
+                const studentLongitude =
+                    position.coords.longitude;
+
+                const accuracy =
+                    position.coords.accuracy;
+
+                const distance = calculateDistance(
+                    CENTER_LATITUDE,
+                    CENTER_LONGITUDE,
+                    studentLatitude,
+                    studentLongitude
                 );
 
+                console.log("Student Latitude:", studentLatitude);
+                console.log("Student Longitude:", studentLongitude);
+                console.log("GPS Accuracy:", accuracy);
+                console.log("Distance From Center:", distance);
+
+                /* =================================
+                   CENTER के अंदर
+                ================================= */
+
+                if (distance <= CENTER_RADIUS) {
+
+                    status.textContent =
+                        "🟢 Center Location Verified";
+
+                    message.innerHTML =
+                        "आप center के <b>" +
+                        Math.round(distance) +
+                        " meters</b> के अंदर हैं।<br>" +
+                        "Attendance marking allowed.";
+
+                    button.disabled = false;
+
+                    button.innerHTML =
+                        "✅ MARK ATTENDANCE";
+
+                    button.classList.add("location-verified");
+
+                }
+
+                /* =================================
+                   CENTER के बाहर
+                ================================= */
+
+                else {
+
+                    status.textContent =
+                        "🔴 Outside Center Area";
+
+                    message.innerHTML =
+                        "आप center से लगभग <b>" +
+                        Math.round(distance) +
+                        " meters</b> दूर हैं।<br>" +
+                        "Attendance केवल center के 50 meter area में mark की जा सकती है।";
+
+                    button.disabled = true;
+
+                    button.innerHTML =
+                        "🔒 LOCATION NOT VERIFIED";
+
+                    button.classList.remove("location-verified");
+                }
+
+            },
+
+            function (error) {
+
+                console.log("GPS Error:", error);
+
+                status.textContent =
+                    "⚠️ Location Permission Required";
+
+                message.innerHTML =
+                    "Attendance mark करने के लिए अपने phone में <b>Location/GPS ON</b> करें और browser को location permission दें।";
+
+                button.disabled = true;
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 0
             }
         );
-
     }
-);
 
+
+    /* =========================================
+       BUTTON CLICK
+    ========================================= */
+
+    button.addEventListener("click", function () {
+
+        if (button.disabled) {
+            return;
+        }
+
+        alert(
+            "📍 Location Verified!\n\n" +
+            "अब अगला security verification step शुरू होगा।"
+        );
+
+    });
+
+
+    // Page खुलते ही location check
+    checkCenterLocation();
+
+});
 </script>
-
 
 </body>
 
