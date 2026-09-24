@@ -1229,6 +1229,301 @@ console.log(
 );
 
 </script>
+      <script type="module">
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =========================================
+   FIREBASE AUTH
+========================================= */
+
+const auth = getAuth();
+
+
+/* =========================================
+   PAGE ELEMENTS
+========================================= */
+
+const studentIdBox =
+    document.getElementById("studentId");
+
+const studentNameBox =
+    document.getElementById("studentName");
+
+const studentCourseBox =
+    document.getElementById("studentCourse");
+
+const locationStatus =
+    document.getElementById("locationStatus");
+
+const locationMessage =
+    document.getElementById("locationMessage");
+
+const attendanceButton =
+    document.getElementById("markAttendanceBtn");
+
+
+/* =========================================
+   STUDENT ACCOUNT VERIFICATION
+========================================= */
+
+onAuthStateChanged(auth, async function(user) {
+
+    /* -----------------------------------------
+       LOGIN CHECK
+    ----------------------------------------- */
+
+    if (!user) {
+
+        console.log(
+            "❌ Student is not logged in"
+        );
+
+        studentIdBox.textContent = "Not Logged In";
+        studentNameBox.textContent = "—";
+        studentCourseBox.textContent = "—";
+
+        attendanceButton.disabled = true;
+
+        locationStatus.textContent =
+            "🔐 Student Login Required";
+
+        locationMessage.innerHTML =
+            "Attendance mark करने से पहले <b>Student Login</b> करना जरूरी है।";
+
+        setTimeout(function() {
+
+            window.location.href =
+                "student-login.html";
+
+        }, 1500);
+
+        return;
+    }
+
+
+    console.log(
+        "✅ Firebase User:",
+        user.uid
+    );
+
+
+    /* -----------------------------------------
+       FIRESTORE DATABASE
+    ----------------------------------------- */
+
+    const db =
+        window.studentAttendanceDB;
+
+
+    if (!db) {
+
+        console.error(
+            "❌ Firestore database not available"
+        );
+
+        locationStatus.textContent =
+            "❌ Database Error";
+
+        locationMessage.textContent =
+            "Firebase database connection नहीं मिल पाया।";
+
+        attendanceButton.disabled = true;
+
+        return;
+    }
+
+
+    try {
+
+        /* -----------------------------------------
+           FIND STUDENT ACCOUNT BY UID
+        ----------------------------------------- */
+
+        const studentQuery = query(
+
+            collection(
+                db,
+                "studentAccounts"
+            ),
+
+            where(
+                "uid",
+                "==",
+                user.uid
+            )
+
+        );
+
+
+        const snapshot =
+            await getDocs(studentQuery);
+
+
+        /* -----------------------------------------
+           STUDENT NOT FOUND
+        ----------------------------------------- */
+
+        if (snapshot.empty) {
+
+            console.error(
+                "❌ Student account not found"
+            );
+
+            studentIdBox.textContent =
+                "Not Found";
+
+            studentNameBox.textContent =
+                "—";
+
+            studentCourseBox.textContent =
+                "—";
+
+            attendanceButton.disabled =
+                true;
+
+            locationStatus.textContent =
+                "❌ Student Verification Failed";
+
+            locationMessage.innerHTML =
+                "आपका student account Firebase में verify नहीं हो पाया।";
+
+            return;
+        }
+
+
+        /* -----------------------------------------
+           STUDENT FOUND
+        ----------------------------------------- */
+
+        const studentDoc =
+            snapshot.docs[0];
+
+        const student =
+            studentDoc.data();
+
+
+        console.log(
+            "✅ Student Verified:",
+            student
+        );
+
+
+        /* -----------------------------------------
+           SHOW STUDENT INFORMATION
+        ----------------------------------------- */
+
+        studentIdBox.textContent =
+            student.studentId || "—";
+
+        studentNameBox.textContent =
+            student.name || "—";
+
+        studentCourseBox.textContent =
+            student.course || "—";
+
+
+        /* -----------------------------------------
+           SAVE VERIFIED STUDENT
+           FOR NEXT ATTENDANCE STEP
+        ----------------------------------------- */
+
+        window.loggedInStudent = {
+
+            uid:
+                user.uid,
+
+            studentId:
+                student.studentId || "",
+
+            name:
+                student.name || "",
+
+            course:
+                student.course || "",
+
+            email:
+                student.email || "",
+
+            mobile:
+                student.mobile || "",
+
+            batch:
+                student.batch || "",
+
+            father:
+                student.father || "",
+
+            accountDocumentId:
+                studentDoc.id
+
+        };
+
+
+        console.log(
+            "✅ Student verification complete"
+        );
+
+        console.log(
+            "Student ID:",
+            window.loggedInStudent.studentId
+        );
+
+        console.log(
+            "Student Name:",
+            window.loggedInStudent.name
+        );
+
+        console.log(
+            "Student Course:",
+            window.loggedInStudent.course
+        );
+
+
+        /* -----------------------------------------
+           VERIFIED MESSAGE
+        ----------------------------------------- */
+
+        locationMessage.innerHTML =
+            "👤 Student account verified successfully.<br>" +
+            "अब GPS verification complete होने के बाद attendance mark की जा सकेगी।";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Student verification error:",
+            error
+        );
+
+        locationStatus.textContent =
+            "❌ Verification Error";
+
+        locationMessage.innerHTML =
+            "Student verification के दौरान समस्या हुई।<br>" +
+            "Please try again.";
+
+        attendanceButton.disabled =
+            true;
+
+    }
+
+});
+
+</script>
       
 </body>
 
