@@ -1158,6 +1158,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+      <!-- =========================================
+     FIREBASE STUDENT ATTENDANCE CONNECTION
+========================================= -->
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getFirestore
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCi0gz9XPJvAUUaMaGYXEC2jTQuOmkRRGM",
+
+    authDomain:
+        "disha-attendance-system.firebaseapp.com",
+
+    projectId:
+        "disha-attendance-system",
+
+    storageBucket:
+        "disha-attendance-system.firebasestorage.app",
+
+    messagingSenderId:
+        "492796083174",
+
+    appId:
+        "1:492796083174:web:3bdfa2b30071c3fae07427",
+
+    measurementId:
+        "G-YP9RLS7XJE"
+};
+
+
+/* =========================================
+   INITIALIZE FIREBASE
+========================================= */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+/* =========================================
+   FIRESTORE DATABASE
+========================================= */
+
+const db =
+    getFirestore(app);
+
+
+/* =========================================
+   MAKE DATABASE AVAILABLE
+   FOR NEXT PART
+========================================= */
+
+window.studentAttendanceDB = db;
+
+console.log(
+    "✅ Firebase connected successfully"
+);
+
+</script>
+      
 </body>
 
 </html>
