@@ -1524,6 +1524,703 @@ onAuthStateChanged(auth, async function(user) {
 });
 
 </script>
+
+      <script type="module">
+
+import {
+    collection,
+    doc,
+    runTransaction
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FINAL STUDENT ATTENDANCE SYSTEM
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const button =
+        document.getElementById("markAttendanceBtn");
+
+    const status =
+        document.getElementById("locationStatus");
+
+    const message =
+        document.getElementById("locationMessage");
+
+
+    /* =================================================
+       CENTER SETTINGS
+    ================================================= */
+
+    const CENTER_LATITUDE = 26.7558402;
+    const CENTER_LONGITUDE = 82.1374394;
+
+    const CENTER_RADIUS = 100;
+
+    const MAX_GPS_ACCURACY = 100;
+
+
+    /* =================================================
+       DISTANCE CALCULATOR
+    ================================================= */
+
+    function calculateDistance(
+        lat1,
+        lon1,
+        lat2,
+        lon2
+    ) {
+
+        const R = 6371000;
+
+        const dLat =
+            (lat2 - lat1) *
+            Math.PI / 180;
+
+        const dLon =
+            (lon2 - lon1) *
+            Math.PI / 180;
+
+        const a =
+            Math.sin(dLat / 2) *
+            Math.sin(dLat / 2) +
+
+            Math.cos(lat1 * Math.PI / 180) *
+            Math.cos(lat2 * Math.PI / 180) *
+
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c =
+            2 *
+            Math.atan2(
+                Math.sqrt(a),
+                Math.sqrt(1 - a)
+            );
+
+        return R * c;
+    }
+
+
+    /* =================================================
+       DATE FORMAT
+       Example: 2026-09-24
+    ================================================= */
+
+    function getTodayDate() {
+
+        const now = new Date();
+
+        const year =
+            now.getFullYear();
+
+        const month =
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                now.getDate()
+            ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    /* =================================================
+       TIME FORMAT
+       Example: 05:30:25 PM
+    ================================================= */
+
+    function getCurrentTime() {
+
+        return new Date().toLocaleTimeString(
+            "en-IN",
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       SHOW MESSAGE
+    ================================================= */
+
+    function showMessage(
+        title,
+        text
+    ) {
+
+        status.textContent = title;
+
+        message.innerHTML = text;
+
+    }
+
+
+    /* =================================================
+       GET FRESH GPS
+       Attendance के समय location दोबारा check होगी
+    ================================================= */
+
+    function getFreshGPS() {
+
+        return new Promise(
+            function (resolve, reject) {
+
+                if (!navigator.geolocation) {
+
+                    reject(
+                        new Error(
+                            "GPS_NOT_SUPPORTED"
+                        )
+                    );
+
+                    return;
+                }
+
+
+                navigator.geolocation.getCurrentPosition(
+
+                    function (position) {
+
+                        resolve(position);
+
+                    },
+
+                    function (error) {
+
+                        reject(error);
+
+                    },
+
+                    {
+
+                        enableHighAccuracy: true,
+
+                        timeout: 20000,
+
+                        maximumAge: 0
+
+                    }
+
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =================================================
+       DISABLE BUTTON
+    ================================================= */
+
+    function lockButton() {
+
+        button.disabled = true;
+
+        button.innerHTML =
+            "⏳ VERIFYING ATTENDANCE...";
+
+    }
+
+
+    /* =================================================
+       RESTORE BUTTON
+    ================================================= */
+
+    function unlockButton() {
+
+        button.disabled = false;
+
+        button.innerHTML =
+            "✅ MARK ATTENDANCE";
+
+    }
+
+
+    /* =================================================
+       FINAL ATTENDANCE CLICK
+    ================================================= */
+
+    async function markAttendance() {
+
+        /* ---------------------------------------------
+           STUDENT LOGIN CHECK
+        --------------------------------------------- */
+
+        const student =
+            window.loggedInStudent;
+
+
+        if (!student) {
+
+            alert(
+                "❌ Student verification नहीं हुई है।"
+            );
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           DATABASE CHECK
+        --------------------------------------------- */
+
+        const db =
+            window.studentAttendanceDB;
+
+
+        if (!db) {
+
+            alert(
+                "❌ Firebase database connected नहीं है।"
+            );
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           LOCK BUTTON
+        --------------------------------------------- */
+
+        lockButton();
+
+
+        showMessage(
+
+            "📡 Verifying Attendance...",
+
+            "Student account और current GPS location verify की जा रही है।"
+
+        );
+
+
+        try {
+
+            /* =========================================
+               FRESH GPS CHECK
+            ========================================= */
+
+            const position =
+                await getFreshGPS();
+
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+            const accuracy =
+                position.coords.accuracy;
+
+
+            /* =========================================
+               GPS ACCURACY CHECK
+            ========================================= */
+
+            if (
+                !Number.isFinite(accuracy) ||
+                accuracy > MAX_GPS_ACCURACY
+            ) {
+
+                showMessage(
+
+                    "⚠️ GPS Accuracy Low",
+
+                    "GPS Accuracy: <b>" +
+                    Math.round(accuracy) +
+                    " meters</b><br><br>" +
+
+                    "कृपया खुले स्थान में कुछ seconds रुकें और फिर दोबारा कोशिश करें।"
+
+                );
+
+                unlockButton();
+
+                return;
+
+            }
+
+
+            /* =========================================
+               DISTANCE
+            ========================================= */
+
+            const distance =
+                calculateDistance(
+
+                    CENTER_LATITUDE,
+
+                    CENTER_LONGITUDE,
+
+                    latitude,
+
+                    longitude
+
+                );
+
+
+            console.log(
+                "Final GPS Latitude:",
+                latitude
+            );
+
+            console.log(
+                "Final GPS Longitude:",
+                longitude
+            );
+
+            console.log(
+                "Final GPS Accuracy:",
+                accuracy
+            );
+
+            console.log(
+                "Final Distance:",
+                distance
+            );
+
+
+            /* =========================================
+               CENTER RANGE CHECK
+            ========================================= */
+
+            if (
+                distance >
+                CENTER_RADIUS
+            ) {
+
+                showMessage(
+
+                    "🔴 Outside Center Area",
+
+                    "आप center से लगभग <b>" +
+                    Math.round(distance) +
+                    " meters</b> दूर हैं।<br><br>" +
+
+                    "Attendance केवल institute के " +
+                    CENTER_RADIUS +
+                    " meter area में mark की जा सकती है।"
+
+                );
+
+                unlockButton();
+
+                return;
+
+            }
+
+
+            /* =========================================
+               TODAY DATE
+            ========================================= */
+
+            const today =
+                getTodayDate();
+
+
+            const currentTime =
+                getCurrentTime();
+
+
+            /* =========================================
+               STUDENT DOCUMENT
+            ========================================= */
+
+            const studentDocument =
+                doc(
+                    db,
+                    "students",
+                    student.accountDocumentId
+                );
+
+
+            /* =========================================
+               FIRESTORE TRANSACTION
+               Duplicate attendance रोकने के लिए
+            ========================================= */
+
+            const result =
+                await runTransaction(
+
+                    db,
+
+                    async function (transaction) {
+
+                        const studentSnapshot =
+                            await transaction.get(
+                                studentDocument
+                            );
+
+
+                        if (
+                            !studentSnapshot.exists()
+                        ) {
+
+                            throw new Error(
+                                "STUDENT_DOCUMENT_NOT_FOUND"
+                            );
+
+                        }
+
+
+                        const studentData =
+                            studentSnapshot.data();
+
+
+                        const attendance =
+                            studentData.attendance ||
+                            {};
+
+
+                        /* --------------------------------
+                           ALREADY MARKED TODAY
+                        -------------------------------- */
+
+                        if (
+                            attendance[today] ===
+                            "Present"
+                        ) {
+
+                            return {
+                                alreadyMarked: true
+                            };
+
+                        }
+
+
+                        /* --------------------------------
+                           SAVE ATTENDANCE
+                        -------------------------------- */
+
+                        attendance[today] =
+                            "Present";
+
+
+                        transaction.update(
+
+                            studentDocument,
+
+                            {
+
+                                attendance:
+                                    attendance
+
+                            }
+
+                        );
+
+
+                        return {
+                            alreadyMarked: false
+                        };
+
+                    }
+
+                );
+
+
+            /* =========================================
+               ALREADY PRESENT
+            ========================================= */
+
+            if (
+                result.alreadyMarked
+            ) {
+
+                showMessage(
+
+                    "🟡 Already Marked",
+
+                    "आज की attendance पहले ही mark हो चुकी है।<br><br>" +
+
+                    "📅 Date: <b>" +
+                    today +
+                    "</b><br>" +
+
+                    "आप एक दिन में दोबारा attendance नहीं लगा सकते।"
+
+                );
+
+                button.disabled = true;
+
+                button.innerHTML =
+                    "✓ TODAY'S ATTENDANCE DONE";
+
+                return;
+
+            }
+
+
+            /* =========================================
+               SUCCESS
+            ========================================= */
+
+            showMessage(
+
+                "🟢 Attendance Marked Successfully",
+
+                "🎉 आपकी attendance successfully save हो गई है।<br><br>" +
+
+                "👤 Student: <b>" +
+                student.name +
+                "</b><br>" +
+
+                "🆔 Student ID: <b>" +
+                student.studentId +
+                "</b><br>" +
+
+                "📚 Course: <b>" +
+                student.course +
+                "</b><br>" +
+
+                "📅 Date: <b>" +
+                today +
+                "</b><br>" +
+
+                "⏰ Time: <b>" +
+                currentTime +
+                "</b><br>" +
+
+                "📍 Distance: <b>" +
+                Math.round(distance) +
+                " meters</b><br>" +
+
+                "📡 GPS Accuracy: <b>" +
+                Math.round(accuracy) +
+                " meters</b>"
+
+            );
+
+
+            /* =========================================
+               SUCCESS BUTTON
+            ========================================= */
+
+            button.disabled = true;
+
+            button.innerHTML =
+                "✅ ATTENDANCE MARKED";
+
+
+            button.classList.add(
+                "location-verified"
+            );
+
+
+            alert(
+                "✅ Attendance Successfully Marked!\n\n" +
+
+                "Student: " +
+                student.name +
+                "\n" +
+
+                "Date: " +
+                today +
+                "\n" +
+
+                "Time: " +
+                currentTime
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Attendance Error:",
+                error
+            );
+
+
+            /* =========================================
+               DUPLICATE / FIREBASE ERROR
+            ========================================= */
+
+            if (
+                error.message ===
+                "STUDENT_DOCUMENT_NOT_FOUND"
+            ) {
+
+                showMessage(
+
+                    "❌ Student Record Not Found",
+
+                    "Firebase में student record नहीं मिला।"
+
+                );
+
+            }
+
+            else {
+
+                showMessage(
+
+                    "❌ Attendance Failed",
+
+                    "Attendance save नहीं हो सकी।<br><br>" +
+
+                    "कृपया internet connection check करके दोबारा कोशिश करें।"
+
+                );
+
+            }
+
+
+            unlockButton();
+
+        }
+
+    }
+
+
+    /* =================================================
+       IMPORTANT:
+       पुराने GPS script का click handler हटाने के लिए
+       button को clone किया जा रहा है।
+    ================================================= */
+
+    const newButton =
+        button.cloneNode(true);
+
+
+    button.parentNode.replaceChild(
+        newButton,
+        button
+    );
+
+
+    /* Re-reference */
+
+    const finalButton =
+        document.getElementById(
+            "markAttendanceBtn"
+        );
+
+
+    finalButton.addEventListener(
+        "click",
+        markAttendance
+    );
+
+
+});
+</script>
       
 </body>
 
