@@ -1230,11 +1230,11 @@ console.log(
 
 <script type="module">
 
-/* =====================================================
+/* =========================================================
    DISHA COMPUTER EDUCATION
-   STUDENT ATTENDANCE - FINAL SYSTEM
-   Firebase + Student Verify + GPS + Attendance
-===================================================== */
+   STUDENT SELF ATTENDANCE - FINAL
+   Firebase + Student ID + GPS + Attendance
+========================================================= */
 
 import {
     initializeApp
@@ -1251,13 +1251,14 @@ import {
     query,
     where,
     getDocs,
+    doc,
     runTransaction
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =====================================================
+/* =========================================================
    FIREBASE CONFIG
-===================================================== */
+========================================================= */
 
 const firebaseConfig = {
 
@@ -1285,9 +1286,9 @@ const firebaseConfig = {
 };
 
 
-/* =====================================================
-   FIREBASE INITIALIZE
-===================================================== */
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
 
 const app =
     initializeApp(firebaseConfig);
@@ -1299,16 +1300,9 @@ const db =
     getFirestore(app);
 
 
-/* =====================================================
-   MAKE DATABASE AVAILABLE
-===================================================== */
-
-window.studentAttendanceDB = db;
-
-
-/* =====================================================
+/* =========================================================
    PAGE ELEMENTS
-===================================================== */
+========================================================= */
 
 const studentIdBox =
     document.getElementById("studentId");
@@ -1319,19 +1313,19 @@ const studentNameBox =
 const studentCourseBox =
     document.getElementById("studentCourse");
 
-const statusBox =
+const locationStatus =
     document.getElementById("locationStatus");
 
-const messageBox =
+const locationMessage =
     document.getElementById("locationMessage");
 
 const attendanceButton =
     document.getElementById("markAttendanceBtn");
 
 
-/* =====================================================
+/* =========================================================
    CENTER LOCATION
-===================================================== */
+========================================================= */
 
 const CENTER_LATITUDE =
     26.7558402;
@@ -1340,32 +1334,34 @@ const CENTER_LONGITUDE =
     82.1374394;
 
 
-/* =====================================================
-   ATTENDANCE AREA
-===================================================== */
+/* =========================================================
+   ATTENDANCE RADIUS
+========================================================= */
 
 const CENTER_RADIUS =
     100;
 
 
-/* =====================================================
-   GPS ACCURACY LIMIT
-===================================================== */
+/* =========================================================
+   GPS ACCURACY
+========================================================= */
 
 const MAX_GPS_ACCURACY =
     150;
 
 
-/* =====================================================
-   CURRENT VERIFIED STUDENT
-===================================================== */
+/* =========================================================
+   CURRENT STUDENT
+========================================================= */
 
 let currentStudent = null;
 
+let verifiedLocation = null;
 
-/* =====================================================
+
+/* =========================================================
    DISTANCE CALCULATOR
-===================================================== */
+========================================================= */
 
 function calculateDistance(
     lat1,
@@ -1374,8 +1370,7 @@ function calculateDistance(
     lon2
 ) {
 
-    const R =
-        6371000;
+    const R = 6371000;
 
     const dLat =
         (lat2 - lat1) *
@@ -1411,9 +1406,9 @@ function calculateDistance(
 }
 
 
-/* =====================================================
+/* =========================================================
    TODAY DATE
-===================================================== */
+========================================================= */
 
 function getTodayDate() {
 
@@ -1434,9 +1429,9 @@ function getTodayDate() {
 }
 
 
-/* =====================================================
+/* =========================================================
    CURRENT TIME
-===================================================== */
+========================================================= */
 
 function getCurrentTime() {
 
@@ -1453,9 +1448,9 @@ function getCurrentTime() {
 }
 
 
-/* =====================================================
-   INITIAL BUTTON STATE
-===================================================== */
+/* =========================================================
+   INITIAL STATE
+========================================================= */
 
 attendanceButton.disabled =
     true;
@@ -1464,23 +1459,23 @@ attendanceButton.innerHTML =
     "🔐 VERIFYING STUDENT...";
 
 
-/* =====================================================
-   STUDENT LOGIN + FIREBASE VERIFICATION
-===================================================== */
+/* =========================================================
+   STUDENT AUTHENTICATION
+========================================================= */
 
 onAuthStateChanged(
     auth,
     async function(user) {
 
         console.log(
-            "Firebase Auth User:",
+            "AUTH USER:",
             user
         );
 
 
-        /* ---------------------------------------------
-           USER NOT LOGGED IN
-        --------------------------------------------- */
+        /* =================================================
+           NOT LOGGED IN
+        ================================================= */
 
         if (!user) {
 
@@ -1493,10 +1488,10 @@ onAuthStateChanged(
             studentCourseBox.textContent =
                 "—";
 
-            statusBox.textContent =
+            locationStatus.textContent =
                 "🔐 Student Login Required";
 
-            messageBox.innerHTML =
+            locationMessage.innerHTML =
                 "कृपया पहले <b>Student Login</b> करें।";
 
             attendanceButton.disabled =
@@ -1505,24 +1500,20 @@ onAuthStateChanged(
             attendanceButton.innerHTML =
                 "🔐 LOGIN REQUIRED";
 
-            console.log(
-                "❌ Firebase user not found"
-            );
-
             return;
 
         }
 
 
         console.log(
-            "✅ Logged-in UID:",
+            "Logged UID:",
             user.uid
         );
 
 
-        /* ---------------------------------------------
-           SEARCH STUDENT ACCOUNT
-        --------------------------------------------- */
+        /* =================================================
+           FIND STUDENT ACCOUNT
+        ================================================= */
 
         try {
 
@@ -1549,153 +1540,114 @@ onAuthStateChanged(
                 );
 
 
-            /* -----------------------------------------
-               STUDENT NOT FOUND
-            ----------------------------------------- */
+            console.log(
+                "Student Account Count:",
+                snapshot.size
+            );
+
+
+            /* =================================================
+               IF UID RECORD NOT FOUND
+
+               FALLBACK:
+               SEARCH USING EMAIL
+            ================================================= */
 
             if (snapshot.empty) {
 
-                studentIdBox.textContent =
-                    "Not Found";
-
-                studentNameBox.textContent =
-                    "—";
-
-                studentCourseBox.textContent =
-                    "—";
-
-                statusBox.textContent =
-                    "❌ Student Verification Failed";
-
-                messageBox.innerHTML =
-                    "Firebase में आपका student account नहीं मिला।";
-
-                attendanceButton.disabled =
-                    true;
-
-                console.error(
-                    "No studentAccounts document for UID:",
-                    user.uid
+                console.log(
+                    "UID record not found. Trying email..."
                 );
 
-                return;
+
+                if (!user.email) {
+
+                    throw new Error(
+                        "Student account could not be verified."
+                    );
+
+                }
+
+
+                const emailQuery =
+                    query(
+
+                        collection(
+                            db,
+                            "studentAccounts"
+                        ),
+
+                        where(
+                            "email",
+                            "==",
+                            user.email
+                        )
+
+                    );
+
+
+                const emailSnapshot =
+                    await getDocs(
+                        emailQuery
+                    );
+
+
+                if (
+                    emailSnapshot.empty
+                ) {
+
+                    throw new Error(
+                        "Student record Firebase में नहीं मिला।"
+                    );
+
+                }
+
+
+                await loadStudent(
+                    emailSnapshot.docs[0].data(),
+                    user
+                );
 
             }
 
+            else {
 
-            /* -----------------------------------------
-               STUDENT FOUND
-            ----------------------------------------- */
+                await loadStudent(
+                    snapshot.docs[0].data(),
+                    user
+                );
 
-            const studentDoc =
-                snapshot.docs[0];
-
-            const data =
-                studentDoc.data();
-
-
-            console.log(
-                "✅ Student Account:",
-                data
-            );
-
-
-            /* -----------------------------------------
-               SAVE STUDENT
-            ----------------------------------------- */
-
-            currentStudent = {
-
-                uid:
-                    user.uid,
-
-                studentId:
-                    data.studentId || "",
-
-                name:
-                    data.name || "",
-
-                course:
-                    data.course || "",
-
-                mobile:
-                    data.mobile || "",
-
-                email:
-                    data.email || "",
-
-                batch:
-                    data.batch || "",
-
-                father:
-                    data.father || ""
-
-            };
-
-
-            /* -----------------------------------------
-               SHOW STUDENT INFORMATION
-            ----------------------------------------- */
-
-            studentIdBox.textContent =
-                currentStudent.studentId ||
-                "—";
-
-            studentNameBox.textContent =
-                currentStudent.name ||
-                "—";
-
-            studentCourseBox.textContent =
-                currentStudent.course ||
-                "—";
-
-
-            /* -----------------------------------------
-               STUDENT VERIFIED
-            ----------------------------------------- */
-
-            statusBox.textContent =
-                "🟢 Student Verified";
-
-            messageBox.innerHTML =
-                "👤 <b>" +
-                currentStudent.name +
-                "</b> verified successfully.<br>" +
-
-                "अब center location verify की जा रही है।";
-
-
-            console.log(
-                "✅ Student verification complete"
-            );
-
-
-            /* -----------------------------------------
-               START GPS
-            ----------------------------------------- */
-
-            checkLocation();
+            }
 
         }
 
         catch(error) {
 
             console.error(
-                "Student Verification Error:",
+                "STUDENT LOAD ERROR:",
                 error
             );
 
-            statusBox.textContent =
-                "❌ Verification Error";
+            studentIdBox.textContent =
+                "Not Found";
 
-            messageBox.innerHTML =
-                "Student verification में error आया।<br>" +
-                "<small>" +
-                error.message +
-                "</small>";
+            studentNameBox.textContent =
+                "—";
+
+            studentCourseBox.textContent =
+                "—";
+
+            locationStatus.textContent =
+                "❌ Student Verification Failed";
+
+            locationMessage.innerHTML =
+                error.message;
 
             attendanceButton.disabled =
                 true;
+
+            attendanceButton.innerHTML =
+                "❌ VERIFICATION FAILED";
 
         }
 
@@ -1703,36 +1655,176 @@ onAuthStateChanged(
 );
 
 
-/* =====================================================
-   GPS CHECK
-===================================================== */
+/* =========================================================
+   LOAD STUDENT
+========================================================= */
 
-function checkLocation() {
+async function loadStudent(
+    data,
+    user
+) {
 
-    statusBox.textContent =
+    console.log(
+        "STUDENT DATA:",
+        data
+    );
+
+
+    /* =====================================================
+       SAVE STUDENT DATA
+    ===================================================== */
+
+    currentStudent = {
+
+        uid:
+            user.uid,
+
+        studentId:
+            String(
+                data.studentId ||
+                data.roll ||
+                data.rollNo ||
+                ""
+            ).trim(),
+
+        name:
+            data.name ||
+            data.studentName ||
+            "",
+
+        course:
+            data.course ||
+            data.selectedCourse ||
+            "",
+
+        email:
+            data.email ||
+            user.email ||
+            "",
+
+        mobile:
+            data.mobile ||
+            "",
+
+        batch:
+            data.batch ||
+            ""
+
+    };
+
+
+    console.log(
+        "CURRENT STUDENT:",
+        currentStudent
+    );
+
+
+    /* =====================================================
+       DISPLAY STUDENT INFORMATION
+    ===================================================== */
+
+    studentIdBox.textContent =
+        currentStudent.studentId ||
+        "—";
+
+    studentNameBox.textContent =
+        currentStudent.name ||
+        "—";
+
+    studentCourseBox.textContent =
+        currentStudent.course ||
+        "—";
+
+
+    /* =====================================================
+       CHECK DATA
+    ===================================================== */
+
+    if (
+        !currentStudent.studentId ||
+        !currentStudent.name ||
+        !currentStudent.course
+    ) {
+
+        locationStatus.textContent =
+            "⚠️ Student Data Incomplete";
+
+        locationMessage.innerHTML =
+            "Firebase student profile में Student ID, Name या Course missing है।";
+
+        attendanceButton.disabled =
+            true;
+
+        attendanceButton.innerHTML =
+            "⚠️ PROFILE INCOMPLETE";
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       STUDENT VERIFIED
+    ===================================================== */
+
+    locationStatus.textContent =
+        "🟢 Student Verified";
+
+    locationMessage.innerHTML =
+        "👤 <b>" +
+        currentStudent.name +
+        "</b><br>" +
+
+        "Student ID: <b>" +
+        currentStudent.studentId +
+        "</b><br>" +
+
+        "Course: <b>" +
+        currentStudent.course +
+        "</b><br><br>" +
+
+        "अब center location verify की जा रही है...";
+
+
+    /* =====================================================
+       START GPS
+    ===================================================== */
+
+    startGPS();
+
+}
+
+
+/* =========================================================
+   START GPS
+========================================================= */
+
+function startGPS() {
+
+    if (!navigator.geolocation) {
+
+        locationStatus.textContent =
+            "❌ GPS Not Supported";
+
+        locationMessage.textContent =
+            "इस device/browser में GPS उपलब्ध नहीं है।";
+
+        return;
+
+    }
+
+
+    locationStatus.textContent =
         "📡 Checking Center Location...";
 
-    messageBox.innerHTML =
-        "आपकी exact GPS location verify की जा रही है...";
+    locationMessage.innerHTML =
+        "आपकी current GPS location verify की जा रही है...";
 
     attendanceButton.disabled =
         true;
 
     attendanceButton.innerHTML =
         "📡 VERIFYING LOCATION...";
-
-
-    if (!navigator.geolocation) {
-
-        statusBox.textContent =
-            "❌ GPS Not Supported";
-
-        messageBox.textContent =
-            "आपके device में GPS support नहीं है।";
-
-        return;
-
-    }
 
 
     navigator.geolocation.watchPosition(
@@ -1764,40 +1856,40 @@ function checkLocation() {
 
 
             console.log(
-                "GPS Latitude:",
+                "LAT:",
                 latitude
             );
 
             console.log(
-                "GPS Longitude:",
+                "LNG:",
                 longitude
             );
 
             console.log(
-                "GPS Accuracy:",
+                "ACCURACY:",
                 accuracy
             );
 
             console.log(
-                "Distance:",
+                "DISTANCE:",
                 distance
             );
 
 
-            /* -----------------------------------------
-               BAD GPS
-            ----------------------------------------- */
+            /* =============================================
+               GPS ACCURACY
+            ============================================= */
 
             if (
                 accuracy >
                 MAX_GPS_ACCURACY
             ) {
 
-                statusBox.textContent =
+                locationStatus.textContent =
                     "🟡 GPS Accuracy Low";
 
-                messageBox.innerHTML =
-                    "📡 GPS Accuracy: <b>" +
+                locationMessage.innerHTML =
+                    "GPS Accuracy: <b>" +
                     Math.round(accuracy) +
                     " meters</b><br><br>" +
 
@@ -1807,27 +1899,45 @@ function checkLocation() {
                     true;
 
                 attendanceButton.innerHTML =
-                    "📡 WAITING FOR ACCURATE GPS";
+                    "📡 WAITING FOR GPS";
 
                 return;
 
             }
 
 
-            /* -----------------------------------------
+            /* =============================================
                INSIDE CENTER
-            ----------------------------------------- */
+            ============================================= */
 
             if (
                 distance <=
                 CENTER_RADIUS
             ) {
 
-                statusBox.textContent =
+                verifiedLocation = {
+
+                    latitude:
+                        latitude,
+
+                    longitude:
+                        longitude,
+
+                    accuracy:
+                        accuracy,
+
+                    distance:
+                        distance
+
+                };
+
+
+                locationStatus.textContent =
                     "🟢 Center Location Verified";
 
-                messageBox.innerHTML =
-                    "📍 Accuracy: <b>" +
+                locationMessage.innerHTML =
+
+                    "📡 GPS Accuracy: <b>" +
                     Math.round(accuracy) +
                     "m</b><br>" +
 
@@ -1835,7 +1945,10 @@ function checkLocation() {
                     Math.round(distance) +
                     "m</b><br><br>" +
 
-                    "✅ आप center के अंदर हैं।";
+                    "✅ आप center के अंदर हैं।<br>" +
+
+                    "Attendance marking allowed.";
+
 
                 attendanceButton.disabled =
                     false;
@@ -1849,21 +1962,26 @@ function checkLocation() {
 
             }
 
-            /* -----------------------------------------
+
+            /* =============================================
                OUTSIDE CENTER
-            ----------------------------------------- */
+            ============================================= */
 
             else {
 
-                statusBox.textContent =
+                verifiedLocation =
+                    null;
+
+                locationStatus.textContent =
                     "🔴 Outside Center Area";
 
-                messageBox.innerHTML =
+                locationMessage.innerHTML =
+
                     "📏 Distance: <b>" +
                     Math.round(distance) +
                     " meters</b><br><br>" +
 
-                    "Attendance केवल center के " +
+                    "❌ Attendance केवल institute के " +
                     CENTER_RADIUS +
                     " meter area में mark की जा सकती है।";
 
@@ -1884,18 +2002,22 @@ function checkLocation() {
         function(error) {
 
             console.error(
-                "GPS Error:",
+                "GPS ERROR:",
                 error
             );
 
-            statusBox.textContent =
+
+            locationStatus.textContent =
                 "⚠️ GPS Error";
 
-            messageBox.innerHTML =
-                "Location permission/GPS check करें।";
+            locationMessage.innerHTML =
+                "Phone में <b>Location/GPS ON</b> करें और browser को location permission दें।";
 
             attendanceButton.disabled =
                 true;
+
+            attendanceButton.innerHTML =
+                "📍 LOCATION REQUIRED";
 
         },
 
@@ -1917,22 +2039,33 @@ function checkLocation() {
 }
 
 
-/* =====================================================
+/* =========================================================
    MARK ATTENDANCE
-===================================================== */
+========================================================= */
 
 attendanceButton.addEventListener(
     "click",
     async function() {
 
-        /* ---------------------------------------------
-           STUDENT CHECK
-        --------------------------------------------- */
-
-        if (!currentStudent) {
+        if (
+            !currentStudent
+        ) {
 
             alert(
                 "❌ Student verification नहीं हुई।"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !verifiedLocation
+        ) {
+
+            alert(
+                "❌ Center location verify नहीं हुई।"
             );
 
             return;
@@ -1946,39 +2079,39 @@ attendanceButton.addEventListener(
         attendanceButton.innerHTML =
             "⏳ SAVING ATTENDANCE...";
 
-
-        statusBox.textContent =
+        locationStatus.textContent =
             "⏳ Saving Attendance...";
 
 
         try {
 
-            /* =========================================
-               FRESH GPS
-            ========================================= */
+            /* =============================================
+               FINAL GPS CHECK
+            ============================================= */
 
             const position =
                 await new Promise(
                     function(resolve, reject) {
 
-                        navigator.geolocation.getCurrentPosition(
+                        navigator.geolocation
+                            .getCurrentPosition(
 
-                            resolve,
+                                resolve,
 
-                            reject,
+                                reject,
 
-                            {
-                                enableHighAccuracy:
-                                    true,
+                                {
+                                    enableHighAccuracy:
+                                        true,
 
-                                timeout:
-                                    30000,
+                                    timeout:
+                                        30000,
 
-                                maximumAge:
-                                    0
-                            }
+                                    maximumAge:
+                                        0
+                                }
 
-                        );
+                            );
 
                     }
                 );
@@ -1994,10 +2127,6 @@ attendanceButton.addEventListener(
                 position.coords.accuracy;
 
 
-            /* =========================================
-               FRESH DISTANCE
-            ========================================= */
-
             const distance =
                 calculateDistance(
 
@@ -2012,9 +2141,9 @@ attendanceButton.addEventListener(
                 );
 
 
-            /* =========================================
-               FINAL GPS CHECK
-            ========================================= */
+            /* =============================================
+               FINAL SECURITY CHECK
+            ============================================= */
 
             if (
                 accuracy >
@@ -2022,7 +2151,7 @@ attendanceButton.addEventListener(
             ) {
 
                 throw new Error(
-                    "GPS accuracy is too low"
+                    "GPS accuracy बहुत कम है।"
                 );
 
             }
@@ -2034,27 +2163,26 @@ attendanceButton.addEventListener(
             ) {
 
                 throw new Error(
-                    "You are outside center area"
+                    "आप center area से बाहर हैं।"
                 );
 
             }
 
 
-            /* =========================================
-               DATE
-            ========================================= */
+            /* =============================================
+               TODAY
+            ============================================= */
 
             const today =
                 getTodayDate();
-
 
             const currentTime =
                 getCurrentTime();
 
 
-            /* =========================================
-               FIND STUDENT IN students COLLECTION
-            ========================================= */
+            /* =============================================
+               FIND STUDENT RECORD
+            ============================================= */
 
             const studentQuery =
                 query(
@@ -2084,19 +2212,20 @@ attendanceButton.addEventListener(
             ) {
 
                 throw new Error(
-                    "Student attendance record not found in students collection"
+                    "students collection में Student ID नहीं मिली: " +
+                    currentStudent.studentId
                 );
 
             }
 
 
-            const attendanceDoc =
+            const studentDoc =
                 studentSnapshot.docs[0];
 
 
-            /* =========================================
+            /* =============================================
                FIRESTORE TRANSACTION
-            ========================================= */
+            ============================================= */
 
             const result =
                 await runTransaction(
@@ -2107,7 +2236,7 @@ attendanceButton.addEventListener(
 
                         const latest =
                             await transaction.get(
-                                attendanceDoc.ref
+                                studentDoc.ref
                             );
 
 
@@ -2120,9 +2249,9 @@ attendanceButton.addEventListener(
                             {};
 
 
-                        /* --------------------------------
+                        /* =================================
                            DUPLICATE CHECK
-                        -------------------------------- */
+                        ================================= */
 
                         if (
                             attendance[today] ===
@@ -2137,9 +2266,9 @@ attendanceButton.addEventListener(
                         }
 
 
-                        /* --------------------------------
-                           SAVE ATTENDANCE
-                        -------------------------------- */
+                        /* =================================
+                           SAVE
+                        ================================= */
 
                         attendance[today] =
                             "Present";
@@ -2147,19 +2276,35 @@ attendanceButton.addEventListener(
 
                         transaction.update(
 
-                            attendanceDoc.ref,
+                            studentDoc.ref,
 
                             {
+
                                 attendance:
-                                    attendance
+                                    attendance,
+
+                                lastAttendanceDate:
+                                    today,
+
+                                lastAttendanceTime:
+                                    currentTime,
+
+                                lastAttendanceLatitude:
+                                    latitude,
+
+                                lastAttendanceLongitude:
+                                    longitude
+
                             }
 
                         );
 
 
                         return {
+
                             alreadyMarked:
                                 false
+
                         };
 
                     }
@@ -2167,18 +2312,19 @@ attendanceButton.addEventListener(
                 );
 
 
-            /* =========================================
+            /* =============================================
                ALREADY MARKED
-            ========================================= */
+            ============================================= */
 
             if (
                 result.alreadyMarked
             ) {
 
-                statusBox.textContent =
+                locationStatus.textContent =
                     "🟡 Already Marked";
 
-                messageBox.innerHTML =
+                locationMessage.innerHTML =
+
                     "आज की attendance पहले ही mark हो चुकी है।<br><br>" +
 
                     "📅 Date: <b>" +
@@ -2193,16 +2339,16 @@ attendanceButton.addEventListener(
             }
 
 
-            /* =========================================
+            /* =============================================
                SUCCESS
-            ========================================= */
+            ============================================= */
 
-            statusBox.textContent =
+            locationStatus.textContent =
                 "🟢 Attendance Marked Successfully";
 
-            messageBox.innerHTML =
+            locationMessage.innerHTML =
 
-                "🎉 Attendance successfully save हो गई!<br><br>" +
+                "🎉 <b>Attendance Successfully Saved!</b><br><br>" +
 
                 "👤 Student: <b>" +
                 currentStudent.name +
@@ -2226,7 +2372,7 @@ attendanceButton.addEventListener(
 
                 "📍 Distance: <b>" +
                 Math.round(distance) +
-                " meters</b>";
+                "m</b>";
 
 
             attendanceButton.innerHTML =
@@ -2239,7 +2385,8 @@ attendanceButton.addEventListener(
 
 
             alert(
-                "✅ Attendance Successfully Marked!\n\n" +
+
+                "✅ ATTENDANCE MARKED!\n\n" +
 
                 "Student: " +
                 currentStudent.name +
@@ -2255,8 +2402,8 @@ attendanceButton.addEventListener(
 
                 "\nTime: " +
                 currentTime
-            );
 
+            );
 
         }
 
@@ -2268,17 +2415,15 @@ attendanceButton.addEventListener(
             );
 
 
-            statusBox.textContent =
+            locationStatus.textContent =
                 "❌ Attendance Failed";
 
-
-            messageBox.innerHTML =
+            locationMessage.innerHTML =
                 error.message;
 
 
             attendanceButton.disabled =
                 false;
-
 
             attendanceButton.innerHTML =
                 "🔄 TRY AGAIN";
