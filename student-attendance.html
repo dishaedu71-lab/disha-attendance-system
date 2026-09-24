@@ -1,287 +1,702 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Student Attendance | Disha Computer Education</title>
 
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/student-attendance.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+/* =====================================================
+   STUDENT ATTENDANCE PAGE
+===================================================== */
+
+.student-attendance-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px 15px;
+
+    background:
+    linear-gradient(
+        rgba(3,8,25,.88),
+        rgba(3,8,25,.92)
+    ),
+    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-attachment:fixed;
+
+}
+
+
+/* MAIN CARD */
+
+.attendance-card{
+
+    width:100%;
+
+    max-width:520px;
+
+    padding:35px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(10,20,50,.96),
+        rgba(5,10,30,.96)
+    );
+
+    border:1px solid rgba(0,229,255,.35);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 0 40px rgba(0,229,255,.12),
+        0 25px 70px rgba(0,0,0,.5);
+
+    color:white;
+
+    text-align:center;
+
+}
+
+
+/* GLOW */
+
+.attendance-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    top:-120px;
+    right:-100px;
+
+    background:#00e5ff;
+
+    opacity:.10;
+
+    filter:blur(70px);
+
+    border-radius:50%;
+
+}
+
+
+.attendance-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    bottom:-100px;
+    left:-80px;
+
+    background:#ff00cc;
+
+    opacity:.08;
+
+    filter:blur(70px);
+
+    border-radius:50%;
+
+}
+
+
+/* HEADER */
+
+.attendance-header{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+.attendance-icon{
+
+    width:75px;
+    height:75px;
+
+    margin:0 auto 18px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:22px;
+
+    font-size:35px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #008cff,
+        #00e5ff
+    );
+
+    box-shadow:
+        0 0 30px rgba(0,229,255,.35);
+
+    animation:
+        attendanceFloat 3s ease-in-out infinite;
+
+}
+
+
+@keyframes attendanceFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+
+.attendance-header h1{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:800;
+
+}
+
+
+.attendance-header h1 span{
+
+    color:#00e5ff;
+
+    text-shadow:
+        0 0 15px rgba(0,229,255,.45);
+
+}
+
+
+.attendance-header p{
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.62);
+
+    font-size:13px;
+
+}
+
+
+/* STUDENT INFO */
+
+.student-info{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:30px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    text-align:left;
+
+}
+
+
+.info-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:8px 0;
+
+}
+
+
+.info-row:not(:last-child){
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+}
+
+
+.info-label{
+
+    color:rgba(255,255,255,.55);
+
+    font-size:12px;
+
+}
+
+
+.info-value{
+
+    color:#fff;
+
+    font-weight:700;
+
+    font-size:13px;
+
+}
+
+
+/* LOCATION STATUS */
+
+.location-box{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,229,255,.05);
+
+    border:
+        1px solid rgba(0,229,255,.20);
+
+}
+
+
+.location-status{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+}
+
+
+.location-dot{
+
+    width:11px;
+    height:11px;
+
+    border-radius:50%;
+
+    background:#ffb300;
+
+    box-shadow:
+        0 0 12px #ffb300;
+
+    animation:
+        locationPulse 1.5s infinite;
+
+}
+
+
+@keyframes locationPulse{
+
+    0%,100%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    50%{
+        transform:scale(1.5);
+        opacity:.5;
+    }
+
+}
+
+
+.location-message{
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.55);
+
+    font-size:11px;
+
+}
+
+
+/* ATTENDANCE BUTTON */
+
+.mark-attendance-btn{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    height:58px;
+
+    margin-top:25px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #007bff,
+            #00d9ff
+        );
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,170,255,.25);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+
+}
+
+
+.mark-attendance-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+}
+
+
+.mark-attendance-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 40px rgba(0,229,255,.35);
+
+}
+
+
+.mark-attendance-btn:hover::before{
+
+    left:140%;
+
+    transition:
+        left .7s ease;
+
+}
+
+
+/* SECURITY TEXT */
+
+.security-note{
+
+    position:relative;
+
+    z-index:2;
+
+    margin-top:18px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:
+        rgba(255,255,255,.48);
+
+    font-size:11px;
+
+    line-height:1.6;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .student-attendance-page{
+
+        padding:15px;
+
+    }
+
+    .attendance-card{
+
+        padding:25px 18px;
+
+        border-radius:22px;
+
+    }
+
+    .attendance-header h1{
+
+        font-size:24px;
+
+    }
+
+    .attendance-icon{
+
+        width:65px;
+        height:65px;
+
+        font-size:30px;
+
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
 
-<nav>
 
-<div class="logo">
-<i class="fa-solid fa-graduation-cap"></i>
-DISHA COMPUTER EDUCATION
-</div>
-
-<ul>
-<li><a href="student-dashboard.html">Dashboard</a></li>
-<li><a href="study.html">Study Portal</a></li>
-</ul>
-
-</nav>
+<div class="student-attendance-page">
 
 
-<section class="attendance-hero">
-
-<div class="glass attendance-page">
-
-<i class="fa-solid fa-calendar-check"></i>
-
-<h2>Student Attendance</h2>
-
-<p>View your attendance details below</p>
-
-</div>
+    <div class="attendance-card">
 
 
-<div class="attendance-container">
+        <!-- HEADER -->
 
-    <!-- Student Information -->
+        <div class="attendance-header">
 
-    <div class="student-info">
+            <div class="attendance-icon">
+                📍
+            </div>
 
-        <h2 id="studentName"></h2>
+            <h1>
+                Student
+                <span>Attendance</span>
+            </h1>
 
-        <p><strong>Student ID :</strong>
-        <span id="studentId"></span></p>
+            <p>
+                Disha Computer Education
+            </p>
 
-        <p><strong>Course :</strong>
-        <span id="course"></span></p>
+        </div>
 
-        <p><strong>Batch :</strong>
-        <span id="batch"></span></p>
+
+        <!-- STUDENT INFORMATION -->
+
+        <div class="student-info">
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Student ID
+                </span>
+
+                <span class="info-value"
+                      id="studentId">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Student Name
+                </span>
+
+                <span class="info-value"
+                      id="studentName">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Course
+                </span>
+
+                <span class="info-value"
+                      id="studentCourse">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="location-box">
+
+            <div class="location-status">
+
+                <span class="location-dot"></span>
+
+                <span id="locationStatus">
+                    Checking Center Location...
+                </span>
+
+            </div>
+
+            <div class="location-message"
+                 id="locationMessage">
+
+                Attendance can only be marked
+                from the institute premises.
+
+            </div>
+
+        </div>
+
+
+        <!-- ATTENDANCE BUTTON -->
+
+        <button
+            type="button"
+            id="markAttendanceBtn"
+            class="mark-attendance-btn">
+
+            📍 VERIFY & MARK ATTENDANCE
+
+        </button>
+
+
+        <!-- SECURITY -->
+
+        <div class="security-note">
+
+            🔐 Secure Attendance System<br>
+
+            Your location and student account
+            will be verified before attendance
+            is recorded.
+
+        </div>
+
 
     </div>
-
-
-    <!-- Attendance Cards -->
-
-    <div class="attendance-cards">
-
-        <div class="att-card">
-            <h3>Total Classes</h3>
-            <h1 id="totalClasses"></h1>
-        </div>
-
-        <div class="att-card">
-            <h3>Present</h3>
-            <h1 id="presentClasses"></h1>
-        </div>
-
-        <div class="att-card">
-            <h3>Absent</h3>
-            <h1 id="absentClasses"></h1>
-        </div>
-
-        <div class="att-card">
-            <h3>Attendance %</h3>
-            <h1 id="attendancePercent"></h1>
-        </div>
-
-    </div>
-
-
-    <!-- Circle -->
-
-    <div class="attendance-circle-box">
-
-        <h2>Overall Attendance</h2>
-
-        <div class="circle">
-
-            <svg width="220" height="220">
-
-                <circle
-                    class="bg"
-                    cx="110"
-                    cy="110"
-                    r="90">
-                </circle>
-
-                <circle
-                    class="progress"
-                    cx="110"
-                    cy="110"
-                    r="90">
-                </circle>
-
-            </svg>
-
-            <div
-            class="percentage-text"
-            id="circlePercentage">
-            91%
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Monthly Attendance -->
-
-    <div class="monthly-attendance">
-
-        <h2>
-        <i class="fa-solid fa-calendar-days"></i>
-        Monthly Attendance Report
-        </h2>
-
-        <div class="month">
-            <span>January</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:95%">95%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>February</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:90%">90%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>March</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:88%">88%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>April</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:100%">100%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>May</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:92%">92%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>June</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:96%">96%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>July</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:91%">91%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>August</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:94%">94%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>September</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:89%">89%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>October</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:93%">93%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>November</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:97%">97%</div>
-            </div>
-        </div>
-
-        <div class="month">
-            <span>December</span>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:98%">98%</div>
-            </div>
-        </div>
-
-    </div>
-    <!-- ================= Month Selector ================= -->
-
-<div class="attendance-history">
-
-    <h2>
-        <i class="fa-solid fa-clock-rotate-left"></i>
-        Attendance History
-    </h2>
-
-   <div class="month-select">
-
-<label for="monthSelect">📅 Select Month</label>
-
-<select id="monthSelect">
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-
-        </select>
-
-    </div>
-   
-    <div class="table-wrapper">
-        
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>Date</th>
-
-                <th>Day</th>
-
-                <th>Status</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="attendanceHistory">
-
-        </tbody>
-
-    </table>
 
 </div>
 
-</div>
 
-</section>
+<script>
 
-<script src="js/student-attendance.js"></script>
+/* =====================================================
+   PART 1 - BASIC STUDENT ATTENDANCE FOUNDATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        console.log(
+            "Student Attendance System Ready"
+        );
+
+
+        const button =
+            document.getElementById(
+                "markAttendanceBtn"
+            );
+
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                alert(
+                    "🔐 Secure attendance verification will be started in the next step."
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
 
 </body>
+
 </html>
