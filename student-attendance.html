@@ -684,185 +684,480 @@
     </div>
 
 </div>
-
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =========================================
+    /* =====================================================
        DISHA COMPUTER EDUCATION
-       CENTER GPS SECURITY
-    ========================================= */
+       ADVANCED GPS CENTER VERIFICATION
+    ===================================================== */
 
+    // Google Maps Center Location
     const CENTER_LATITUDE = 26.7558402;
     const CENTER_LONGITUDE = 82.1374394;
 
-    // Attendance allowed within 50 meters
-    const CENTER_RADIUS = 50;
+    // Attendance allowed area
+    const CENTER_RADIUS = 100; // meters
+
+    // Maximum acceptable GPS uncertainty
+    const MAX_GPS_ACCURACY = 100; // meters
 
     const button = document.getElementById("markAttendanceBtn");
     const status = document.getElementById("locationStatus");
     const message = document.getElementById("locationMessage");
 
-    // Distance calculate करने का function
+    let bestLocation = null;
+    let locationWatcher = null;
+    let attempts = 0;
+
+    /* =====================================================
+       DISTANCE CALCULATION
+    ===================================================== */
+
     function calculateDistance(lat1, lon1, lat2, lon2) {
 
-        const R = 6371000; // Earth radius in meters
+        const R = 6371000;
 
-        const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const dLat =
+            (lat2 - lat1) * Math.PI / 180;
+
+        const dLon =
+            (lon2 - lon1) * Math.PI / 180;
 
         const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLat / 2) *
+            Math.sin(dLat / 2) +
+
             Math.cos(lat1 * Math.PI / 180) *
             Math.cos(lat2 * Math.PI / 180) *
+
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
 
-        const c = 2 * Math.atan2(
-            Math.sqrt(a),
-            Math.sqrt(1 - a)
-        );
+        const c =
+            2 *
+            Math.atan2(
+                Math.sqrt(a),
+                Math.sqrt(1 - a)
+            );
 
         return R * c;
     }
 
-    // GPS verification
-    function checkCenterLocation() {
 
-        status.textContent = "📡 Checking your location...";
-        message.textContent = "कृपया GPS location allow करें...";
+    /* =====================================================
+       RESET UI
+    ===================================================== */
+
+    function resetLocationUI() {
+
+        status.textContent =
+            "📡 Getting Accurate GPS Location...";
+
+        message.innerHTML =
+            "कृपया कुछ seconds wait करें।<br>" +
+            "Phone का GPS आपकी exact location प्राप्त कर रहा है।";
+
         button.disabled = true;
 
-        if (!navigator.geolocation) {
+        button.innerHTML =
+            "📡 VERIFYING LOCATION...";
 
-            status.textContent = "❌ GPS Not Supported";
-            message.textContent =
-                "आपके device/browser में location service उपलब्ध नहीं है।";
-
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-
-            function (position) {
-
-                const studentLatitude =
-                    position.coords.latitude;
-
-                const studentLongitude =
-                    position.coords.longitude;
-
-                const accuracy =
-                    position.coords.accuracy;
-
-                const distance = calculateDistance(
-                    CENTER_LATITUDE,
-                    CENTER_LONGITUDE,
-                    studentLatitude,
-                    studentLongitude
-                );
-
-                console.log("Student Latitude:", studentLatitude);
-                console.log("Student Longitude:", studentLongitude);
-                console.log("GPS Accuracy:", accuracy);
-                console.log("Distance From Center:", distance);
-
-                /* =================================
-                   CENTER के अंदर
-                ================================= */
-
-                if (distance <= CENTER_RADIUS) {
-
-                    status.textContent =
-                        "🟢 Center Location Verified";
-
-                    message.innerHTML =
-                        "आप center के <b>" +
-                        Math.round(distance) +
-                        " meters</b> के अंदर हैं।<br>" +
-                        "Attendance marking allowed.";
-
-                    button.disabled = false;
-
-                    button.innerHTML =
-                        "✅ MARK ATTENDANCE";
-
-                    button.classList.add("location-verified");
-
-                }
-
-                /* =================================
-                   CENTER के बाहर
-                ================================= */
-
-                else {
-
-                    status.textContent =
-                        "🔴 Outside Center Area";
-
-                    message.innerHTML =
-                        "आप center से लगभग <b>" +
-                        Math.round(distance) +
-                        " meters</b> दूर हैं।<br>" +
-                        "Attendance केवल center के 50 meter area में mark की जा सकती है।";
-
-                    button.disabled = true;
-
-                    button.innerHTML =
-                        "🔒 LOCATION NOT VERIFIED";
-
-                    button.classList.remove("location-verified");
-                }
-
-            },
-
-            function (error) {
-
-                console.log("GPS Error:", error);
-
-                status.textContent =
-                    "⚠️ Location Permission Required";
-
-                message.innerHTML =
-                    "Attendance mark करने के लिए अपने phone में <b>Location/GPS ON</b> करें और browser को location permission दें।";
-
-                button.disabled = true;
-            },
-
-            {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0
-            }
+        button.classList.remove(
+            "location-verified"
         );
     }
 
 
-    /* =========================================
-       BUTTON CLICK
-    ========================================= */
+    /* =====================================================
+       PROCESS GPS LOCATION
+    ===================================================== */
 
-    button.addEventListener("click", function () {
+    function processLocation(position) {
 
-        if (button.disabled) {
+        const latitude =
+            position.coords.latitude;
+
+        const longitude =
+            position.coords.longitude;
+
+        const accuracy =
+            position.coords.accuracy;
+
+
+        const distance =
+            calculateDistance(
+                CENTER_LATITUDE,
+                CENTER_LONGITUDE,
+                latitude,
+                longitude
+            );
+
+
+        console.log(
+            "Latitude:",
+            latitude
+        );
+
+        console.log(
+            "Longitude:",
+            longitude
+        );
+
+        console.log(
+            "GPS Accuracy:",
+            accuracy
+        );
+
+        console.log(
+            "Distance:",
+            distance
+        );
+
+
+        /* =================================================
+           SHOW GPS INFORMATION
+        ================================================= */
+
+        const roundedAccuracy =
+            Math.round(accuracy);
+
+        const roundedDistance =
+            Math.round(distance);
+
+
+        /* =================================================
+           GPS ACCURACY TOO LOW
+        ================================================= */
+
+        if (accuracy > MAX_GPS_ACCURACY) {
+
+            status.textContent =
+                "🟡 GPS Accuracy Low";
+
+            message.innerHTML =
+                "📡 GPS Accuracy: <b>" +
+                roundedAccuracy +
+                " meters</b><br><br>" +
+
+                "GPS अभी accurate location नहीं दे रहा है।<br>" +
+
+                "कृपया खुले स्थान में 10–20 seconds रुकें और GPS को location लेने दें।";
+
+            button.disabled = true;
+
+            button.innerHTML =
+                "📡 WAITING FOR ACCURATE GPS";
+
+            button.classList.remove(
+                "location-verified"
+            );
+
             return;
         }
 
-        alert(
-            "📍 Location Verified!\n\n" +
-            "अब अगला security verification step शुरू होगा।"
+
+        /* =================================================
+           CENTER LOCATION VERIFIED
+        ================================================= */
+
+        if (distance <= CENTER_RADIUS) {
+
+            status.textContent =
+                "🟢 Center Location Verified";
+
+            message.innerHTML =
+                "📍 GPS Accuracy: <b>" +
+                roundedAccuracy +
+                " meters</b><br>" +
+
+                "📏 Distance From Center: <b>" +
+                roundedDistance +
+                " meters</b><br><br>" +
+
+                "✅ आप institute के allowed area में हैं।<br>" +
+                "Attendance marking allowed.";
+
+            button.disabled = false;
+
+            button.innerHTML =
+                "✅ MARK ATTENDANCE";
+
+            button.classList.add(
+                "location-verified"
+            );
+
+            // Best location save
+            bestLocation = {
+                latitude: latitude,
+                longitude: longitude,
+                accuracy: accuracy,
+                distance: distance
+            };
+
+        }
+
+
+        /* =================================================
+           OUTSIDE CENTER
+        ================================================= */
+
+        else {
+
+            status.textContent =
+                "🔴 Outside Center Area";
+
+            message.innerHTML =
+                "📡 GPS Accuracy: <b>" +
+                roundedAccuracy +
+                " meters</b><br>" +
+
+                "📏 Distance From Center: <b>" +
+                roundedDistance +
+                " meters</b><br><br>" +
+
+                "❌ Attendance केवल institute के " +
+                CENTER_RADIUS +
+                " meter area में mark की जा सकती है।";
+
+            button.disabled = true;
+
+            button.innerHTML =
+                "🔒 LOCATION NOT VERIFIED";
+
+            button.classList.remove(
+                "location-verified"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GPS ERROR
+    ===================================================== */
+
+    function gpsError(error) {
+
+        console.log(
+            "GPS Error:",
+            error
         );
 
-    });
+
+        let errorMessage =
+            "Location प्राप्त नहीं हो सकी।";
 
 
-    // Page खुलते ही location check
-    checkCenterLocation();
+        if (error.code === 1) {
+
+            errorMessage =
+                "Location permission denied है।";
+
+        }
+
+        else if (error.code === 2) {
+
+            errorMessage =
+                "GPS location उपलब्ध नहीं है।";
+
+        }
+
+        else if (error.code === 3) {
+
+            errorMessage =
+                "GPS request timeout हो गया।";
+
+        }
+
+
+        status.textContent =
+            "⚠️ Location Error";
+
+        message.innerHTML =
+            errorMessage +
+            "<br><br>" +
+
+            "कृपया Phone में <b>Location/GPS ON</b> करें और browser को location permission दें।";
+
+
+        button.disabled = true;
+
+        button.innerHTML =
+            "📍 TRY LOCATION AGAIN";
+
+        button.classList.remove(
+            "location-verified"
+        );
+
+    }
+
+
+    /* =====================================================
+       GET CURRENT LOCATION
+    ===================================================== */
+
+    function getAccurateLocation() {
+
+        resetLocationUI();
+
+        attempts = 0;
+
+        if (!navigator.geolocation) {
+
+            status.textContent =
+                "❌ GPS Not Supported";
+
+            message.textContent =
+                "आपके browser/device में GPS location support नहीं है।";
+
+            return;
+        }
+
+
+        /* =================================================
+           CONTINUOUS GPS WATCH
+           इससे GPS को बेहतर accuracy मिलने का मौका मिलेगा
+        ================================================= */
+
+        locationWatcher =
+            navigator.geolocation.watchPosition(
+
+                function (position) {
+
+                    attempts++;
+
+                    console.log(
+                        "GPS Attempt:",
+                        attempts
+                    );
+
+                    processLocation(position);
+
+
+                    /*
+                       अगर अच्छी accuracy मिल गई
+                       तो watcher बंद कर दें
+                    */
+
+                    if (
+                        position.coords.accuracy <= 30 &&
+                        bestLocation
+                    ) {
+
+                        navigator.geolocation.clearWatch(
+                            locationWatcher
+                        );
+
+                        console.log(
+                            "High accuracy GPS locked."
+                        );
+
+                    }
+
+                },
+
+                function (error) {
+
+                    gpsError(error);
+
+                },
+
+                {
+
+                    enableHighAccuracy: true,
+
+                    timeout: 20000,
+
+                    maximumAge: 0
+
+                }
+
+            );
+
+
+        /*
+           Maximum 30 seconds बाद GPS watcher बंद
+        */
+
+        setTimeout(function () {
+
+            if (locationWatcher !== null) {
+
+                navigator.geolocation.clearWatch(
+                    locationWatcher
+                );
+
+                locationWatcher = null;
+
+                console.log(
+                    "GPS watcher stopped."
+                );
+
+            }
+
+        }, 30000);
+
+    }
+
+
+    /* =====================================================
+       ATTENDANCE BUTTON
+    ===================================================== */
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            if (button.disabled) {
+
+                return;
+
+            }
+
+
+            if (!bestLocation) {
+
+                alert(
+                    "⚠️ पहले location verification पूरा होने दें।"
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                "📍 Location Verified!\n\n" +
+
+                "Distance: " +
+                Math.round(
+                    bestLocation.distance
+                ) +
+                " meters\n" +
+
+                "GPS Accuracy: " +
+                Math.round(
+                    bestLocation.accuracy
+                ) +
+                " meters\n\n" +
+
+                "अब अगला security verification step शुरू होगा।"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       START GPS CHECK
+    ===================================================== */
+
+    getAccurateLocation();
 
 });
 </script>
-
 </body>
 
 </html>
