@@ -62,14 +62,66 @@ Choose any option below
 <p>View Profile</p>
 
 </a>
-<div class="card">
- <a href="student-attendance.html">
+<a href="student-attendance.html" class="card">
 
-<i class="fa-solid fa-calendar-check"></i>
+    <i class="fa-solid fa-calendar-check"></i>
 
-<h3>Attendance</h3>
+    <h3>Attendance</h3>
 
-<p>View Attendance</p>
+    <p>Mark / View Attendance</p>
+
+</a>
+
+
+<!-- ================================
+     MY ATTENDANCE SUMMARY
+================================ -->
+
+<div class="card attendance-summary-card">
+
+    <i class="fa-solid fa-chart-pie"></i>
+
+    <h3>My Attendance</h3>
+
+    <div
+        id="studentAttendancePercent"
+        style="
+            font-size:32px;
+            font-weight:bold;
+            margin:10px 0;
+        "
+    >
+        --
+    </div>
+
+    <p id="studentAttendanceStatus">
+        Loading Attendance...
+    </p>
+
+    <div
+        style="
+            margin-top:12px;
+            font-size:14px;
+            line-height:1.8;
+        "
+    >
+
+        <div>
+            🟢 Present:
+            <b id="studentPresentCount">0</b>
+        </div>
+
+        <div>
+            🔴 Absent:
+            <b id="studentAbsentCount">0</b>
+        </div>
+
+        <div>
+            📊 Total:
+            <b id="studentTotalCount">0</b>
+        </div>
+
+    </div>
 
 </div>
 
@@ -183,5 +235,385 @@ OK
 </div>
 
 </div>
+ <script type="module" src="js/student-dashboard.js"></script>
+<script src="js/money-rain.js"></script>
+ <script type="module">
+
+import {
+    initializeApp,
+    getApps,
+    getApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCi0gz9XPJvAUUaMaGYXEC2jTQuOmkRRGM",
+
+    authDomain:
+    "disha-attendance-system.firebaseapp.com",
+
+    projectId:
+    "disha-attendance-system",
+
+    storageBucket:
+    "disha-attendance-system.firebasestorage.app",
+
+    messagingSenderId:
+    "492796083174",
+
+    appId:
+    "1:492796083174:web:3bdfa2b30071c3fae07427",
+
+    measurementId:
+    "G-YP9RLS7XJE"
+
+};
+
+
+/* ==========================================
+   EXISTING APP USE करें
+========================================== */
+
+const app =
+    getApps().length
+    ? getApp()
+    : initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* ==========================================
+   LOAD STUDENT ATTENDANCE
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if(!user){
+
+            return;
+
+        }
+
+
+        try{
+
+            /* ==============================
+               FIND STUDENT ACCOUNT
+            ============================== */
+
+            const accountQuery =
+                query(
+
+                    collection(
+                        db,
+                        "studentAccounts"
+                    ),
+
+                    where(
+                        "uid",
+                        "==",
+                        user.uid
+                    )
+
+                );
+
+
+            const accountSnapshot =
+                await getDocs(
+                    accountQuery
+                );
+
+
+            if(accountSnapshot.empty){
+
+                return;
+
+            }
+
+
+            const account =
+                accountSnapshot.docs[0].data();
+
+
+            const studentId =
+                account.studentId || "";
+
+            const studentName =
+                account.name || "";
+
+            const studentCourse =
+                account.course || "";
+
+
+            /* ==============================
+               FIND ATTENDANCE RECORD
+            ============================== */
+
+            let studentSnapshot =
+                null;
+
+
+            /* First Student ID */
+
+            if(studentId){
+
+                const idQuery =
+                    query(
+
+                        collection(
+                            db,
+                            "students"
+                        ),
+
+                        where(
+                            "studentId",
+                            "==",
+                            studentId
+                        )
+
+                    );
+
+
+                studentSnapshot =
+                    await getDocs(
+                        idQuery
+                    );
+
+            }
+
+
+            /* ==============================
+               FALLBACK NAME + COURSE
+            ============================== */
+
+            if(
+                !studentSnapshot ||
+                studentSnapshot.empty
+            ){
+
+                const nameQuery =
+                    query(
+
+                        collection(
+                            db,
+                            "students"
+                        ),
+
+                        where(
+                            "name",
+                            "==",
+                            studentName
+                        ),
+
+                        where(
+                            "course",
+                            "==",
+                            studentCourse
+                        )
+
+                    );
+
+
+                studentSnapshot =
+                    await getDocs(
+                        nameQuery
+                    );
+
+            }
+
+
+            if(
+                !studentSnapshot ||
+                studentSnapshot.empty
+            ){
+
+                document.getElementById(
+                    "studentAttendancePercent"
+                ).innerText =
+                    "0%";
+
+                document.getElementById(
+                    "studentAttendanceStatus"
+                ).innerText =
+                    "Attendance Record Not Found";
+
+                return;
+
+            }
+
+
+            const studentData =
+                studentSnapshot.docs[0].data();
+
+
+            const attendance =
+                studentData.attendance || {};
+
+
+            /* ==============================
+               CALCULATE
+            ============================== */
+
+            let present = 0;
+
+            let absent = 0;
+
+
+            Object.values(
+                attendance
+            ).forEach(
+                status => {
+
+                    if(
+                        status === "Present"
+                    ){
+
+                        present++;
+
+                    }
+
+                    if(
+                        status === "Absent"
+                    ){
+
+                        absent++;
+
+                    }
+
+                }
+            );
+
+
+            const total =
+                present + absent;
+
+
+            let percentage = 0;
+
+
+            if(total > 0){
+
+                percentage =
+                    (
+                        present /
+                        total
+                    ) *
+                    100;
+
+            }
+
+
+            percentage =
+                percentage.toFixed(1);
+
+
+            /* ==============================
+               DISPLAY
+            ============================== */
+
+            document.getElementById(
+                "studentAttendancePercent"
+            ).innerText =
+                percentage + "%";
+
+
+            document.getElementById(
+                "studentPresentCount"
+            ).innerText =
+                present;
+
+
+            document.getElementById(
+                "studentAbsentCount"
+            ).innerText =
+                absent;
+
+
+            document.getElementById(
+                "studentTotalCount"
+            ).innerText =
+                total;
+
+
+            /* ==============================
+               STATUS
+            ============================== */
+
+            const statusBox =
+                document.getElementById(
+                    "studentAttendanceStatus"
+                );
+
+
+            if(
+                percentage >= 75
+            ){
+
+                statusBox.innerText =
+                    "🟢 Good Attendance";
+
+            }
+
+            else if(
+                percentage >= 60
+            ){
+
+                statusBox.innerText =
+                    "🟡 Attendance Needs Attention";
+
+            }
+
+            else{
+
+                statusBox.innerText =
+                    "🔴 Low Attendance";
+
+            }
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Student Attendance Error:",
+                error
+            );
+
+        }
+
+    }
+
+);
+
+</script>
 </body>
 </html>
