@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -453,7 +454,7 @@ const CENTER_RADIUS = 100;
    GPS ACCURACY
 ================================================== */
 
-const MAX_GPS_ACCURACY = 150;
+const MAX_GPS_ACCURACY = 2000;
 
 
 /* ==================================================
@@ -908,10 +909,10 @@ function checkLocation(){
                     "कृपया बाहर/खुले स्थान में जाकर GPS फिर से ON करें।";
 
 
-                attendanceButton.disabled = true;
+                attendanceButton.disabled = false;
 
                 attendanceButton.textContent =
-                    "📡 TRY AGAIN";
+                    "🔄 TRY AGAIN";
 
 
                 return;
@@ -923,10 +924,15 @@ function checkLocation(){
                CENTER DISTANCE CHECK
             ====================================== */
 
-            if(
-                distance <=
-                CENTER_RADIUS
-            ){
+            /*
+               When GPS accuracy is weak, use the reported accuracy
+               as a confidence radius. When GPS is accurate, the
+               normal 100m center radius remains active.
+            */
+            const allowedRadius =
+                Math.max(CENTER_RADIUS, accuracy);
+
+            if(distance <= allowedRadius){
 
                 locationVerified = true;
 
@@ -939,9 +945,10 @@ function checkLocation(){
 
 
                 locationMessage.innerHTML =
-                    "आप institute के अंदर हैं।<br>" +
-                    "Distance: <b>" +
-                    Math.round(distance) +
+                    "आप institute के अंदर / GPS confidence range में हैं।<br>" +
+                    "Distance: <b>" + Math.round(distance) +
+                    " meters</b><br>" +
+                    "GPS Accuracy: <b>" + Math.round(accuracy) +
                     " meters</b>";
 
 
@@ -1025,10 +1032,10 @@ function checkLocation(){
                 message;
 
 
-            attendanceButton.disabled = true;
+            attendanceButton.disabled = false;
 
             attendanceButton.textContent =
-                "📡 TRY AGAIN";
+                "🔄 TRY AGAIN";
 
         },
 
@@ -1065,10 +1072,8 @@ attendanceButton.addEventListener(
 
         if(!locationVerified){
 
-            alert(
-                "पहले center location verify करें।"
-            );
-
+            /* TRY AGAIN button now re-runs GPS verification */
+            checkLocation();
             return;
 
         }
