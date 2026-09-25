@@ -1091,47 +1091,35 @@ attendanceButton.addEventListener(
                 getToday();
 
 
-            /* ======================================
+          /* ======================================
    FIND STUDENT IN students COLLECTION
-   MATCH USING MOBILE NUMBER
+   MATCH USING NAME + COURSE
 ====================================== */
 
-const studentQuery =
-    query(
-        collection(
-            db,
-            "students"
-        ),
+const studentQuery = query(
+    collection(db, "students"),
 
-        where(
-            "mobile",
-            "==",
-            currentStudent.mobile
-        )
-    );
+    where("name", "==", currentStudent.name),
 
-const studentSnapshot =
-    await getDocs(
-        studentQuery
-    );
+    where("course", "==", currentStudent.course)
+);
+
+const studentSnapshot = await getDocs(studentQuery);
 
 if(studentSnapshot.empty){
 
     throw new Error(
-        "students collection में इस Mobile Number का Student नहीं मिला."
+        "students collection में Student Name + Course नहीं मिला."
     );
-
 }
 
-const studentDoc =
-    studentSnapshot.docs[0];
+const studentDoc = studentSnapshot.docs[0];
 
-const studentRef =
-    doc(
-        db,
-        "students",
-        studentDoc.id
-    );
+const studentRef = doc(
+    db,
+    "students",
+    studentDoc.id
+);
 
 console.log(
     "Attendance Student Found:",
