@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1054,11 +1055,17 @@ function checkLocation(){
 
 /* ==================================================
    MARK ATTENDANCE
+   FINAL STUDENT-ID BASED SYSTEM
 ================================================== */
 
 attendanceButton.addEventListener(
     "click",
     async function(){
+
+        /* ------------------------------------------
+           IF LOCATION IS NOT VERIFIED:
+           BUTTON WORKS AS TRY AGAIN
+        ------------------------------------------ */
 
         if(!currentStudent){
 
@@ -1069,12 +1076,9 @@ attendanceButton.addEventListener(
             return;
         }
 
-
         if(!locationVerified){
 
-            alert(
-                "पहले center location verify करें."
-            );
+            checkLocation();
 
             return;
         }
@@ -1088,22 +1092,31 @@ attendanceButton.addEventListener(
 
         try{
 
-            const today =
-                getToday();
+            const today = getToday();
+
+            const studentId =
+                String(currentStudent.studentId || "").trim();
+
+            if(!studentId){
+
+                throw new Error(
+                    "Student ID नहीं मिली."
+                );
+
+            }
 
 
             /* ==========================================
                STEP 1
-               STUDENT ID से studentsERP में STUDENT FIND
+               STUDENT ID से studentsERP MASTER RECORD
             ========================================== */
 
             const erpRef =
                 doc(
                     db,
                     "studentsERP",
-                    currentStudent.studentId
+                    studentId
                 );
-
 
             const erpSnap =
                 await getDoc(erpRef);
@@ -1113,7 +1126,7 @@ attendanceButton.addEventListener(
 
                 throw new Error(
                     "studentsERP में Student ID नहीं मिली: " +
-                    currentStudent.studentId
+                    studentId
                 );
 
             }
@@ -1121,6 +1134,22 @@ attendanceButton.addEventListener(
 
             const erpData =
                 erpSnap.data();
+
+
+            const studentName =
+                erpData.name ||
+                currentStudent.name ||
+                "";
+
+            const studentCourse =
+                erpData.course ||
+                currentStudent.course ||
+                "";
+
+            const studentMobile =
+                erpData.mobile ||
+                currentStudent.mobile ||
+                "";
 
 
             console.log(
@@ -1131,100 +1160,138 @@ attendanceButton.addEventListener(
 
             /* ==========================================
                STEP 2
-               ERP से STUDENT NAME + COURSE
+               EXISTING students RECORD FIND
+
+               Priority:
+               1. studentId field
+               2. document ID = studentId
+               3. name + course
+
+               कोई manual entry required नहीं
             ========================================== */
 
-            const studentName =
-                erpData.name ||
-                currentStudent.name ||
-                "";
-
-
-            const studentCourse =
-                erpData.course ||
-                currentStudent.course ||
-                "";
-
-
-            if(!studentName){
-
-                throw new Error(
-                    "Student Name नहीं मिला."
+            const studentsSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "students"
+                    )
                 );
 
-            }
+
+            let matchedDoc = null;
+
+
+            studentsSnapshot.forEach(
+                (item) => {
+
+                    const data =
+                        item.data();
+
+
+                    /* 1. Student ID field */
+
+                    if(
+                        !matchedDoc &&
+                        String(
+                            data.studentId || ""
+                        ).trim() === studentId
+                    ){
+
+                        matchedDoc = item;
+
+                    }
+
+
+                    /* 2. Document ID */
+
+                    if(
+                        !matchedDoc &&
+                        item.id === studentId
+                    ){
+
+                        matchedDoc = item;
+
+                    }
+
+
+                    /* 3. Existing old attendance
+                       record */
+
+                    if(
+                        !matchedDoc &&
+                        String(
+                            data.name || ""
+                        ).trim().toLowerCase()
+                        ===
+                        String(
+                            studentName
+                        ).trim().toLowerCase()
+                        &&
+                        String(
+                            data.course || ""
+                        ).trim().toLowerCase()
+                        ===
+                        String(
+                            studentCourse
+                        ).trim().toLowerCase()
+                    ){
+
+                        matchedDoc = item;
+
+                    }
+
+                }
+            );
 
 
             /* ==========================================
                STEP 3
-               EXISTING students COLLECTION में
-               उसी STUDENT को FIND करें
+               USE EXISTING RECORD OR CREATE AUTOMATICALLY
             ========================================== */
 
-            const studentQuery =
-                query(
+            let studentRef;
 
-                    collection(
+
+            if(matchedDoc){
+
+                studentRef =
+                    doc(
                         db,
-                        "students"
-                    ),
+                        "students",
+                        matchedDoc.id
+                    );
 
-                    where(
-                        "name",
-                        "==",
-                        studentName
-                    ),
+            }
+            else{
 
-                    where(
-                        "course",
-                        "==",
-                        studentCourse
-                    )
+                /*
+                   No old record found.
 
-                );
+                   Automatically create a new
+                   attendance record using Student ID
+                   as Firestore document ID.
+                */
 
-
-            const studentSnapshot =
-                await getDocs(
-                    studentQuery
-                );
-
-
-            if(studentSnapshot.empty){
-
-                throw new Error(
-                    "Attendance record नहीं मिला।<br>" +
-                    "Student: " +
-                    studentName +
-                    "<br>" +
-                    "Course: " +
-                    studentCourse
-                );
+                studentRef =
+                    doc(
+                        db,
+                        "students",
+                        studentId
+                    );
 
             }
 
 
-            const studentDoc =
-                studentSnapshot.docs[0];
-
-
-            const studentRef =
-                doc(
-                    db,
-                    "students",
-                    studentDoc.id
-                );
-
-
             console.log(
-                "Attendance Record Found:",
-                studentDoc.data()
+                "Attendance Document:",
+                studentRef.id
             );
 
 
             /* ==========================================
                STEP 4
-               FIRESTORE TRANSACTION
+               SAVE ATTENDANCE
             ========================================== */
 
             await runTransaction(
@@ -1237,26 +1304,23 @@ attendanceButton.addEventListener(
                         );
 
 
-                    if(!snap.exists()){
+                    let data = {};
 
-                        throw new Error(
-                            "Student attendance record नहीं मिला."
-                        );
+                    if(snap.exists()){
+
+                        data =
+                            snap.data();
 
                     }
-
-
-                    const data =
-                        snap.data();
 
 
                     const attendance =
                         data.attendance || {};
 
 
-                    /* ==================================
+                    /* ----------------------------------
                        DUPLICATE CHECK
-                    ================================== */
+                    ---------------------------------- */
 
                     if(
                         attendance[today] ===
@@ -1270,17 +1334,29 @@ attendanceButton.addEventListener(
                     }
 
 
-                    /* ==================================
+                    /* ----------------------------------
                        MARK PRESENT
-                    ================================== */
+                    ---------------------------------- */
 
                     attendance[today] =
                         "Present";
 
 
-                    transaction.update(
+                    transaction.set(
                         studentRef,
                         {
+
+                            studentId:
+                                studentId,
+
+                            name:
+                                studentName,
+
+                            course:
+                                studentCourse,
+
+                            mobile:
+                                studentMobile,
 
                             attendance:
                                 attendance,
@@ -1297,6 +1373,9 @@ attendanceButton.addEventListener(
                             attendanceLongitude:
                                 null
 
+                        },
+                        {
+                            merge:true
                         }
                     );
 
@@ -1322,8 +1401,10 @@ attendanceButton.addEventListener(
                 studentName +
                 "</b><br>" +
                 "Student ID: " +
-                currentStudent.studentId;
+                studentId;
 
+
+            attendanceButton.disabled = true;
 
             attendanceButton.textContent =
                 "✅ ATTENDANCE MARKED";
@@ -1332,7 +1413,6 @@ attendanceButton.addEventListener(
             alert(
                 "✅ Attendance Successfully Marked!"
             );
-
 
         }
 
