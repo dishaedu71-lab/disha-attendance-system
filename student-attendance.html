@@ -433,31 +433,28 @@ const attendanceButton =
 
 
 /* ==================================================
-   CENTER LOCATION
-
-   IMPORTANT:
-   फिलहाल यहाँ वही coordinates रखे गए हैं
-   जो आपके पुराने attendance page में थे।
+   FINAL CENTER LOCATION
 ================================================== */
 
-const CENTER_LATITUDE = 26.7558402;
+const CENTER_LATITUDE = 26.7557355;
 
-const CENTER_LONGITUDE = 82.1374394;
+const CENTER_LONGITUDE = 82.1374452;
 
 
 /* ==================================================
-   ATTENDANCE RADIUS
+   FINAL ATTENDANCE RADIUS
+   केवल 35 meter के अंदर attendance
 ================================================== */
 
-const CENTER_RADIUS = 100;
+const CENTER_RADIUS = 35;
 
 
 /* ==================================================
-   GPS ACCURACY
+   GPS ACCURACY SECURITY
+   Accuracy 30 meter से खराब हुई तो reject
 ================================================== */
 
-const MAX_GPS_ACCURACY = 2000;
-
+const MAX_GPS_ACCURACY = 30;
 
 /* ==================================================
    CURRENT STUDENT
