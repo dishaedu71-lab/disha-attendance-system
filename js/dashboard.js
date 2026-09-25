@@ -611,6 +611,21 @@ function renderTable(
                         📜 History
                     </button>
 
+                    <button
+    onclick="showGPSAudit(${index})"
+    style="
+        margin:4px;
+        background:#0ea5e9;
+        color:white;
+        border:none;
+        padding:7px 10px;
+        border-radius:7px;
+        cursor:pointer;
+    "
+>
+    📍 GPS Audit
+</button>
+
 
                     ${whatsappButton}
 
@@ -1368,6 +1383,9 @@ window.saveAttendance =
 window.setStatus =
     setStatus;
 
+window.showGPSAudit =
+    showGPSAudit;
+
 window.editStudent =
     editStudent;
 
@@ -1460,3 +1478,171 @@ if (
 // ==================================================
 
 renderTable();
+
+/* ==================================================
+   GPS AUDIT
+================================================== */
+
+function showGPSAudit(index){
+
+    const student =
+        students[index];
+
+
+    const date =
+        document.getElementById(
+            "attendanceDate"
+        ).value;
+
+
+    const attendance =
+        student.attendance || {};
+
+
+    if(
+        attendance[date] !== "Present"
+    ){
+
+        alert(
+            "इस date पर Student Present नहीं है."
+        );
+
+        return;
+
+    }
+
+
+    const latitude =
+        student.attendanceLatitude;
+
+
+    const longitude =
+        student.attendanceLongitude;
+
+
+    const accuracy =
+        student.attendanceGPSAccuracy;
+
+
+    const distance =
+        student.attendanceDistance;
+
+
+    const method =
+        student.attendanceMethod;
+
+
+    if(
+        !latitude ||
+        !longitude
+    ){
+
+        alert(
+            "इस attendance के लिए GPS Audit Data उपलब्ध नहीं है."
+        );
+
+        return;
+
+    }
+
+
+    const html = `
+
+        <div
+            style="
+                background:#111827;
+                color:white;
+                padding:25px;
+                border-radius:15px;
+                line-height:2;
+            "
+        >
+
+            <h2>
+                📍 GPS Attendance Audit
+            </h2>
+
+            <hr>
+
+            <b>Student:</b>
+            ${student.name || "-"}
+
+            <br>
+
+            <b>Student ID:</b>
+            ${student.studentId || student.roll || "-"}
+
+            <br>
+
+            <b>Date:</b>
+            ${date}
+
+            <br>
+
+            <b>Time:</b>
+            ${student.lastAttendanceTime || "-"}
+
+            <br>
+
+            <b>Method:</b>
+            ${method || "Student Self Attendance"}
+
+            <br><br>
+
+            <b>📍 Latitude:</b>
+            ${latitude}
+
+            <br>
+
+            <b>📍 Longitude:</b>
+            ${longitude}
+
+            <br>
+
+            <b>📏 Distance:</b>
+            ${distance || "-"} meters
+
+            <br>
+
+            <b>📡 GPS Accuracy:</b>
+            ${accuracy || "-"} meters
+
+            <br><br>
+
+            <div
+                style="
+                    background:#064e3b;
+                    padding:12px;
+                    border-radius:10px;
+                "
+            >
+
+                ✅ GPS Verification Successful
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    const modal =
+        document.getElementById(
+            "historyModal"
+        );
+
+
+    const content =
+        document.getElementById(
+            "historyContent"
+        );
+
+
+    content.innerHTML =
+        html;
+
+
+    modal.style.display =
+        "flex";
+
+}
