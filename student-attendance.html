@@ -1092,52 +1092,51 @@ attendanceButton.addEventListener(
 
 
             /* ======================================
-               FIND STUDENT IN students COLLECTION
-            ====================================== */
+   FIND STUDENT IN students COLLECTION
+   MATCH USING MOBILE NUMBER
+====================================== */
 
-            const studentQuery =
-                query(
+const studentQuery =
+    query(
+        collection(
+            db,
+            "students"
+        ),
 
-                    collection(
-                        db,
-                        "students"
-                    ),
+        where(
+            "mobile",
+            "==",
+            currentStudent.mobile
+        )
+    );
 
-                    where(
-                        "studentId",
-                        "==",
-                        currentStudent.studentId
-                    )
+const studentSnapshot =
+    await getDocs(
+        studentQuery
+    );
 
-                );
+if(studentSnapshot.empty){
 
+    throw new Error(
+        "students collection में इस Mobile Number का Student नहीं मिला."
+    );
 
-            const studentSnapshot =
-                await getDocs(
-                    studentQuery
-                );
+}
 
+const studentDoc =
+    studentSnapshot.docs[0];
 
-            if(studentSnapshot.empty){
+const studentRef =
+    doc(
+        db,
+        "students",
+        studentDoc.id
+    );
 
-                throw new Error(
-                    "students collection में Student ID नहीं मिली."
-                );
-
-            }
-
-
-            const studentDoc =
-                studentSnapshot.docs[0];
-
-
-            const studentRef =
-                doc(
-                    db,
-                    "students",
-                    studentDoc.id
-                );
-
+console.log(
+    "Attendance Student Found:",
+    studentDoc.data()
+);
 
             /* ======================================
                FIRESTORE TRANSACTION
