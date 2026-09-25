@@ -360,6 +360,7 @@ import {
     query,
     where,
     getDocs,
+    getDoc,
     doc,
     runTransaction
 }
@@ -1062,20 +1063,20 @@ attendanceButton.addEventListener(
         if(!currentStudent){
 
             alert(
-                "Student verification complete नहीं है।"
+                "Student verification complete नहीं है."
             );
 
             return;
-
         }
 
 
         if(!locationVerified){
 
-            /* TRY AGAIN button now re-runs GPS verification */
-            checkLocation();
-            return;
+            alert(
+                "पहले center location verify करें."
+            );
 
+            return;
         }
 
 
@@ -1091,44 +1092,140 @@ attendanceButton.addEventListener(
                 getToday();
 
 
-          /* ======================================
-   FIND STUDENT IN students COLLECTION
-   MATCH USING NAME + COURSE
-====================================== */
+            /* ==========================================
+               STEP 1
+               STUDENT ID से studentsERP में STUDENT FIND
+            ========================================== */
 
-const studentQuery = query(
-    collection(db, "students"),
+            const erpRef =
+                doc(
+                    db,
+                    "studentsERP",
+                    currentStudent.studentId
+                );
 
-    where("name", "==", currentStudent.name),
 
-    where("course", "==", currentStudent.course)
-);
+            const erpSnap =
+                await getDoc(erpRef);
 
-const studentSnapshot = await getDocs(studentQuery);
 
-if(studentSnapshot.empty){
+            if(!erpSnap.exists()){
 
-    throw new Error(
-        "students collection में Student Name + Course नहीं मिला."
-    );
-}
+                throw new Error(
+                    "studentsERP में Student ID नहीं मिली: " +
+                    currentStudent.studentId
+                );
 
-const studentDoc = studentSnapshot.docs[0];
+            }
 
-const studentRef = doc(
-    db,
-    "students",
-    studentDoc.id
-);
 
-console.log(
-    "Attendance Student Found:",
-    studentDoc.data()
-);
+            const erpData =
+                erpSnap.data();
 
-            /* ======================================
+
+            console.log(
+                "ERP Student:",
+                erpData
+            );
+
+
+            /* ==========================================
+               STEP 2
+               ERP से STUDENT NAME + COURSE
+            ========================================== */
+
+            const studentName =
+                erpData.name ||
+                currentStudent.name ||
+                "";
+
+
+            const studentCourse =
+                erpData.course ||
+                currentStudent.course ||
+                "";
+
+
+            if(!studentName){
+
+                throw new Error(
+                    "Student Name नहीं मिला."
+                );
+
+            }
+
+
+            /* ==========================================
+               STEP 3
+               EXISTING students COLLECTION में
+               उसी STUDENT को FIND करें
+            ========================================== */
+
+            const studentQuery =
+                query(
+
+                    collection(
+                        db,
+                        "students"
+                    ),
+
+                    where(
+                        "name",
+                        "==",
+                        studentName
+                    ),
+
+                    where(
+                        "course",
+                        "==",
+                        studentCourse
+                    )
+
+                );
+
+
+            const studentSnapshot =
+                await getDocs(
+                    studentQuery
+                );
+
+
+            if(studentSnapshot.empty){
+
+                throw new Error(
+                    "Attendance record नहीं मिला।<br>" +
+                    "Student: " +
+                    studentName +
+                    "<br>" +
+                    "Course: " +
+                    studentCourse
+                );
+
+            }
+
+
+            const studentDoc =
+                studentSnapshot.docs[0];
+
+
+            const studentRef =
+                doc(
+                    db,
+                    "students",
+                    studentDoc.id
+                );
+
+
+            console.log(
+                "Attendance Record Found:",
+                studentDoc.data()
+            );
+
+
+            /* ==========================================
+               STEP 4
                FIRESTORE TRANSACTION
-            ====================================== */
+            ========================================== */
 
             await runTransaction(
                 db,
@@ -1143,7 +1240,7 @@ console.log(
                     if(!snap.exists()){
 
                         throw new Error(
-                            "Student record not found."
+                            "Student attendance record नहीं मिला."
                         );
 
                     }
@@ -1157,9 +1254,9 @@ console.log(
                         data.attendance || {};
 
 
-                    /* ==============================
+                    /* ==================================
                        DUPLICATE CHECK
-                    ============================== */
+                    ================================== */
 
                     if(
                         attendance[today] ===
@@ -1172,6 +1269,10 @@ console.log(
 
                     }
 
+
+                    /* ==================================
+                       MARK PRESENT
+                    ================================== */
 
                     attendance[today] =
                         "Present";
@@ -1203,12 +1304,13 @@ console.log(
             );
 
 
-            /* ======================================
+            /* ==========================================
                SUCCESS
-            ====================================== */
+            ========================================== */
 
             locationStatus.textContent =
                 "✅ Attendance Marked Successfully";
+
 
             locationStatus.className =
                 "success";
@@ -1217,8 +1319,10 @@ console.log(
             locationMessage.innerHTML =
                 "आज की attendance successfully mark हो गई।<br>" +
                 "<b>" +
-                currentStudent.name +
-                "</b>";
+                studentName +
+                "</b><br>" +
+                "Student ID: " +
+                currentStudent.studentId;
 
 
             attendanceButton.textContent =
@@ -1243,6 +1347,7 @@ console.log(
             locationStatus.textContent =
                 "⚠️ Attendance Not Marked";
 
+
             locationStatus.className =
                 "error";
 
@@ -1251,7 +1356,9 @@ console.log(
                 error.message;
 
 
-            attendanceButton.disabled = false;
+            attendanceButton.disabled =
+                false;
+
 
             attendanceButton.textContent =
                 "📍 MARK ATTENDANCE";
@@ -1260,7 +1367,6 @@ console.log(
 
     }
 );
-
 </script>
 
 </body>
