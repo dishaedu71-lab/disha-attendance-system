@@ -572,6 +572,32 @@ function getCurrentTime(){
     );
 
 }
+    /* ==================================================
+   ATTENDANCE TIME SECURITY
+   08:00 AM TO 06:00 PM
+================================================== */
+
+function isAttendanceTimeAllowed(){
+
+    const now = new Date();
+
+    const currentMinutes =
+        now.getHours() * 60 +
+        now.getMinutes();
+
+    const startTime =
+        8 * 60;       // 08:00 AM
+
+    const endTime =
+        18 * 60;      // 06:00 PM
+
+
+    return (
+        currentMinutes >= startTime &&
+        currentMinutes < endTime
+    );
+
+}
 
 
 /* ==================================================
@@ -1061,6 +1087,32 @@ function checkLocation(){
 attendanceButton.addEventListener(
     "click",
     async function(){
+
+        /* ==========================================
+   TIME SECURITY
+========================================== */
+
+if(!isAttendanceTimeAllowed()){
+
+    locationStatus.textContent =
+        "⏰ Attendance Time Closed";
+
+    locationStatus.className =
+        "error";
+
+    locationMessage.innerHTML =
+        "Student attendance केवल <b>सुबह 8:00 AM से शाम 6:00 PM</b> तक लगाई जा सकती है।<br><br>" +
+        "आज की attendance का समय समाप्त हो चुका है।";
+
+    attendanceButton.disabled =
+        true;
+
+    attendanceButton.textContent =
+        "⏰ TIME CLOSED";
+
+    return;
+
+}
 
         /* ------------------------------------------
            IF LOCATION IS NOT VERIFIED:
