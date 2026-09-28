@@ -1402,5 +1402,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- Footer End -->
     <script src="js/enquiry.js"></script>
+    <script>
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => {
+
+                console.log(
+                    "Disha Computer App Ready"
+                );
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Service Worker Error:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+</script>
 </body>
 </html>
