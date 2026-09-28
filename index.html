@@ -214,6 +214,38 @@ DISHA COMPUTER EDUCATION
 
 </nav>
 
+    <!-- ==============================
+     INSTALL APP BUTTON
+============================== -->
+
+<button
+    id="installAppBtn"
+    style="
+        display:none;
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        z-index:9999;
+
+        padding:14px 22px;
+
+        border:none;
+        border-radius:50px;
+
+        background:#0d6efd;
+        color:white;
+
+        font-size:16px;
+        font-weight:bold;
+
+        cursor:pointer;
+
+        box-shadow:0 8px 25px rgba(0,0,0,.25);
+    "
+>
+    📱 Install App
+</button>
+
 <!-- ============================= -->
 <!-- DISHA IMAGE SLIDER -->
 <!-- ============================= -->
@@ -1428,6 +1460,93 @@ if ("serviceWorker" in navigator) {
     });
 
 }
+</script>
+    <script>
+
+let deferredInstallPrompt = null;
+
+const installAppBtn =
+    document.getElementById("installAppBtn");
+
+
+/* ==========================================
+   ANDROID INSTALL PROMPT
+========================================== */
+
+window.addEventListener(
+    "beforeinstallprompt",
+    (event) => {
+
+        event.preventDefault();
+
+        deferredInstallPrompt = event;
+
+        installAppBtn.style.display =
+            "block";
+
+    }
+);
+
+
+/* ==========================================
+   INSTALL BUTTON CLICK
+========================================== */
+
+installAppBtn.addEventListener(
+    "click",
+    async () => {
+
+        if(!deferredInstallPrompt){
+
+            alert(
+                "App installation अभी उपलब्ध नहीं है."
+            );
+
+            return;
+
+        }
+
+
+        deferredInstallPrompt.prompt();
+
+
+        const result =
+            await deferredInstallPrompt.userChoice;
+
+
+        console.log(
+            "Install result:",
+            result.outcome
+        );
+
+
+        deferredInstallPrompt = null;
+
+        installAppBtn.style.display =
+            "none";
+
+    }
+);
+
+
+/* ==========================================
+   APP INSTALLED
+========================================== */
+
+window.addEventListener(
+    "appinstalled",
+    () => {
+
+        console.log(
+            "Disha Computer App Installed"
+        );
+
+        installAppBtn.style.display =
+            "none";
+
+    }
+);
+
 </script>
 </body>
 </html>
