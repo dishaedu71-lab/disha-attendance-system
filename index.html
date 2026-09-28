@@ -1461,17 +1461,30 @@ if ("serviceWorker" in navigator) {
 
 }
 </script>
-    <script>
-
+  <script>
 let deferredInstallPrompt = null;
 
 const installAppBtn =
     document.getElementById("installAppBtn");
 
 
-/* ==========================================
-   ANDROID INSTALL PROMPT
-========================================== */
+// ==========================================
+// CHECK IF APP IS ALREADY INSTALLED
+// ==========================================
+
+function isAppInstalled() {
+
+    return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+    );
+
+}
+
+
+// ==========================================
+// ANDROID / CHROME INSTALL PROMPT
+// ==========================================
 
 window.addEventListener(
     "beforeinstallprompt",
@@ -1481,72 +1494,139 @@ window.addEventListener(
 
         deferredInstallPrompt = event;
 
-        installAppBtn.style.display =
-            "block";
+        if (!isAppInstalled()) {
+            installAppBtn.style.display = "flex";
+        }
+
+        console.log("Disha App Install Ready");
 
     }
 );
 
 
-/* ==========================================
-   INSTALL BUTTON CLICK
-========================================== */
+// ==========================================
+// INSTALL BUTTON
+// ==========================================
 
 installAppBtn.addEventListener(
     "click",
     async () => {
 
-        if(!deferredInstallPrompt){
+        // Already installed
+        if (isAppInstalled()) {
 
             alert(
-                "App installation अभी उपलब्ध नहीं है."
+                "Disha Computer Education App पहले से installed है."
             );
 
             return;
-
         }
 
 
-        deferredInstallPrompt.prompt();
+        // Android / Chrome install
+        if (deferredInstallPrompt) {
+
+            deferredInstallPrompt.prompt();
+
+            const result =
+                await deferredInstallPrompt.userChoice;
+
+            console.log(
+                "Install Result:",
+                result.outcome
+            );
+
+            deferredInstallPrompt = null;
+
+            installAppBtn.style.display = "none";
+
+            return;
+        }
 
 
-        const result =
-            await deferredInstallPrompt.userChoice;
+        // iPhone / iPad Safari
+        if (
+            /iPhone|iPad|iPod/i.test(
+                navigator.userAgent
+            )
+        ) {
+
+            alert(
+                "iPhone में App Install करने के लिए:\n\n" +
+                "1. नीचे Share button दबाएँ\n" +
+                "2. Add to Home Screen चुनें\n" +
+                "3. Add दबाएँ"
+            );
+
+            return;
+        }
 
 
-        console.log(
-            "Install result:",
-            result.outcome
+        // Browser does not currently provide install prompt
+        alert(
+            "App install option अभी browser द्वारा उपलब्ध नहीं कराया गया है.\n\n" +
+            "Chrome में page को एक बार reload करके फिर कोशिश करें."
         );
-
-
-        deferredInstallPrompt = null;
-
-        installAppBtn.style.display =
-            "none";
 
     }
 );
 
 
-/* ==========================================
-   APP INSTALLED
-========================================== */
+// ==========================================
+// APP INSTALLED
+// ==========================================
 
 window.addEventListener(
     "appinstalled",
     () => {
 
         console.log(
-            "Disha Computer App Installed"
+            "Disha Computer Education App Installed"
         );
 
-        installAppBtn.style.display =
-            "none";
+        deferredInstallPrompt = null;
+
+        installAppBtn.style.display = "none";
 
     }
 );
 
+
+// ==========================================
+// SERVICE WORKER
+// ==========================================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        async () => {
+
+            try {
+
+                const registration =
+                    await navigator.serviceWorker.register(
+                        "./service-worker.js"
+                    );
+
+                console.log(
+                    "Disha Service Worker Registered:",
+                    registration.scope
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Service Worker Error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
 </script>
 </body>
 </html>
