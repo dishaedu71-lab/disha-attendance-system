@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Offline Result Management</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b1020;
+    color:white;
+}
+
+.result-container{
+
+    max-width:1100px;
+    margin:40px auto;
+    padding:25px;
+
+}
+
+.result-header{
+
+    text-align:center;
+    margin-bottom:30px;
+
+}
+
+.result-header h1{
+
+    margin:0;
+    font-size:32px;
+
+}
+
+.result-header p{
+
+    color:#bbb;
+
+}
+
+.result-card{
+
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+
+}
+
+.form-grid{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+
+}
+
+input,
+select{
+
+    width:100%;
+    box-sizing:border-box;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #555;
+    background:#151b2e;
+    color:white;
+
+}
+
+button{
+
+    padding:13px 20px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+
+.save-btn{
+
+    background:#00d4ff;
+    color:#001018;
+    margin-top:20px;
+
+}
+
+.back-btn{
+
+    background:#444;
+    color:white;
+    text-decoration:none;
+    display:inline-block;
+    padding:12px 18px;
+    border-radius:10px;
+
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+th,
+td{
+
+    padding:12px;
+    border-bottom:1px solid #444;
+    text-align:left;
+
+}
+
+th{
+
+    background:#151b2e;
+
+}
+
+.pass{
+
+    color:#00ff88;
+    font-weight:bold;
+
+}
+
+.fail{
+
+    color:#ff5555;
+    font-weight:bold;
+
+}
+
+.delete-btn{
+
+    background:#ff3b30;
+    color:white;
+    padding:8px 12px;
+
+}
+
+.edit-btn{
+
+    background:#ffb000;
+    color:#111;
+    padding:8px 12px;
+
+}
+
+@media(max-width:700px){
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .result-container{
+
+        padding:15px;
+
+    }
+
+    table{
+
+        font-size:13px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="result-container">
+
+
+<div class="result-header">
+
+<h1>📊 Offline Result Management</h1>
+
+<p>
+Disha Computer Education
+</p>
+
+<a href="admin-dashboard.html"
+class="back-btn">
+
+← Back to Dashboard
+
+</a>
+
+</div>
+
+
+
+<!-- ADD RESULT -->
+
+<div class="result-card">
+
+<h2>➕ Add Offline Result</h2>
+
+
+<div class="form-grid">
+
+
+<input
+type="text"
+id="studentId"
+placeholder="Student ID">
+
+
+<input
+type="text"
+id="studentName"
+placeholder="Student Name">
+
+
+<select id="course">
+
+<option value="">Select Course</option>
+
+<option value="O Level">
+O Level
+</option>
+
+<option value="ADCA">
+ADCA
+</option>
+
+<option value="CCC">
+CCC
+</option>
+
+<option value="Tally">
+Tally
+</option>
+
+<option value="Python">
+Python
+</option>
+
+<option value="Excel">
+Excel
+</option>
+
+<option value="Cyber Security">
+Cyber Security
+</option>
+
+</select>
+
+
+<input
+type="text"
+id="testName"
+placeholder="Test Name">
+
+
+<input
+type="date"
+id="examDate">
+
+
+<input
+type="number"
+id="totalMarks"
+placeholder="Total Marks">
+
+
+<input
+type="number"
+id="obtainedMarks"
+placeholder="Obtained Marks">
+
+
+<select id="publish">
+
+<option value="false">
+🔒 Keep Result Hidden
+</option>
+
+<option value="true">
+🌐 Publish Result
+</option>
+
+</select>
+
+
+</div>
+
+
+<button
+class="save-btn"
+onclick="saveResult()">
+
+💾 Save Result
+
+</button>
+
+
+</div>
+
+
+
+<!-- RESULT LIST -->
+
+<div class="result-card">
+
+<h2>📋 Published / Saved Results</h2>
+
+<div style="overflow-x:auto;">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Student ID</th>
+<th>Name</th>
+<th>Course</th>
+<th>Test</th>
+<th>Marks</th>
+<th>%</th>
+<th>Grade</th>
+<th>Result</th>
+<th>Publish</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="resultTable">
+
+</tbody>
+
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/*
+=================================================
+IMPORTANT
+=================================================
+
+Tumhari existing website me Firebase configuration
+already hai.
+
+Is file me hum existing global Firebase setup
+use karenge.
+
+Agar tumhari Firebase file alag naam se hai,
+next step me usko connect karenge.
+
+=================================================
+*/
+
+
+const db = window.db;
+
+
+
+function calculateResult(
+    obtained,
+    total
+){
+
+    const percentage =
+        (obtained / total) * 100;
+
+
+    let grade;
+
+
+    if(percentage >= 90){
+
+        grade = "A+";
+
+    }
+
+    else if(percentage >= 80){
+
+        grade = "A";
+
+    }
+
+    else if(percentage >= 70){
+
+        grade = "B+";
+
+    }
+
+    else if(percentage >= 60){
+
+        grade = "B";
+
+    }
+
+    else if(percentage >= 50){
+
+        grade = "C";
+
+    }
+
+    else if(percentage >= 40){
+
+        grade = "D";
+
+    }
+
+    else{
+
+        grade = "F";
+
+    }
+
+
+    const result =
+        percentage >= 40
+        ? "PASS"
+        : "FAIL";
+
+
+    return {
+
+        percentage:
+            Number(
+                percentage.toFixed(2)
+            ),
+
+        grade,
+
+        result
+
+    };
+
+}
+
+
+
+window.saveResult = async function(){
+
+    const studentId =
+        document
+        .getElementById("studentId")
+        .value
+        .trim();
+
+
+    const studentName =
+        document
+        .getElementById("studentName")
+        .value
+        .trim();
+
+
+    const course =
+        document
+        .getElementById("course")
+        .value;
+
+
+    const testName =
+        document
+        .getElementById("testName")
+        .value
+        .trim();
+
+
+    const examDate =
+        document
+        .getElementById("examDate")
+        .value;
+
+
+    const totalMarks =
+        Number(
+            document
+            .getElementById("totalMarks")
+            .value
+        );
+
+
+    const obtainedMarks =
+        Number(
+            document
+            .getElementById("obtainedMarks")
+            .value
+        );
+
+
+    const publish =
+        document
+        .getElementById("publish")
+        .value === "true";
+
+
+    if(
+        !studentId ||
+        !studentName ||
+        !course ||
+        !testName ||
+        !examDate ||
+        !totalMarks
+    ){
+
+        alert(
+            "Please सभी जरूरी details भरें."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        obtainedMarks < 0 ||
+        obtainedMarks > totalMarks
+    ){
+
+        alert(
+            "Obtained Marks सही नहीं हैं."
+        );
+
+        return;
+
+    }
+
+
+    const calculated =
+        calculateResult(
+            obtainedMarks,
+            totalMarks
+        );
+
+
+    try{
+
+
+        await addDoc(
+
+            collection(
+                db,
+                "offlineResults"
+            ),
+
+            {
+
+                studentId,
+
+                studentName,
+
+                course,
+
+                testName,
+
+                examDate,
+
+                totalMarks,
+
+                obtainedMarks,
+
+                percentage:
+                    calculated.percentage,
+
+                grade:
+                    calculated.grade,
+
+                result:
+                    calculated.result,
+
+                published:
+                    publish,
+
+                createdAt:
+                    new Date()
+                    .toISOString()
+
+            }
+
+        );
+
+
+        alert(
+            "✅ Result Successfully Saved!"
+        );
+
+
+        document
+        .querySelectorAll(
+            "input"
+        )
+        .forEach(
+            input =>
+            input.value = ""
+        );
+
+
+        loadResults();
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Result Save Failed: "
+            + error.message
+        );
+
+    }
+
+};
+
+
+
+async function loadResults(){
+
+    const table =
+        document
+        .getElementById(
+            "resultTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    try{
+
+        const snapshot =
+            await getDocs(
+
+                collection(
+                    db,
+                    "offlineResults"
+                )
+
+            );
+
+
+        snapshot.forEach(
+            resultDoc => {
+
+                const r =
+                    resultDoc.data();
+
+
+                table.innerHTML += `
+
+<tr>
+
+<td>
+${r.studentId || ""}
+</td>
+
+<td>
+${r.studentName || ""}
+</td>
+
+<td>
+${r.course || ""}
+</td>
+
+<td>
+${r.testName || ""}
+</td>
+
+<td>
+${r.obtainedMarks || 0}
+/
+${r.totalMarks || 0}
+</td>
+
+<td>
+${r.percentage || 0}%
+</td>
+
+<td>
+${r.grade || ""}
+</td>
+
+<td class="${
+    r.result === "PASS"
+    ? "pass"
+    : "fail"
+}">
+
+${r.result || ""}
+
+</td>
+
+<td>
+
+${
+r.published
+? "🌐 Published"
+: "🔒 Hidden"
+}
+
+</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteResult('${resultDoc.id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+            }
+        );
+
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Load Results Error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+window.deleteResult =
+async function(id){
+
+    if(
+        !confirm(
+            "क्या आप यह result delete करना चाहते हैं?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        await deleteDoc(
+
+            doc(
+                db,
+                "offlineResults",
+                id
+            )
+
+        );
+
+
+        alert(
+            "Result Deleted"
+        );
+
+
+        loadResults();
+
+
+    }
+
+    catch(error){
+
+        alert(
+            "Delete Failed: "
+            + error.message
+        );
+
+    }
+
+};
+
+
+
+window.addEventListener(
+    "firebase-ready",
+    () => {
+
+        loadResults();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
