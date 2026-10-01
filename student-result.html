@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Check Result | Disha Computer Education</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+body{
+
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b1020;
+    color:white;
+
+}
+
+.result-page{
+
+    max-width:800px;
+    margin:40px auto;
+    padding:20px;
+
+}
+
+.header{
+
+    text-align:center;
+    margin-bottom:30px;
+
+}
+
+.header h1{
+
+    margin-bottom:8px;
+
+}
+
+.search-card,
+.result-card{
+
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+
+}
+
+input{
+
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #555;
+    background:#151b2e;
+    color:white;
+    font-size:16px;
+
+}
+
+button{
+
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#0d6efd;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+
+}
+
+.result-card{
+
+    display:none;
+
+}
+
+.result-row{
+
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #444;
+
+}
+
+.pass{
+
+    color:#00ff88;
+    font-weight:bold;
+
+}
+
+.fail{
+
+    color:#ff5555;
+    font-weight:bold;
+
+}
+
+.error{
+
+    text-align:center;
+    color:#ff6666;
+    margin-top:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<script type="module"
+src="js/firebase.js"></script>
+
+
+<div class="result-page">
+
+
+<div class="header">
+
+<h1>📊 Check Your Result</h1>
+
+<p>
+Disha Computer Education
+</p>
+
+</div>
+
+
+<div class="search-card">
+
+<h2>🔎 Search Result</h2>
+
+<p>
+अपना Student ID डालें
+</p>
+
+<input
+type="text"
+id="studentId"
+placeholder="Enter Student ID">
+
+
+<button
+id="checkBtn">
+
+🔍 CHECK RESULT
+
+</button>
+
+
+<div
+id="error"
+class="error">
+</div>
+
+</div>
+
+
+
+<div
+id="resultCard"
+class="result-card">
+
+
+<h2 style="text-align:center;">
+
+📄 EXAM RESULT
+
+</h2>
+
+
+<div class="result-row">
+
+<span>Student Name</span>
+
+<b id="rName"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Student ID</span>
+
+<b id="rId"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Course</span>
+
+<b id="rCourse"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Test</span>
+
+<b id="rTest"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Exam Date</span>
+
+<b id="rDate"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Marks</span>
+
+<b id="rMarks"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Percentage</span>
+
+<b id="rPercentage"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Grade</span>
+
+<b id="rGrade"></b>
+
+</div>
+
+
+<div class="result-row">
+
+<span>Result</span>
+
+<b id="rResult"></b>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script type="module">
+
+const checkBtn =
+document.getElementById(
+    "checkBtn"
+);
+
+
+checkBtn.onclick =
+async function(){
+
+
+    const studentId =
+        document
+        .getElementById(
+            "studentId"
+        )
+        .value
+        .trim();
+
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+
+    const resultCard =
+        document.getElementById(
+            "resultCard"
+        );
+
+
+    resultCard.style.display =
+        "none";
+
+
+    error.innerText =
+        "";
+
+
+    if(!studentId){
+
+        error.innerText =
+            "Please Student ID enter करें.";
+
+        return;
+
+    }
+
+
+    try{
+
+
+        await new Promise(
+            resolve => {
+
+                if(window.db){
+
+                    resolve();
+
+                    return;
+
+                }
+
+                window.addEventListener(
+                    "firebase-ready",
+                    resolve,
+                    {once:true}
+                );
+
+            }
+        );
+
+
+        const snapshot =
+            await window.getDocs(
+
+                window.collection(
+                    window.db,
+                    "offlineResults"
+                )
+
+            );
+
+
+        let found = null;
+
+
+        snapshot.forEach(
+            docSnap => {
+
+                const data =
+                    docSnap.data();
+
+
+                if(
+
+                    String(
+                        data.studentId
+                    ).toLowerCase()
+
+                    ===
+
+                    String(
+                        studentId
+                    ).toLowerCase()
+
+                    &&
+
+                    data.published === true
+
+                ){
+
+                    found = data;
+
+                }
+
+            }
+        );
+
+
+        if(!found){
+
+            error.innerText =
+                "Result नहीं मिला या अभी Publish नहीं किया गया है.";
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "rName"
+        ).innerText =
+            found.studentName || "-";
+
+
+        document.getElementById(
+            "rId"
+        ).innerText =
+            found.studentId || "-";
+
+
+        document.getElementById(
+            "rCourse"
+        ).innerText =
+            found.course || "-";
+
+
+        document.getElementById(
+            "rTest"
+        ).innerText =
+            found.testName || "-";
+
+
+        document.getElementById(
+            "rDate"
+        ).innerText =
+            found.examDate || "-";
+
+
+        document.getElementById(
+            "rMarks"
+        ).innerText =
+            `${found.obtainedMarks || 0} / ${found.totalMarks || 0}`;
+
+
+        document.getElementById(
+            "rPercentage"
+        ).innerText =
+            `${found.percentage || 0}%`;
+
+
+        document.getElementById(
+            "rGrade"
+        ).innerText =
+            found.grade || "-";
+
+
+        const resultElement =
+            document.getElementById(
+                "rResult"
+            );
+
+
+        resultElement.innerText =
+            found.result || "-";
+
+
+        resultElement.className =
+            found.result === "PASS"
+            ? "pass"
+            : "fail";
+
+
+        resultCard.style.display =
+            "block";
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        error.innerText =
+            "Result check करते समय error आया.";
+
+    }
+
+};
+
+</script>
+
+
+</body>
+
+</html>
