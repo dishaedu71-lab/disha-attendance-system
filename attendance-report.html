@@ -1107,7 +1107,69 @@ function(){
 };
 
 
-\n/* =========================================================\n   PROFESSIONAL DASHBOARD UPDATE\n========================================================= */\nfunction updateDashboard(date,total,present,absent,percentage){\n\n    const setText = (id,value) => {\n        const el=document.getElementById(id);\n        if(el) el.innerText=value;\n    };\n\n    setText("dashboardDate", "Date: " + (typeof formatDate === "function" ? formatDate(date) : date));\n    setText("dashTotal", total);\n    setText("dashPresent", present);\n    setText("dashAbsent", absent);\n    setText("dashPercent", percentage + "%");\n    setText("summaryTotal", total);\n    setText("summaryPresent", present);\n    setText("summaryAbsent", absent);\n    setText("summaryPercent", percentage + "%");\n\n    const presentBar=document.getElementById("presentBar");\n    const absentBar=document.getElementById("absentBar");\n    const p=total>0 ? (present/total*100) : 0;\n    const a=total>0 ? (absent/total*100) : 0;\n    if(presentBar) presentBar.style.width=p+"%";\n    if(absentBar) absentBar.style.width=a+"%";\n\n    const canvas=document.getElementById("attendanceChart");\n    if(!canvas || typeof Chart === "undefined") return;\n\n    if(window.attendanceChartInstance){\n        window.attendanceChartInstance.destroy();\n    }\n\n    window.attendanceChartInstance=new Chart(canvas,{\n        type:"doughnut",\n        data:{\n            labels:["Present","Absent"],\n            datasets:[{\n                data:[present,absent],\n                backgroundColor:["#16a34a","#dc2626"],\n                borderColor:["#ffffff","#ffffff"],\n                borderWidth:4\n            }]\n        },\n        options:{\n            responsive:true,\n            maintainAspectRatio:false,\n            cutout:"64%",\n            plugins:{\n                legend:{position:"bottom",labels:{padding:18,usePointStyle:true}},\n                tooltip:{callbacks:{label:function(context){\n                    const value=context.raw||0;\n                    const pct=total>0 ? (value/total*100).toFixed(1) : "0.0";\n                    return " "+context.label+": "+value+" ("+pct+"%)";\n                }}}\n            }\n        }\n    });\n}\n\n/* =========================================================
+
+/* =========================================================
+   PROFESSIONAL DASHBOARD UPDATE
+========================================================= */
+function updateDashboard(date,total,present,absent,percentage){
+
+    const setText = (id,value) => {
+        const el=document.getElementById(id);
+        if(el) el.innerText=value;
+    };
+
+    setText("dashboardDate", "Date: " + (typeof formatDate === "function" ? formatDate(date) : date));
+    setText("dashTotal", total);
+    setText("dashPresent", present);
+    setText("dashAbsent", absent);
+    setText("dashPercent", percentage + "%");
+    setText("summaryTotal", total);
+    setText("summaryPresent", present);
+    setText("summaryAbsent", absent);
+    setText("summaryPercent", percentage + "%");
+
+    const presentBar=document.getElementById("presentBar");
+    const absentBar=document.getElementById("absentBar");
+    const p=total>0 ? (present/total*100) : 0;
+    const a=total>0 ? (absent/total*100) : 0;
+    if(presentBar) presentBar.style.width=p+"%";
+    if(absentBar) absentBar.style.width=a+"%";
+
+    const canvas=document.getElementById("attendanceChart");
+    if(!canvas || typeof Chart === "undefined") return;
+
+    if(window.attendanceChartInstance){
+        window.attendanceChartInstance.destroy();
+    }
+
+    window.attendanceChartInstance=new Chart(canvas,{
+        type:"doughnut",
+        data:{
+            labels:["Present","Absent"],
+            datasets:[{
+                data:[present,absent],
+                backgroundColor:["#16a34a","#dc2626"],
+                borderColor:["#ffffff","#ffffff"],
+                borderWidth:4
+            }]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            cutout:"64%",
+            plugins:{
+                legend:{position:"bottom",labels:{padding:18,usePointStyle:true}},
+                tooltip:{callbacks:{label:function(context){
+                    const value=context.raw||0;
+                    const pct=total>0 ? (value/total*100).toFixed(1) : "0.0";
+                    return " "+context.label+": "+value+" ("+pct+"%)";
+                }}}
+            }
+        }
+    });
+}
+
+/* =========================================================
    BUILD REPORT
 ========================================================= */
 
@@ -2132,4 +2194,4 @@ console.log(
 </script>
 
 </body>
-</html>s
+</html>
