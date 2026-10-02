@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attendance Report | Disha Computer Education</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6fb;
+    color:#1f2937;
+}
+
+/* HEADER */
+
+.header{
+    background:linear-gradient(135deg,#111827,#2563eb);
+    color:white;
+    padding:25px 20px;
+    text-align:center;
+}
+
+.header h1{
+    margin:0;
+    font-size:30px;
+}
+
+.header p{
+    margin:7px 0 0;
+    opacity:.9;
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+/* CONTROL */
+
+.control-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.control-row{
+    display:flex;
+    gap:12px;
+    align-items:end;
+    flex-wrap:wrap;
+}
+
+.field{
+    flex:1;
+    min-width:200px;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    font-size:15px;
+    background:white;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.refresh-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.pdf-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.excel-btn{
+    background:#15803d;
+    color:white;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card-title{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.card-value{
+    font-size:30px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.total{
+    border-left:5px solid #2563eb;
+}
+
+.present{
+    border-left:5px solid #16a34a;
+}
+
+.absent{
+    border-left:5px solid #dc2626;
+}
+
+.percent{
+    border-left:5px solid #f59e0b;
+}
+
+/* CHART */
+
+.chart-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    margin-bottom:20px;
+}
+
+.chart{
+    height:30px;
+    width:100%;
+    background:#fee2e2;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.present-bar{
+    height:100%;
+    background:#16a34a;
+    width:0%;
+    transition:.5s;
+}
+
+/* TABLE */
+
+.table-box{
+    background:white;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    overflow:hidden;
+}
+
+.table-header{
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+.table-header h2{
+    margin:0 0 12px;
+}
+
+.search{
+    max-width:350px;
+}
+
+.table-scroll{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#111827;
+    color:white;
+    padding:13px;
+    text-align:left;
+    white-space:nowrap;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    white-space:nowrap;
+}
+
+tr:hover td{
+    background:#f8fafc;
+}
+
+.status-present{
+    color:#15803d;
+    font-weight:bold;
+}
+
+.status-absent{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:500px){
+
+    .header h1{
+        font-size:23px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .card-value{
+        font-size:24px;
+    }
+
+    .control-row{
+        display:block;
+    }
+
+    .field{
+        margin-bottom:12px;
+    }
+
+    button{
+        width:100%;
+        margin-top:5px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <h1>📊 Attendance Report</h1>
+
+    <p>
+        Disha Computer Education
+    </p>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ================= CONTROL ================= -->
+
+<div class="control-box">
+
+    <div class="control-row">
+
+
+        <div class="field">
+
+            <label>
+                📅 Select Date
+            </label>
+
+            <input
+                type="date"
+                id="reportDate"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                🔎 Search Student
+            </label>
+
+            <input
+                type="text"
+                id="searchStudent"
+                class="search"
+                placeholder="ID / Name / Mobile"
+            >
+
+        </div>
+
+
+        <button
+            class="refresh-btn"
+            id="refreshBtn">
+
+            🔄 Refresh
+
+        </button>
+
+
+        <button
+            class="pdf-btn"
+            id="pdfBtn">
+
+            📄 Download PDF
+
+        </button>
+
+
+        <button
+            class="excel-btn"
+            id="excelBtn">
+
+            📊 Download Excel
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= SUMMARY ================= -->
+
+<div class="cards">
+
+
+    <div class="card total">
+
+        <div class="card-title">
+            TOTAL STUDENTS
+        </div>
+
+        <div
+            class="card-value"
+            id="totalStudents">
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <div class="card present">
+
+        <div class="card-title">
+            PRESENT
+        </div>
+
+        <div
+            class="card-value"
+            id="presentStudents">
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <div class="card absent">
+
+        <div class="card-title">
+            ABSENT
+        </div>
+
+        <div
+            class="card-value"
+            id="absentStudents">
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <div class="card percent">
+
+        <div class="card-title">
+            ATTENDANCE %
+        </div>
+
+        <div
+            class="card-value"
+            id="attendancePercent">
+
+            0%
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================= CHART ================= -->
+
+<div class="chart-box">
+
+    <h2>
+        📈 Daily Attendance
+    </h2>
+
+    <div
+        id="chartText">
+
+        Present 0% | Absent 0%
+
+    </div>
+
+    <div class="chart">
+
+        <div
+            class="present-bar"
+            id="presentBar">
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= TABLE ================= -->
+
+<div class="table-box">
+
+
+    <div class="table-header">
+
+        <h2>
+            📋 Student Attendance Report
+        </h2>
+
+        <div>
+            Date:
+            <b id="displayDate">—</b>
+        </div>
+
+    </div>
+
+
+    <div class="table-scroll">
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Student ID</th>
+
+                    <th>Name</th>
+
+                    <th>Mobile</th>
+
+                    <th>Course</th>
+
+                    <th>Date</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="reportBody">
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="loading">
+
+                        ⏳ Loading Students...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+
+/*
+====================================================
+DISHA COMPUTER EDUCATION
+ATTENDANCE REPORT
+====================================================
+
+Existing Collection:
+
+students
+
+Attendance structure:
+
+attendance : {
+    "2026-10-02" : "Present"
+}
+
+IMPORTANT:
+
+If attendance is missing for selected date,
+student will automatically be treated as ABSENT.
+====================================================
+*/
+
+
+let db = null;
+
+let collection = null;
+
+let getDocs = null;
+
+let students = [];
+
+
+
+/* =========================================
+   DATE
+========================================= */
+
+const dateInput =
+document.getElementById("reportDate");
+
+
+const today =
+new Date()
+.toISOString()
+.split("T")[0];
+
+
+dateInput.value = today;
+
+
+
+/* =========================================
+   FIREBASE READY
+========================================= */
+
+window.addEventListener(
+    "firebase-ready",
+    async () => {
+
+        console.log(
+            "Attendance Report Firebase Ready"
+        );
+
+
+        db =
+        window.db;
+
+        collection =
+        window.collection;
+
+        getDocs =
+        window.getDocs;
+
+
+        if(!db){
+
+            alert(
+                "Firebase connection नहीं मिला."
+            );
+
+            return;
+
+        }
+
+
+        await loadStudents();
+
+    }
+);
+
+
+
+/* =========================================
+   LOAD STUDENTS
+========================================= */
+
+async function loadStudents(){
+
+    try{
+
+        const studentRef =
+        collection(
+            db,
+            "students"
+        );
+
+
+        const snapshot =
+        await getDocs(
+            studentRef
+        );
+
+
+        students = [];
+
+
+        snapshot.forEach(
+            docSnap => {
+
+                students.push({
+
+                    id:
+                    docSnap.id,
+
+                    ...docSnap.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Students:",
+            students.length
+        );
+
+
+        generateReport();
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        document.getElementById(
+            "reportBody"
+        ).innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                class="loading">
+
+                ❌ Students load नहीं हुए।
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================
+   GENERATE REPORT
+========================================= */
+
+function generateReport(){
+
+    const selectedDate =
+    dateInput.value;
+
+
+    document.getElementById(
+        "displayDate"
+    ).innerText =
+    selectedDate;
+
+
+    const searchText =
+    document.getElementById(
+        "searchStudent"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    /*
+    -----------------------------------------
+    IMPORTANT
+    -----------------------------------------
+
+    Search केवल display को filter करेगा.
+    Summary पूरे students की होगी.
+    -----------------------------------------
+    */
+
+
+    let total =
+    students.length;
+
+
+    let present = 0;
+
+    let absent = 0;
+
+
+    students.forEach(
+        student => {
+
+            const status =
+            student.attendance &&
+            student.attendance[selectedDate];
+
+
+            if(status === "Present"){
+
+                present++;
+
+            }
+
+            else{
+
+                /*
+                Attendance नहीं लगी
+                तो AUTOMATIC ABSENT
+                */
+
+                absent++;
+
+            }
+
+        }
+    );
+
+
+    /* =====================================
+       SUMMARY
+    ===================================== */
+
+    const percentage =
+    total > 0
+    ? ((present / total) * 100).toFixed(1)
+    : "0.0";
+
+
+    document.getElementById(
+        "totalStudents"
+    ).innerText =
+    total;
+
+
+    document.getElementById(
+        "presentStudents"
+    ).innerText =
+    present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).innerText =
+    absent;
+
+
+    document.getElementById(
+        "attendancePercent"
+    ).innerText =
+    percentage + "%";
+
+
+    document.getElementById(
+        "chartText"
+    ).innerText =
+    "Present " +
+    percentage +
+    "% | Absent " +
+    (100 - Number(percentage)).toFixed(1) +
+    "%";
+
+
+    document.getElementById(
+        "presentBar"
+    ).style.width =
+    percentage + "%";
+
+
+    /* =====================================
+       TABLE
+    ===================================== */
+
+    let filtered =
+    students.filter(
+        student => {
+
+            if(!searchText){
+
+                return true;
+
+            }
+
+
+            const id =
+            String(
+                student.studentId ||
+                student.roll ||
+                student.id ||
+                ""
+            )
+            .toLowerCase();
+
+
+            const name =
+            String(
+                student.name ||
+                ""
+            )
+            .toLowerCase();
+
+
+            const mobile =
+            String(
+                student.mobile ||
+                ""
+            )
+            .toLowerCase();
+
+
+            return (
+
+                id.includes(searchText) ||
+
+                name.includes(searchText) ||
+
+                mobile.includes(searchText)
+
+            );
+
+        }
+    );
+
+
+    const tbody =
+    document.getElementById(
+        "reportBody"
+    );
+
+
+    tbody.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        tbody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                class="loading">
+
+                📭 कोई Student नहीं मिला।
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        student => {
+
+
+            const studentId =
+            student.studentId ||
+            student.roll ||
+            student.id ||
+            "—";
+
+
+            const name =
+            student.name ||
+            "—";
+
+
+            const mobile =
+            student.mobile ||
+            "—";
+
+
+            const course =
+            student.course ||
+            "—";
+
+
+            const actualStatus =
+            student.attendance &&
+            student.attendance[selectedDate];
+
+
+            /*
+            ====================================
+            AUTOMATIC ABSENT
+            ====================================
+            */
+
+            const status =
+            actualStatus === "Present"
+            ? "Present"
+            : "Absent";
+
+
+            const statusClass =
+            status === "Present"
+            ? "status-present"
+            : "status-absent";
+
+
+            tbody.innerHTML += `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(studentId)}
+                </td>
+
+                <td>
+                    ${escapeHTML(name)}
+                </td>
+
+                <td>
+                    ${escapeHTML(mobile)}
+                </td>
+
+                <td>
+                    ${escapeHTML(course)}
+                </td>
+
+                <td>
+                    ${escapeHTML(selectedDate)}
+                </td>
+
+                <td
+                    class="${statusClass}">
+
+                    ${
+                        status === "Present"
+                        ? "🟢 PRESENT"
+                        : "🔴 ABSENT"
+                    }
+
+                </td>
+
+            </tr>
+
+            `;
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   DATE CHANGE
+========================================= */
+
+dateInput.addEventListener(
+    "change",
+    generateReport
+);
+
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+document.getElementById(
+    "searchStudent"
+)
+.addEventListener(
+    "input",
+    generateReport
+);
+
+
+
+/* =========================================
+   REFRESH
+========================================= */
+
+document.getElementById(
+    "refreshBtn"
+)
+.addEventListener(
+    "click",
+    loadStudents
+);
+
+
+
+/* =========================================
+   HTML SECURITY
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/* =========================================
+   PDF / EXCEL PLACEHOLDER
+========================================= */
+
+/*
+Next step में:
+
+1. Professional PDF
+2. Excel .xlsx
+3. Automatic totals
+4. Logo
+5. Institute address
+6. Print layout
+
+add करेंगे.
+*/
+
+
+document.getElementById(
+    "pdfBtn"
+)
+.addEventListener(
+    "click",
+    () => {
+
+        alert(
+            "PDF feature अगले step में add करेंगे."
+        );
+
+    }
+);
+
+
+document.getElementById(
+    "excelBtn"
+)
+.addEventListener(
+    "click",
+    () => {
+
+        alert(
+            "Excel feature अगले step में add करेंगे."
+        );
+
+    }
+);
+
+
+/* =========================================
+   FIREBASE FILE
+========================================= */
+
+const firebaseScript =
+document.createElement(
+    "script"
+);
+
+firebaseScript.type =
+"module";
+
+firebaseScript.src =
+"js/firebase.js";
+
+document.body.appendChild(
+    firebaseScript
+);
+
+
+</script>
+
+
+</body>
+
+</html>
