@@ -1,102 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Attendance Report | Disha Computer Education</title>
 
-<!-- Excel -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- FONT AWESOME -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<!-- PDF -->
+<!-- SHEET JS - EXCEL -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- JSPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- AUTOTABLE -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
 
 <style>
 
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 body{
+    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:linear-gradient(135deg,#eef2ff,#f8fafc);
-    color:#1e293b;
+    background:#eef2ff;
+    color:#111827;
 }
 
+/* HEADER */
+
 .header{
-    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    background:linear-gradient(135deg,#4338ca,#7c3aed);
     color:white;
-    padding:22px;
+    padding:25px 15px;
     text-align:center;
     box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
 .header h1{
-    font-size:27px;
-    margin-bottom:6px;
+    margin:0;
+    font-size:28px;
 }
 
 .header p{
-    opacity:.9;
+    margin:6px 0 0;
     font-size:14px;
+    opacity:.9;
 }
+
+/* MAIN */
 
 .container{
-    width:95%;
-    max-width:1400px;
-    margin:25px auto;
+    width:96%;
+    max-width:1450px;
+    margin:22px auto;
 }
 
-.topbar{
+/* CONTROL PANEL */
+
+.control-panel{
     background:white;
-    border-radius:16px;
     padding:20px;
+    border-radius:16px;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
-    margin-bottom:20px;
-}
-
-.controls{
     display:flex;
     flex-wrap:wrap;
-    gap:12px;
+    gap:10px;
     align-items:end;
 }
 
-.control{
-    flex:1;
-    min-width:180px;
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
 }
 
-.control label{
-    display:block;
-    font-size:13px;
+.field label{
+    font-size:12px;
     font-weight:bold;
-    margin-bottom:6px;
-    color:#475569;
+    color:#374151;
 }
 
-input,select{
-    width:100%;
+.field input{
     padding:11px 12px;
-    border:1px solid #cbd5e1;
-    border-radius:9px;
-    font-size:14px;
-    outline:none;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    min-width:150px;
 }
 
-input:focus,select:focus{
-    border-color:#6366f1;
-    box-shadow:0 0 0 3px rgba(99,102,241,.12);
+.search-box{
+    flex:1;
+}
+
+.search-box input{
+    width:100%;
+    min-width:220px;
 }
 
 button{
     border:none;
-    padding:11px 17px;
-    border-radius:9px;
+    border-radius:8px;
+    padding:11px 15px;
     cursor:pointer;
     font-weight:bold;
     color:white;
@@ -108,77 +119,83 @@ button:hover{
     opacity:.92;
 }
 
-.btn-blue{
+.generate{
     background:#2563eb;
 }
 
-.btn-green{
+.excel{
     background:#16a34a;
 }
 
-.btn-red{
+.pdf{
     background:#dc2626;
 }
 
-.btn-purple{
+.print{
+    background:#374151;
+}
+
+.refresh{
     background:#7c3aed;
 }
 
-.btn-dark{
-    background:#334155;
-}
+/* CARDS */
 
-.btn-orange{
-    background:#ea580c;
-}
-
-.cards{
+.stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
+    gap:16px;
+    margin-top:20px;
 }
 
-.card{
+.stat-card{
     background:white;
-    border-radius:15px;
-    padding:22px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    border-radius:16px;
+    padding:20px;
     text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
-.card .icon{
+.stat-card i{
     font-size:28px;
     margin-bottom:8px;
 }
 
-.card h2{
-    font-size:30px;
+.stat-card h2{
     margin:5px 0;
+    font-size:28px;
 }
 
-.card p{
-    color:#64748b;
-    font-size:14px;
+.stat-card p{
+    margin:0;
+    color:#6b7280;
+    font-size:13px;
 }
 
+.total i,
 .total h2{
     color:#4f46e5;
 }
 
+.present i,
 .present h2{
     color:#16a34a;
 }
 
+.absent i,
 .absent h2{
     color:#dc2626;
 }
 
+.percent i,
 .percent h2{
-    color:#ea580c;
+    color:#0891b2;
 }
 
-.report-box{
+/* REPORT */
+
+.report-card{
+    margin-top:20px;
     background:white;
     border-radius:16px;
     padding:20px;
@@ -195,36 +212,40 @@ button:hover{
 }
 
 .report-title h2{
+    margin:0;
     font-size:20px;
 }
 
-.date-label{
+.date-badge{
     background:#eef2ff;
     color:#4338ca;
-    padding:8px 13px;
+    padding:8px 12px;
     border-radius:8px;
     font-weight:bold;
+    font-size:13px;
 }
 
+/* TABLE */
+
 .table-wrap{
-    width:100%;
     overflow-x:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:850px;
+    min-width:800px;
 }
 
 thead{
-    background:#1e293b;
+    background:#172033;
     color:white;
 }
 
-th,td{
+th,
+td{
     padding:12px 10px;
-    border-bottom:1px solid #e2e8f0;
+    border-bottom:1px solid #e5e7eb;
     text-align:left;
     font-size:13px;
 }
@@ -235,7 +256,7 @@ tbody tr:hover{
 
 .status{
     display:inline-block;
-    padding:6px 10px;
+    padding:5px 10px;
     border-radius:20px;
     font-weight:bold;
     font-size:12px;
@@ -251,28 +272,83 @@ tbody tr:hover{
     color:#b91c1c;
 }
 
-.footer{
-    text-align:center;
-    padding:25px;
-    color:#64748b;
-    font-size:13px;
+.history-btn{
+    background:#0ea5e9;
+    padding:7px 10px;
+    font-size:11px;
 }
+
+/* LOADING */
 
 .loading{
     text-align:center;
-    padding:30px;
-    color:#64748b;
+    padding:35px;
+    color:#4b5563;
 }
 
-.no-data{
-    text-align:center;
-    padding:30px;
-    color:#64748b;
+.loading i{
+    font-size:28px;
+    margin-bottom:10px;
 }
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#6b7280;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:9999;
+    padding:20px;
+    overflow:auto;
+}
+
+.modal-box{
+    background:white;
+    max-width:800px;
+    margin:50px auto;
+    border-radius:16px;
+    padding:25px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.modal-head h2{
+    margin:0;
+}
+
+.close{
+    background:#dc2626;
+    padding:8px 12px;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    padding:25px;
+}
+
+/* RESPONSIVE */
 
 @media(max-width:900px){
 
-    .cards{
+    .stats{
         grid-template-columns:repeat(2,1fr);
     }
 
@@ -281,635 +357,959 @@ tbody tr:hover{
 @media(max-width:600px){
 
     .header h1{
-        font-size:21px;
+        font-size:22px;
     }
 
     .container{
         width:94%;
     }
 
-    .cards{
+    .stats{
         grid-template-columns:1fr 1fr;
         gap:10px;
     }
 
-    .card{
+    .stat-card{
         padding:15px 8px;
     }
 
-    .card h2{
-        font-size:24px;
+    .stat-card h2{
+        font-size:22px;
     }
 
-    .controls{
-        display:block;
+    .control-panel{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .control{
-        margin-bottom:12px;
+    .field input,
+    .search-box input{
+        width:100%;
+        min-width:0;
     }
 
     button{
         width:100%;
-        margin-bottom:8px;
     }
 
 }
 
 @media print{
 
-    .no-print{
-        display:none !important;
-    }
-
     body{
         background:white;
     }
 
+    .control-panel,
+    .footer,
+    .history-btn{
+        display:none !important;
+    }
+
+    .header{
+        background:#4338ca !important;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+
     .container{
         width:100%;
-        max-width:none;
         margin:0;
     }
 
-    .report-box{
+    .stats{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .report-card{
         box-shadow:none;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <div class="header">
-    <h1>📊 Attendance Report</h1>
-    <p>Disha Computer Education</p>
+
+    <h1>
+        📊 Attendance Report
+    </h1>
+
+    <p>
+        Disha Computer Education
+    </p>
+
 </div>
+
 
 <div class="container">
 
-    <!-- CONTROL PANEL -->
-    <div class="topbar no-print">
 
-        <div class="controls">
+<!-- CONTROL PANEL -->
 
-            <div class="control">
-                <label>📅 Select Attendance Date</label>
-                <input type="date" id="attendanceDate">
-            </div>
+<div class="control-panel">
 
-            <div class="control">
-                <label>🔍 Search Student</label>
-                <input
-                    type="text"
-                    id="searchStudent"
-                    placeholder="Student ID / Name / Mobile / Course"
-                >
-            </div>
+    <div class="field">
 
-            <div class="control">
-                <button class="btn-blue" onclick="generateReport()">
-                    🔄 Generate Report
-                </button>
-            </div>
+        <label>
+            📅 Select Attendance Date
+        </label>
 
-            <div class="control">
-                <button class="btn-green" onclick="downloadExcel()">
-                    📊 Download Excel
-                </button>
-            </div>
+        <input
+            type="date"
+            id="attendanceDate">
 
-            <div class="control">
-                <button class="btn-red" onclick="downloadPDF()">
-                    📄 Download PDF
-                </button>
-            </div>
+    </div>
 
-            <div class="control">
-                <button class="btn-dark" onclick="window.print()">
-                    🖨️ Print
-                </button>
-            </div>
+
+    <div class="field search-box">
+
+        <label>
+            🔎 Search Student
+        </label>
+
+        <input
+            type="text"
+            id="searchStudent"
+            placeholder="Student ID / Name / Mobile">
+
+    </div>
+
+
+    <button
+        class="generate"
+        onclick="generateReport()">
+
+        🔄 Generate Report
+
+    </button>
+
+
+    <button
+        class="excel"
+        onclick="downloadExcel()">
+
+        📊 Download Excel
+
+    </button>
+
+
+    <button
+        class="pdf"
+        onclick="downloadPDF()">
+
+        📄 Download PDF
+
+    </button>
+
+
+    <button
+        class="print"
+        onclick="window.print()">
+
+        🖨️ Print
+
+    </button>
+
+
+    <button
+        class="refresh"
+        onclick="location.reload()">
+
+        ↻ Refresh
+
+    </button>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="stat-card total">
+
+        <i class="fa-solid fa-users"></i>
+
+        <h2 id="totalStudents">
+            0
+        </h2>
+
+        <p>
+            Total Students
+        </p>
+
+    </div>
+
+
+    <div class="stat-card present">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <h2 id="presentStudents">
+            0
+        </h2>
+
+        <p>
+            Present
+        </p>
+
+    </div>
+
+
+    <div class="stat-card absent">
+
+        <i class="fa-solid fa-circle-xmark"></i>
+
+        <h2 id="absentStudents">
+            0
+        </h2>
+
+        <p>
+            Absent
+        </p>
+
+    </div>
+
+
+    <div class="stat-card percent">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <h2 id="attendancePercent">
+            0%
+        </h2>
+
+        <p>
+            Attendance
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- REPORT -->
+
+<div class="report-card">
+
+    <div class="report-title">
+
+        <h2>
+            📋 Daily Attendance Report
+        </h2>
+
+        <div
+            class="date-badge"
+            id="reportDate">
+
+            Date: -
 
         </div>
 
     </div>
 
 
-    <!-- SUMMARY -->
-    <div class="cards">
+    <div
+        id="reportArea"
+        class="loading">
 
-        <div class="card total">
-            <div class="icon">👥</div>
-            <h2 id="totalStudents">0</h2>
-            <p>Total Students</p>
-        </div>
+        <i class="fa-solid fa-spinner fa-spin"></i>
 
-        <div class="card present">
-            <div class="icon">✅</div>
-            <h2 id="totalPresent">0</h2>
-            <p>Present</p>
-        </div>
+        <br>
 
-        <div class="card absent">
-            <div class="icon">❌</div>
-            <h2 id="totalAbsent">0</h2>
-            <p>Absent</p>
-        </div>
-
-        <div class="card percent">
-            <div class="icon">📈</div>
-            <h2 id="attendancePercent">0%</h2>
-            <p>Attendance</p>
-        </div>
+        Firebase से student data load हो रहा है...
 
     </div>
 
+</div>
 
-    <!-- REPORT -->
-    <div class="report-box">
-
-        <div class="report-title">
-
-            <h2>📋 Daily Attendance Report</h2>
-
-            <div class="date-label">
-                Date:
-                <span id="displayDate">-</span>
-            </div>
-
-        </div>
-
-        <div id="loading" class="loading">
-            🔄 Loading students...
-        </div>
-
-        <div class="table-wrap">
-
-            <table id="attendanceTable">
-
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Student ID</th>
-                        <th>Student Name</th>
-                        <th>Mobile No.</th>
-                        <th>Course</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody id="attendanceBody"></tbody>
-
-            </table>
-
-        </div>
-
-        <div id="noData" class="no-data" style="display:none;">
-            No student found.
-        </div>
-
-    </div>
 
 </div>
 
 
 <div class="footer">
-    © 2026 Disha Computer Education | Attendance Management System
+
+    © 2026 Disha Computer Education |
+    Attendance Management System
+
 </div>
 
 
-<script>
+<!-- HISTORY MODAL -->
 
-let students = [];
+<div
+    class="modal"
+    id="historyModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>
+                📜 Student Attendance History
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeHistory()">
+
+                ✕ Close
+
+            </button>
+
+        </div>
+
+        <div id="historyContent"></div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyCi0gz9XPJvAUUaMaGYXEC2jTQuOmkRRGM",
+
+    authDomain:
+    "disha-attendance-system.firebaseapp.com",
+
+    projectId:
+    "disha-attendance-system",
+
+    storageBucket:
+    "disha-attendance-system.firebasestorage.app",
+
+    messagingSenderId:
+    "492796083174",
+
+    appId:
+    "1:492796083174:web:3bdfa2b30071c3fae07427",
+
+    measurementId:
+    "G-YP9RLS7XJE"
+
+};
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let allStudents = [];
+
 let reportData = [];
 
 
-/* =========================================
-   DATE
-========================================= */
+/* =========================================================
+   TODAY DATE
+========================================================= */
 
-function getToday(){
+function getLocalDate(){
 
-    const d = new Date();
+    const now = new Date();
 
-    const year = d.getFullYear();
+    const year =
+        now.getFullYear();
 
-    const month = String(d.getMonth()+1).padStart(2,"0");
+    const month =
+        String(
+            now.getMonth()+1
+        ).padStart(2,"0");
 
-    const day = String(d.getDate()).padStart(2,"0");
+    const day =
+        String(
+            now.getDate()
+        ).padStart(2,"0");
 
     return `${year}-${month}-${day}`;
+
 }
 
 
-/* =========================================
-   INITIAL DATE
-========================================= */
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
 
-    const dateInput =
-        document.getElementById("attendanceDate");
-
-    dateInput.value = getToday();
-
-    document
-        .getElementById("searchStudent")
-        .addEventListener("input",generateReport);
-
-});
+        document.getElementById(
+            "attendanceDate"
+        ).value = getLocalDate();
 
 
-/* =========================================
-   FIREBASE READY
-========================================= */
+        document.getElementById(
+            "searchStudent"
+        ).addEventListener(
+            "input",
+            function(){
 
-window.addEventListener("firebase-ready",()=>{
-
-    loadStudents();
-
-});
-
-
-/* =========================================
-   IF FIREBASE ALREADY READY
-========================================= */
-
-setTimeout(()=>{
-
-    if(window.db && students.length===0){
-
-        loadStudents();
-
-    }
-
-},1500);
-
-
-/* =========================================
-   LOAD STUDENTS
-========================================= */
-
-async function loadStudents(){
-
-    try{
-
-        document.getElementById("loading").style.display="block";
-
-        const studentRef =
-            window.collection(window.db,"students");
-
-        window.onSnapshot(
-            studentRef,
-            (snapshot)=>{
-
-                students=[];
-
-                snapshot.forEach(docSnap=>{
-
-                    students.push({
-
-                        id:docSnap.id,
-
-                        ...docSnap.data()
-
-                    });
-
-                });
-
-                generateReport();
-
-                document.getElementById("loading").style.display="none";
-
-            },
-            (error)=>{
-
-                console.error(error);
-
-                document.getElementById("loading").innerHTML =
-                    "❌ Students load नहीं हो पाए।";
+                buildReport();
 
             }
         );
 
-    }catch(error){
 
-        console.error(error);
+        await loadStudents();
 
-        document.getElementById("loading").innerHTML =
-            "❌ Firebase connection error.";
+    }
+);
+
+
+/* =========================================================
+   LOAD STUDENTS FROM FIRESTORE
+========================================================= */
+
+async function loadStudents(){
+
+    const area =
+        document.getElementById(
+            "reportArea"
+        );
+
+
+    area.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            <br><br>
+
+            Firebase से data load हो रहा है...
+
+        </div>
+
+    `;
+
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "students"
+                )
+            );
+
+
+        allStudents = [];
+
+
+        snapshot.forEach(
+            docSnap => {
+
+                allStudents.push({
+
+                    id:
+                        docSnap.id,
+
+                    ...docSnap.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Students Loaded:",
+            allStudents.length
+        );
+
+
+        generateReport();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Firebase Error:",
+            error
+        );
+
+
+        area.innerHTML = `
+
+            <div class="empty">
+
+                ❌ Student data load नहीं हुआ।
+
+                <br><br>
+
+                ${escapeHTML(
+                    error.message
+                )}
+
+            </div>
+
+        `;
 
     }
 
 }
 
 
-/* =========================================
+/* =========================================================
    GENERATE REPORT
-========================================= */
+========================================================= */
 
-function generateReport(){
+window.generateReport =
+function(){
+
+    buildReport();
+
+};
+
+
+/* =========================================================
+   BUILD REPORT
+========================================================= */
+
+function buildReport(){
 
     const date =
-        document.getElementById("attendanceDate").value;
+        document.getElementById(
+            "attendanceDate"
+        ).value;
+
 
     const search =
-        document
-        .getElementById("searchStudent")
-        .value
+        document.getElementById(
+            "searchStudent"
+        ).value
         .trim()
         .toLowerCase();
 
 
     if(!date){
 
+        alert(
+            "कृपया attendance date select करें।"
+        );
+
         return;
 
     }
 
 
-    document.getElementById("displayDate").innerText =
-        formatDate(date);
+    document.getElementById(
+        "reportDate"
+    ).innerText =
+        "Date: " + formatDate(date);
 
 
-    reportData=[];
+    /* =====================================================
+       SEARCH FILTER
+    ===================================================== */
 
+    let filtered =
+        allStudents.filter(
+            student => {
 
-    students.forEach(student=>{
+                if(!search){
 
-        const studentId =
-            student.studentId ||
-            student.roll ||
-            student.id ||
-            "";
+                    return true;
 
-        const name =
-            student.name ||
-            student.studentName ||
-            "";
-
-        const mobile =
-            student.mobile ||
-            student.phone ||
-            "";
-
-        const course =
-            student.course ||
-            "";
-
-
-        /*
-        =====================================
-        SEARCH
-        =====================================
-        */
-
-        const searchable = (
-
-            String(studentId)+" "+
-            String(name)+" "+
-            String(mobile)+" "+
-            String(course)
-
-        ).toLowerCase();
-
-
-        if(search && !searchable.includes(search)){
-
-            return;
-
-        }
-
-
-        /*
-        =====================================
-        ATTENDANCE
-        =====================================
-        */
-
-        let status="Absent";
-
-
-        if(
-            student.attendance &&
-            student.attendance[date]
-        ){
-
-            const savedStatus =
-                student.attendance[date];
-
-            if(
-                String(savedStatus).toLowerCase()
-                === "present"
-            ){
-
-                status="Present";
-
-            }
-
-            else if(
-                String(savedStatus).toLowerCase()
-                === "absent"
-            ){
-
-                status="Absent";
-
-            }
-
-        }
-
-
-        reportData.push({
-
-            studentId:studentId,
-
-            name:name,
-
-            mobile:mobile,
-
-            course:course,
-
-            status:status
-
-        });
-
-    });
-
-
-    renderReport();
-
-}
-
-
-/* =========================================
-   RENDER
-========================================= */
-
-function renderReport(){
-
-    const tbody =
-        document.getElementById("attendanceBody");
-
-    tbody.innerHTML="";
-
-
-    let present=0;
-
-    let absent=0;
-
-
-    reportData.forEach((student,index)=>{
-
-        if(student.status==="Present"){
-
-            present++;
-
-        }else{
-
-            absent++;
-
-        }
-
-
-        const tr =
-            document.createElement("tr");
-
-
-        tr.innerHTML=`
-
-            <td>${index+1}</td>
-
-            <td>
-                <strong>
-                    ${escapeHTML(student.studentId)}
-                </strong>
-            </td>
-
-            <td>
-                ${escapeHTML(student.name)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.mobile)}
-            </td>
-
-            <td>
-                ${escapeHTML(student.course)}
-            </td>
-
-            <td>
-
-                ${
-                    student.status==="Present"
-
-                    ?
-
-                    `<span class="status status-present">
-                        ✅ Present
-                    </span>`
-
-                    :
-
-                    `<span class="status status-absent">
-                        ❌ Absent
-                    </span>`
                 }
 
-            </td>
 
-        `;
+                const id =
+                    String(
+                        student.studentId ||
+                        student.roll ||
+                        student.id ||
+                        ""
+                    ).toLowerCase();
 
 
-        tbody.appendChild(tr);
+                const name =
+                    String(
+                        student.name ||
+                        ""
+                    ).toLowerCase();
 
-    });
 
+                const mobile =
+                    String(
+                        student.mobile ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+
+                    id.includes(search) ||
+
+                    name.includes(search) ||
+
+                    mobile.includes(search)
+
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       CREATE DAILY REPORT
+
+       IMPORTANT:
+       Attendance नहीं मिली = ABSENT
+    ===================================================== */
+
+    reportData =
+        filtered.map(
+            student => {
+
+                const attendance =
+                    student.attendance || {};
+
+
+                const markedStatus =
+                    attendance[date];
+
+
+                const status =
+                    markedStatus === "Present"
+                    ? "Present"
+                    : "Absent";
+
+
+                return {
+
+                    id:
+                        student.studentId ||
+                        student.roll ||
+                        student.id ||
+                        "-",
+
+                    name:
+                        student.name ||
+                        "-",
+
+                    mobile:
+                        student.mobile ||
+                        "-",
+
+                    course:
+                        student.course ||
+                        "-",
+
+                    status:
+                        status
+
+                };
+
+            }
+        );
+
+
+    /* =====================================================
+       COUNTERS
+    ===================================================== */
 
     const total =
         reportData.length;
 
 
+    const present =
+        reportData.filter(
+            x =>
+                x.status === "Present"
+        ).length;
+
+
+    const absent =
+        reportData.filter(
+            x =>
+                x.status === "Absent"
+        ).length;
+
+
     const percentage =
-        total>0
-        ? ((present/total)*100).toFixed(1)
+        total > 0
+        ? (
+            present /
+            total *
+            100
+        ).toFixed(1)
         : "0.0";
 
 
-    document.getElementById("totalStudents").innerText =
-        total;
-
-    document.getElementById("totalPresent").innerText =
-        present;
-
-    document.getElementById("totalAbsent").innerText =
-        absent;
-
-    document.getElementById("attendancePercent").innerText =
-        percentage+"%";
+    document.getElementById(
+        "totalStudents"
+    ).innerText = total;
 
 
-    document.getElementById("noData").style.display =
-        total===0 ? "block" : "none";
+    document.getElementById(
+        "presentStudents"
+    ).innerText = present;
 
-}
+
+    document.getElementById(
+        "absentStudents"
+    ).innerText = absent;
 
 
-/* =========================================
-   DATE FORMAT
-========================================= */
+    document.getElementById(
+        "attendancePercent"
+    ).innerText =
+        percentage + "%";
 
-function formatDate(date){
 
-    if(!date) return "-";
+    /* =====================================================
+       TABLE
+    ===================================================== */
 
-    const parts=date.split("-");
-
-    if(parts.length!==3) return date;
-
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    renderReportTable(
+        date
+    );
 
 }
 
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
+/* =========================================================
+   RENDER TABLE
+========================================================= */
 
-function escapeHTML(value){
+function renderReportTable(date){
 
-    if(value===undefined || value===null){
+    const area =
+        document.getElementById(
+            "reportArea"
+        );
 
-        return "";
+
+    if(reportData.length === 0){
+
+        area.innerHTML = `
+
+            <div class="empty">
+
+                <i
+                class="fa-solid fa-user-slash"
+                style="font-size:35px;">
+                </i>
+
+                <br><br>
+
+                इस search/date के लिए कोई student नहीं मिला।
+
+            </div>
+
+        `;
+
+        return;
 
     }
 
-    return String(value)
 
-        .replace(/&/g,"&amp;")
+    let html = `
 
-        .replace(/</g,"&lt;")
+        <div class="table-wrap">
 
-        .replace(/>/g,"&gt;")
+        <table>
 
-        .replace(/"/g,"&quot;")
+            <thead>
 
-        .replace(/'/g,"&#039;");
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Student ID</th>
+
+                    <th>Student Name</th>
+
+                    <th>Mobile No.</th>
+
+                    <th>Course</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    reportData.forEach(
+        (student,index) => {
+
+            const statusClass =
+                student.status === "Present"
+                ? "status-present"
+                : "status-absent";
+
+
+            const icon =
+                student.status === "Present"
+                ? "✓"
+                : "✕";
+
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <b>
+                            ${escapeHTML(
+                                student.id
+                            )}
+                        </b>
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            student.name
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            student.mobile
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            student.course
+                        )}
+                    </td>
+
+                    <td>
+
+                        <span
+                        class="status ${statusClass}">
+
+                            ${icon}
+                            ${student.status}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                        class="history-btn"
+                        onclick="showStudentHistory(
+                            '${escapeAttribute(student.id)}'
+                        )">
+
+                            📜 History
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+        </div>
+
+    `;
+
+
+    area.innerHTML =
+        html;
 
 }
 
 
-/* =========================================
+/* =========================================================
+   DATE CHANGE
+========================================================= */
+
+document.getElementById(
+    "attendanceDate"
+).addEventListener(
+    "change",
+    function(){
+
+        buildReport();
+
+    }
+);
+
+
+/* =========================================================
    EXCEL DOWNLOAD
-========================================= */
+========================================================= */
 
-function downloadExcel(){
+window.downloadExcel =
+function(){
 
-    if(reportData.length===0){
+    if(reportData.length === 0){
 
-        alert("Report में कोई student नहीं है।");
+        alert(
+            "पहले Generate Report करें।"
+        );
 
         return;
 
@@ -917,48 +1317,55 @@ function downloadExcel(){
 
 
     const date =
-        document.getElementById("attendanceDate").value;
+        document.getElementById(
+            "attendanceDate"
+        ).value;
 
 
-    const excelData =
-        reportData.map((student,index)=>({
+    const rows =
+        reportData.map(
+            (student,index) => ({
 
-            "S.No.":index+1,
+                "#":
+                    index + 1,
 
-            "Student ID":student.studentId,
+                "Student ID":
+                    student.id,
 
-            "Student Name":student.name,
+                "Student Name":
+                    student.name,
 
-            "Mobile No.":student.mobile,
+                "Mobile No.":
+                    student.mobile,
 
-            "Course":student.course,
+                "Course":
+                    student.course,
 
-            "Date":date,
+                "Date":
+                    date,
 
-            "Status":student.status
+                "Status":
+                    student.status
 
-        }));
+            })
+        );
 
 
     const worksheet =
-        XLSX.utils.json_to_sheet(excelData);
+        XLSX.utils.json_to_sheet(
+            rows
+        );
 
 
-    worksheet["!cols"]=[
+    worksheet["!cols"] = [
 
         {wch:8},
-
         {wch:18},
-
-        {wch:25},
-
-        {wch:16},
-
+        {wch:28},
+        {wch:18},
         {wch:22},
-
-        {wch:14},
-
-        {wch:14}
+        {wch:15},
+        {wch:15}
 
     ];
 
@@ -968,185 +1375,172 @@ function downloadExcel(){
 
 
     XLSX.utils.book_append_sheet(
-
         workbook,
-
         worksheet,
-
         "Attendance Report"
-
     );
+
+
+    const fileName =
+        "Disha_Attendance_" +
+        date +
+        ".xlsx";
 
 
     XLSX.writeFile(
-
         workbook,
-
-        `Attendance_Report_${date}.xlsx`
-
+        fileName
     );
 
-}
+};
 
 
-/* =========================================
+/* =========================================================
    PDF DOWNLOAD
-========================================= */
+========================================================= */
 
-function downloadPDF(){
+window.downloadPDF =
+function(){
 
-    if(reportData.length===0){
+    if(reportData.length === 0){
 
-        alert("Report में कोई student नहीं है।");
+        alert(
+            "पहले Generate Report करें।"
+        );
 
         return;
 
     }
 
 
-    const {jsPDF}=window.jspdf;
-
-
-    const doc =
-        new jsPDF("landscape","mm","a4");
+    const {
+        jsPDF
+    } = window.jspdf;
 
 
     const date =
-        document.getElementById("attendanceDate").value;
+        document.getElementById(
+            "attendanceDate"
+        ).value;
 
 
-    const present =
-        reportData.filter(
-            s=>s.status==="Present"
-        ).length;
+    const doc =
+        new jsPDF(
+            "l",
+            "mm",
+            "a4"
+        );
 
 
-    const absent =
-        reportData.length-present;
+    /* HEADER */
 
-
-    const percentage =
-        reportData.length>0
-
-        ?
-
-        ((present/reportData.length)*100).toFixed(1)
-
-        :
-
-        "0.0";
-
-
-    /*
-    =====================================
-    HEADER
-    =====================================
-    */
-
-    doc.setFontSize(20);
-
-    doc.setTextColor(40,40,40);
+    doc.setFontSize(18);
 
     doc.text(
-        "Disha Computer Education",
+        "DISHA COMPUTER EDUCATION",
         148,
         15,
-        {align:"center"}
+        {
+            align:"center"
+        }
     );
 
 
-    doc.setFontSize(14);
+    doc.setFontSize(13);
 
     doc.text(
         "Daily Attendance Report",
         148,
         23,
-        {align:"center"}
+        {
+            align:"center"
+        }
     );
 
 
     doc.setFontSize(10);
 
     doc.text(
-        `Date: ${formatDate(date)}`,
+        "Date: " + formatDate(date),
         14,
         32
     );
 
 
-    doc.text(
-        `Total Students: ${reportData.length}`,
-        75,
-        32
-    );
+    const total =
+        reportData.length;
+
+
+    const present =
+        reportData.filter(
+            x =>
+                x.status === "Present"
+        ).length;
+
+
+    const absent =
+        reportData.filter(
+            x =>
+                x.status === "Absent"
+        ).length;
+
+
+    const percent =
+        total
+        ? (
+            present /
+            total *
+            100
+        ).toFixed(1)
+        : "0.0";
 
 
     doc.text(
-        `Present: ${present}`,
-        145,
-        32
+        "Total: " + total +
+        "    Present: " + present +
+        "    Absent: " + absent +
+        "    Attendance: " + percent + "%",
+        14,
+        39
     );
 
 
-    doc.text(
-        `Absent: ${absent}`,
-        195,
-        32
-    );
+    const body =
+        reportData.map(
+            (student,index) => [
 
+                index + 1,
 
-    doc.text(
-        `Attendance: ${percentage}%`,
-        245,
-        32
-    );
+                student.id,
 
+                student.name,
 
-    /*
-    =====================================
-    TABLE
-    =====================================
-    */
+                student.mobile,
 
-    const rows =
-        reportData.map((student,index)=>[
+                student.course,
 
-            index+1,
+                student.status
 
-            student.studentId,
-
-            student.name,
-
-            student.mobile,
-
-            student.course,
-
-            student.status
-
-        ]);
+            ]
+        );
 
 
     doc.autoTable({
 
-        startY:38,
+        startY:45,
 
         head:[[
 
-            "S.No.",
-
+            "#",
             "Student ID",
-
             "Student Name",
-
             "Mobile No.",
-
             "Course",
-
             "Status"
 
         ]],
 
-        body:rows,
+        body:body,
 
         theme:"grid",
 
@@ -1160,23 +1554,19 @@ function downloadPDF(){
 
         headStyles:{
 
-            fillColor:[79,70,229],
+            fillColor:[
+                30,
+                41,
+                59
+            ],
 
-            textColor:255,
-
-            fontStyle:"bold"
-
-        },
-
-        alternateRowStyles:{
-
-            fillColor:[245,247,250]
+            textColor:255
 
         },
 
         columnStyles:{
 
-            0:{cellWidth:15},
+            0:{cellWidth:10},
 
             1:{cellWidth:35},
 
@@ -1184,7 +1574,7 @@ function downloadPDF(){
 
             3:{cellWidth:35},
 
-            4:{cellWidth:55},
+            4:{cellWidth:45},
 
             5:{cellWidth:25}
 
@@ -1193,70 +1583,340 @@ function downloadPDF(){
     });
 
 
-    /*
-    =====================================
-    FOOTER
-    =====================================
-    */
-
-    const pageCount =
-        doc.internal.getNumberOfPages();
+    const finalY =
+        doc.lastAutoTable.finalY + 10;
 
 
-    for(
-        let i=1;
-        i<=pageCount;
-        i++
-    ){
+    doc.setFontSize(9);
 
-        doc.setPage(i);
 
-        doc.setFontSize(8);
+    doc.text(
+        "Generated by Disha Computer Education Attendance Management System",
+        148,
+        finalY,
+        {
+            align:"center"
+        }
+    );
 
-        doc.setTextColor(100,100,100);
 
-        doc.text(
+    const fileName =
+        "Disha_Attendance_" +
+        date +
+        ".pdf";
 
-            `Disha Computer Education | Page ${i} of ${pageCount}`,
 
-            148,
+    doc.save(
+        fileName
+    );
 
-            202,
+};
 
-            {align:"center"}
 
+/* =========================================================
+   STUDENT HISTORY
+========================================================= */
+
+window.showStudentHistory =
+function(studentId){
+
+    const student =
+        allStudents.find(
+            s => {
+
+                const id =
+                    String(
+                        s.studentId ||
+                        s.roll ||
+                        s.id ||
+                        ""
+                    );
+
+                return id ===
+                    String(studentId);
+
+            }
         );
+
+
+    if(!student){
+
+        alert(
+            "Student नहीं मिला।"
+        );
+
+        return;
 
     }
 
 
-    doc.save(
+    const attendance =
+        student.attendance || {};
 
-        `Attendance_Report_${date}.pdf`
 
+    const dates =
+        Object.keys(
+            attendance
+        ).sort().reverse();
+
+
+    let html = `
+
+        <h3>
+
+            ${escapeHTML(
+                student.name || "-"
+            )}
+
+        </h3>
+
+        <p>
+
+            <b>Student ID:</b>
+            ${escapeHTML(
+                student.studentId ||
+                student.roll ||
+                student.id ||
+                "-"
+            )}
+
+            <br>
+
+            <b>Mobile:</b>
+            ${escapeHTML(
+                student.mobile || "-"
+            )}
+
+            <br>
+
+            <b>Course:</b>
+            ${escapeHTML(
+                student.course || "-"
+            )}
+
+        </p>
+
+    `;
+
+
+    if(dates.length === 0){
+
+        html += `
+
+            <div class="empty">
+
+                कोई attendance history उपलब्ध नहीं है।
+
+            </div>
+
+        `;
+
+    }
+    else{
+
+        html += `
+
+            <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+        `;
+
+
+        dates.forEach(
+            (date,index) => {
+
+                const status =
+                    attendance[date];
+
+
+                const cls =
+                    status === "Present"
+                    ? "status-present"
+                    : "status-absent";
+
+
+                html += `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${formatDate(
+                                date
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span
+                            class="status ${cls}">
+
+                                ${status}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+
+        html += `
+
+                </tbody>
+
+            </table>
+
+            </div>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "historyContent"
+    ).innerHTML =
+        html;
+
+
+    document.getElementById(
+        "historyModal"
+    ).style.display =
+        "block";
+
+};
+
+
+/* =========================================================
+   CLOSE HISTORY
+========================================================= */
+
+window.closeHistory =
+function(){
+
+    document.getElementById(
+        "historyModal"
+    ).style.display =
+        "none";
+
+};
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(date){
+
+    if(!date){
+
+        return "-";
+
+    }
+
+
+    const parts =
+        date.split("-");
+
+
+    if(parts.length !== 3){
+
+        return date;
+
+    }
+
+
+    return (
+        parts[2] +
+        "/" +
+        parts[1] +
+        "/" +
+        parts[0]
     );
 
 }
 
 
-/* =========================================
-   DATE CHANGE
-========================================= */
+/* =========================================================
+   SECURITY / HTML ESCAPE
+========================================================= */
 
-document
-.getElementById("attendanceDate")
-.addEventListener(
-    "change",
-    generateReport
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function escapeAttribute(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    );
+
+}
+
+
+/* =========================================================
+   FIREBASE READY MESSAGE
+========================================================= */
+
+console.log(
+    "✅ Attendance Report Firebase Connected"
 );
 
 </script>
-
-
-<!-- IMPORTANT:
-     Your existing firebase.js must be loaded
-     BEFORE this report page script.
--->
 
 </body>
 </html>
